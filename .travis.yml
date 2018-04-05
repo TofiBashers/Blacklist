@@ -43,9 +43,9 @@ android:
   - extra-android-m2repository
 
 before_install:
-- openssl aes-256-cbc -k $travisKeystoreEncPassword -in travis.keystore.enc -out travis.keystore -d
+- openssl aes-256-cbc -k "$travisKeystoreEncPassword" -in travis.keystore.enc -out travis.keystore -d
 - cd app
-- openssl aes-256-cbc -k $fabricPropertiesEncPassword -in fabric.properties.enc -out fabric.properties -d
+- openssl aes-256-cbc -k "$fabricPropertiesEncPassword" -in fabric.properties.enc -out fabric.properties -d
 - cd ..
 - chmod +x gradlew
 
