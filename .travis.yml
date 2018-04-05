@@ -69,7 +69,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-    repo: TofiBashers/Black-List
+    repo: TofiBashers/Blacklist
     jdk: oraclejdk8
   api_key:
     secure: "ZMk9HMYIWdqRkD03bqEn6p4qxkwXGTpm3DSA5Pg+bXI58U5pe3Ip9dEksH/aBvXhM8xLb
