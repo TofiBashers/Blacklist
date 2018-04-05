@@ -18,59 +18,19 @@ env:
   - APK_FINAL_NAME=Blacklist.apk
 
   #keyPassword
-  - secure: "RLqv3X4lvNEyP57wG4NiBzYIybrqHlavcVuMIu5NutrLLoH+ih/LLdY+o/BLSThaNpbV4
-            5WwrOTxrsN1Ey/SBEsi2WD7dWWHCNyCGtZtkC1FGJ1z5NuWUWXnXd8V4cZ7fAwh8xQQ+zjcqq7/B6OPm
-            swJlYEkQkf1EgvQylx4GRQH33Dla21kaDHXkxPKvbBEfRFi7QDe+53TFg1ZNy5KseYtxLCim1FjfCwZ1
-            dZa1bIktqM+MljF3Lqoeqh/gSbq2VUTsXo0/Eujz57cP70IPuHxaCvPJndchyjAmMHl4yZQ3udX6FAxH
-            tnXGdvpqbuisCiuqDtaAKrRdCxFwbx6r3fasqtGCuzlxMur+jhp6UuI3b9LkUhwvVZgY8KgSTIaVIP8E
-            Sdj52oqzBusCiivo3xx+ccFQtyXwj0ajZaVtCtjIkEdYC00QmS4upd6rn1t8sApxUq/Wwgsvl6CHwN9g
-            iUy7fnqLiOxY2oI1B5zrNPwhrZUBHkhNqr3DAf38Jse5AWIWRmbhOcP1Oh3pUCNLWXONUFLZRTgXW6IE
-            UT4eukd5ufzecIztkHTtBbAezObtEHTkwcnROc5YTW+oApmSjwxHSsWKD6ei3jUE+gYXtMjJcqxlQ1bp
-            MiQiZY6bjvbXBXhd57ImlwAH+O1zR+W37dXMXDlBxgKTUjD09E6jZw="
+  - secure: "RLqv3X4lvNEyP57wG4NiBzYIybrqHlavcVuMIu5NutrLLoH+ih/LLdY+o/BLSThaNpbV45WwrOTxrsN1Ey/SBEsi2WD7dWWHCNyCGtZtkC1FGJ1z5NuWUWXnXd8V4cZ7fAwh8xQQ+zjcqq7/B6OPmswJlYEkQkf1EgvQylx4GRQH33Dla21kaDHXkxPKvbBEfRFi7QDe+53TFg1ZNy5KseYtxLCim1FjfCwZ1dZa1bIktqM+MljF3Lqoeqh/gSbq2VUTsXo0/Eujz57cP70IPuHxaCvPJndchyjAmMHl4yZQ3udX6FAxHtnXGdvpqbuisCiuqDtaAKrRdCxFwbx6r3fasqtGCuzlxMur+jhp6UuI3b9LkUhwvVZgY8KgSTIaVIP8ESdj52oqzBusCiivo3xx+ccFQtyXwj0ajZaVtCtjIkEdYC00QmS4upd6rn1t8sApxUq/Wwgsvl6CHwN9giUy7fnqLiOxY2oI1B5zrNPwhrZUBHkhNqr3DAf38Jse5AWIWRmbhOcP1Oh3pUCNLWXONUFLZRTgXW6IEUT4eukd5ufzecIztkHTtBbAezObtEHTkwcnROc5YTW+oApmSjwxHSsWKD6ei3jUE+gYXtMjJcqxlQ1bpMiQiZY6bjvbXBXhd57ImlwAH+O1zR+W37dXMXDlBxgKTUjD09E6jZw="
 
   #keyAlias
-  - secure: "D0yJK6vh0+ruHVZdXb18eiu/9JjkGxpTV3ULPDBSztBztmphr2SRf1s7yjVMgQqBuYLZ3
-            B+/TGa/6SCVUohQFGkm1J+O8FwvKI65Whb5ODGaukq6CGPCZJ8Hit2mzfWkRdCdXbqLaBII+DXcOq0ff
-            eEwrCXP7TUiVwAvl+noKuLY6TsoX4hB3g1hzz9oUbL6XaekrFk6FIKG71Rwn0AFyf12tbeV/znuUqSHp
-            Alp2XyjWrFdTM5B4SDJUYnarKwb1iE1s0DGR1h4gv7t40hRNLCJv8y+L4sCkfvawcCzZlwDqIImdLQp1
-            C/c+PR8TZ2qlgTEgXHyJ1NWU6eqJXiQ39ea9KrLhcoBGxd21NvaLrcAupv+tCZy0PXYc5uTnb5MliTTn
-            /N/+Ih+TfCin14Vt0aGuysV7SRuc5I+Kmh1ktl8a2vUVZmjRR2Nre6bwhCIZZTqG3UiOVRU7MLl4qWgu
-            pcfWDA43H9ScIKVMbZ0apKCg7fUzoIute14+ALPLjN1JTPLGAzK3xVjCnXBntIIiykrZEiyKa5FxgaTw
-            Cuagcbimc/ZN67a9brxmcUe+E93M5Iy72NoBpHFVMhsS2AXgMQb33fkabTXcXCPPwXqOCqDF2axhbTyG
-            L+Cjdy7zqkX9A82uACbywmzv4WhXlo99RfhN2tDpU93Qsw1T/IfflU="
+  - secure: "D0yJK6vh0+ruHVZdXb18eiu/9JjkGxpTV3ULPDBSztBztmphr2SRf1s7yjVMgQqBuYLZ3B+/TGa/6SCVUohQFGkm1J+O8FwvKI65Whb5ODGaukq6CGPCZJ8Hit2mzfWkRdCdXbqLaBII+DXcOq0ffeEwrCXP7TUiVwAvl+noKuLY6TsoX4hB3g1hzz9oUbL6XaekrFk6FIKG71Rwn0AFyf12tbeV/znuUqSHpAlp2XyjWrFdTM5B4SDJUYnarKwb1iE1s0DGR1h4gv7t40hRNLCJv8y+L4sCkfvawcCzZlwDqIImdLQp1C/c+PR8TZ2qlgTEgXHyJ1NWU6eqJXiQ39ea9KrLhcoBGxd21NvaLrcAupv+tCZy0PXYc5uTnb5MliTTn/N/+Ih+TfCin14Vt0aGuysV7SRuc5I+Kmh1ktl8a2vUVZmjRR2Nre6bwhCIZZTqG3UiOVRU7MLl4qWgupcfWDA43H9ScIKVMbZ0apKCg7fUzoIute14+ALPLjN1JTPLGAzK3xVjCnXBntIIiykrZEiyKa5FxgaTwCuagcbimc/ZN67a9brxmcUe+E93M5Iy72NoBpHFVMhsS2AXgMQb33fkabTXcXCPPwXqOCqDF2axhbTyGL+Cjdy7zqkX9A82uACbywmzv4WhXlo99RfhN2tDpU93Qsw1T/IfflU="
 
   #storePassword
-  - secure: "VYHF9Ig8Ef+y84LBhnfuH+UhOi7phtqhRijz6DXxWWz2FlbqoaK3JxdULXsy4ZPQKP4ro
-            +gxLr51HhdZ2F+OM06JSUmEe7yRQP+B8mSatAmWfxS1SwXIbwyTxvp9dw/dytlU8WrtNe6LNQSvcIL/F
-            w6ryvMzLo/X4FbSgdb3KLwJ0OhnE0Cn6ycErPX7/E/X9dK1tSCY5OIEXZqaSylrpQN3n0pXnA2WK+i/V
-            8Z/vlqzwNjE+4sE12Ek1rxGs6ianxl760lX5eNVoXX2GhQ/P5KfTyiu8asswhCd3An1VtRNr75xBahPX
-            oPtVA0aE7zRNLaa7Rm1OeMtmv2twZci6ToU+QQtKYvTQnvB2u/kVHSuD4tiFKcWcC9HbqPLL89dY3+lR
-            +28pBW8Vnz9AmkXrIsaRokwOT31B5GQruy8TGDjMMMlaXIaRdlzY6U8raYO4c7z23hvzsnDKFFxjmzfM
-            lVP0VEiD18URrAb5ZLb63r7/mKtNbdme2Sd3vx5tmn7ty9HLS8b0KmvNWwCNnfDxg/m1Lye69fFU9oJS
-            mCDDz4/E2Yy419/XC9Tdr7oUKk/mRfuu6DuN/Kqq8zaGQMnCOmSttB3Ov6um76uzBbhMFebc93ESizBL
-            YYfVTmJ6d/snMbqElHUALrQ7LGALzhKIMi+q8wNpswupdaG2eoLNd4="
+  - secure: "VYHF9Ig8Ef+y84LBhnfuH+UhOi7phtqhRijz6DXxWWz2FlbqoaK3JxdULXsy4ZPQKP4ro+gxLr51HhdZ2F+OM06JSUmEe7yRQP+B8mSatAmWfxS1SwXIbwyTxvp9dw/dytlU8WrtNe6LNQSvcIL/Fw6ryvMzLo/X4FbSgdb3KLwJ0OhnE0Cn6ycErPX7/E/X9dK1tSCY5OIEXZqaSylrpQN3n0pXnA2WK+i/V8Z/vlqzwNjE+4sE12Ek1rxGs6ianxl760lX5eNVoXX2GhQ/P5KfTyiu8asswhCd3An1VtRNr75xBahPXoPtVA0aE7zRNLaa7Rm1OeMtmv2twZci6ToU+QQtKYvTQnvB2u/kVHSuD4tiFKcWcC9HbqPLL89dY3+lR+28pBW8Vnz9AmkXrIsaRokwOT31B5GQruy8TGDjMMMlaXIaRdlzY6U8raYO4c7z23hvzsnDKFFxjmzfMlVP0VEiD18URrAb5ZLb63r7/mKtNbdme2Sd3vx5tmn7ty9HLS8b0KmvNWwCNnfDxg/m1Lye69fFU9oJSmCDDz4/E2Yy419/XC9Tdr7oUKk/mRfuu6DuN/Kqq8zaGQMnCOmSttB3Ov6um76uzBbhMFebc93ESizBLYYfVTmJ6d/snMbqElHUALrQ7LGALzhKIMi+q8wNpswupdaG2eoLNd4="
 
   #travisKeystoreEncPassword
-  - secure: "Dpi8sCgOIftwfLP5TIb/5Xw1kCqwAz12j1HHYsFEFPET2Z1pYRoyaPZGQSXtCtrCBcoHs
-            tp/lgYTjTJB7Wo66CrnMMOFWGf/TO2Zx6BDfACklHOwAarvBPHxKb3sigYWMpkLtXjPAoykOU++hfx8H
-            6dwjFyn8neztn82VwVKXcl9Y2ecHXzzibqPufItrqsknOlDy4u74sJDiyiH9/fA8grHVSJ5LvDj4m+2R
-            OzxDdlD5wqFHX8fqrcPnZPMg0XwzYBFikn54JegyH/jF7ge8HoUVo+R0xzhNzRdbJH8xj1M7xXXRtS0T
-            buNVdFDBVg8ay9U+B7vgW+8WAEI1TsVKoauPWedfyvEkmg6gPN7AEIvvblWbHYevpLmcOJU0q/CGJs+/
-            2Rmm6DXSGlNG0pjl8EtlH3n6XGhI9en5lIEWq3v3s2EIZcco6N66OCLoIO4mLUbWaVxplZAyD8TLqzDv
-            ySiMGt3E6kiS3K9WFsf7iD5ngeuPthFf9lIy7csEbAjAKgVBHoRD2nE16gotPg9cYoXbbTq62Rp4bSPx
-            fpelOZqkyT8eDCCVIbu+cxmETehojo9yHmDqq8YI2hNKZeVl6SktOrQMGFGI3FxHqE0gH9UxED4mpWBI
-            R66weaMuOMzAnFsFT2Ip5Dl/2Hb5sZU7Uibb9BEjXSiksSZybxE5IA="
+  - secure: "Dpi8sCgOIftwfLP5TIb/5Xw1kCqwAz12j1HHYsFEFPET2Z1pYRoyaPZGQSXtCtrCBcoHstp/lgYTjTJB7Wo66CrnMMOFWGf/TO2Zx6BDfACklHOwAarvBPHxKb3sigYWMpkLtXjPAoykOU++hfx8H6dwjFyn8neztn82VwVKXcl9Y2ecHXzzibqPufItrqsknOlDy4u74sJDiyiH9/fA8grHVSJ5LvDj4m+2ROzxDdlD5wqFHX8fqrcPnZPMg0XwzYBFikn54JegyH/jF7ge8HoUVo+R0xzhNzRdbJH8xj1M7xXXRtS0TbuNVdFDBVg8ay9U+B7vgW+8WAEI1TsVKoauPWedfyvEkmg6gPN7AEIvvblWbHYevpLmcOJU0q/CGJs+/2Rmm6DXSGlNG0pjl8EtlH3n6XGhI9en5lIEWq3v3s2EIZcco6N66OCLoIO4mLUbWaVxplZAyD8TLqzDvySiMGt3E6kiS3K9WFsf7iD5ngeuPthFf9lIy7csEbAjAKgVBHoRD2nE16gotPg9cYoXbbTq62Rp4bSPxfpelOZqkyT8eDCCVIbu+cxmETehojo9yHmDqq8YI2hNKZeVl6SktOrQMGFGI3FxHqE0gH9UxED4mpWBIR66weaMuOMzAnFsFT2Ip5Dl/2Hb5sZU7Uibb9BEjXSiksSZybxE5IA="
 
   #fabricPropertiesEncPassword
-  - secure: "JaN0w6Xc4vt4h+qxPgb1MLCLUS9e8IdhYtBbnqoWK03GIw0owLQ3tU1zOSkH2yysMQ91w
-            wLddNqTON5DLfHe+U6VUDNEkMJUBi4HJBO0LjcbY0QwnXS+j7ACfIngVQ4OPL+Y8R2nmlunTEIaSyMDB
-            K7w6fJxxIobz5LsYLm8OiZy7jBlIIsvQB+mshn160gi1CWFvrz8f/PbidHZXf+nPjtSvsSafxNqHqKqN
-            MPJtyZ+xt8CiCrR3H7PThkvsy61QIfqKCZntFyaDtRSmstEXGalq3HnFmtqAMkGLh+eYG4K3hoEq5Asl
-            w8zkVg52QhBohef4W7f8OvY+7N3fHJLbEMvjxcrmVK8vpgO1IhruNe9oymSsSB6cmir7dT+QMLh9m9OX
-            Sta+tbci71fzfa+C4kTsZutNtucngKyjxYNZRYUQMUovYcNHJD45phvJ88R9haT/RCbE/BNvRlDp+fRB
-            wBlXWu7qcfB9Opg9wlZZwn07eFgqyccxLRuCW2OwUTYZP0RR1h4a89lz8FvzdLtmHyYBhFREtVLAzpY6
-            DNwS0HM3rTghI0dsUNs9EMqzRi2h+44SKL5Nvp2ITI22dAX9E77WAG9UeEBllB+Oclba9p5kzYLHbedD
-            j2wAnr5waonXZhKdCywGaPnzeM2m9071Zq/OPxbIQs+8MtMuMy1jQA="
+  - secure: "JaN0w6Xc4vt4h+qxPgb1MLCLUS9e8IdhYtBbnqoWK03GIw0owLQ3tU1zOSkH2yysMQ91wwLddNqTON5DLfHe+U6VUDNEkMJUBi4HJBO0LjcbY0QwnXS+j7ACfIngVQ4OPL+Y8R2nmlunTEIaSyMDBK7w6fJxxIobz5LsYLm8OiZy7jBlIIsvQB+mshn160gi1CWFvrz8f/PbidHZXf+nPjtSvsSafxNqHqKqNMPJtyZ+xt8CiCrR3H7PThkvsy61QIfqKCZntFyaDtRSmstEXGalq3HnFmtqAMkGLh+eYG4K3hoEq5Aslw8zkVg52QhBohef4W7f8OvY+7N3fHJLbEMvjxcrmVK8vpgO1IhruNe9oymSsSB6cmir7dT+QMLh9m9OXSta+tbci71fzfa+C4kTsZutNtucngKyjxYNZRYUQMUovYcNHJD45phvJ88R9haT/RCbE/BNvRlDp+fRBwBlXWu7qcfB9Opg9wlZZwn07eFgqyccxLRuCW2OwUTYZP0RR1h4a89lz8FvzdLtmHyYBhFREtVLAzpY6DNwS0HM3rTghI0dsUNs9EMqzRi2h+44SKL5Nvp2ITI22dAX9E77WAG9UeEBllB+Oclba9p5kzYLHbedDj2wAnr5waonXZhKdCywGaPnzeM2m9071Zq/OPxbIQs+8MtMuMy1jQA="
 android:
   components:
   - tools
