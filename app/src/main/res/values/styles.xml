@@ -1,0 +1,47 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="buttonStyle">@style/Button</item>
+        <item name="textAllCaps">false</item>
+    </style>
+    
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme"/>
+    
+    <style name="Button" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_default_backgrounds</item>
+        <item name="android:textColor">@drawable/btn_default_text_colors</item>
+    </style>
+
+    <style name="ErrorTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/disabled_events_icons</item>
+    </style>
+
+    <style name="HintTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/enabled_icons</item>
+    </style>
+
+    <style name="AppTheme.TextInputLayout">
+        <item name="colorControlNormal">@color/enabled_icons</item>
+        <item name="colorControlActivated">@color/enabled_icons</item>
+        <item name="colorControlHighlight">@color/enabled_icons</item>
+    </style>
+
+    <style name="AppTheme.CheckBox">
+        <item name="colorControlActivated">@color/enabled_icons</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primary_dark_text</item>
+    </style>
+
+    <style name="ProgressTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/enabled_icons</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/toolbar_text_color</item>
+        <item name="android:textColorSecondary">@color/toolbar_text_color</item>
+        <item name="android:actionMenuTextColor">@color/toolbar_text_color</item>
+    </style>
+
+</resources>

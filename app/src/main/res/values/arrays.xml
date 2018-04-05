@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="partial_title_text_time_size">
+        <item>18sp</item>
+    </array>
+    <array name="item_numberlist_number_text_sizes">
+        <item>45sp</item>
+        <item>23sp</item>
+    </array>
+</resources>

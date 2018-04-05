@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Чёрный список</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="options_cancel_action">Отмена</string>
+    <string name="options_ignore_calls_action">Игнорировать звонки</string>
+    <string name="options_ignore_sms_action">Игнорировать SMS</string>
+    <string name="options_edit_number_action">Введите номер </string>
+    <string name="options_change_ignoring_period_action">Изменить период игнорирования</string>
+    <string name="options_ok_action">Oк</string>
+    <string name="options_toolbar_edit_title">Редактировать номер</string>
+    <string name="options_toolbar_create_title">Добавить номер</string>
+    <string name="blacklist_add_num_action">Добавить номер</string>
+    <string name="blacklist_ignore_hidden_action">Игнорировать скрытые номера</string>
+    <string name="blacklist_item_numberlist_menu_change_action">Изменить</string>
+    <string name="blacklist_item_numberlist_menu_delete_action">Удалить</string>
+    <string name="blacklist_warning_update_to_incompatible_android_version">Данное приложение работает только на версиях системы ниже 4.4 ("KitKat").\nПосле обновления системы до версии 4.4 или выше, рекомендуется использовать функции чёрного списка, предоставляемые системой.</string>
+    <string name="blacklist_warning_incompatible_android_version">Версия вашей системы выше, чем 4.4 ("KitKat").\nИз-за системных ограничений, данное приложение корректно работает только на версиях Android ниже 4.4.\nНастоятельно рекомендуется использовать системные возможности чёрного списка вместо данного приложения.</string>
+    <string name="timesettings_toolbar_title">Время игнорирования</string>
+    <string name="dialog_error_saved_number_exists_now">Номер уже в чёрном списке, введите другой.\n</string>
+    <string-array name="timesettings_weekday_titles">
+        <item name="sunday">Воскресенье</item>
+        <item name="monday">Понедельник</item>
+        <item name="tuesday">Вторник</item>
+        <item name="wednesday">Среда</item>
+        <item name="thursday">Четверг</item>
+        <item name="friday">Пятница</item>
+        <item name="saturday">Суббота</item>
+    </string-array>
+
+    <string name="action_save">Сохранить</string>
+    <string name="action_settings">Настройки</string>
+    <string name="title_data_saving_error">Ошибка сохранения данных</string>
+
+    <string name="current_locale">ru</string>
+</resources>

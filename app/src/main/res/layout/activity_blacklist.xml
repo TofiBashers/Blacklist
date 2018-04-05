@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraint_root"
+    tools:context=".ui.blacklist.BlacklistActivity">
+
+    <com.gmail.tofibashers.blacklist.ui.common.ToolbarWrapperWithBottomElevation
+        android:id="@+id/toolbar_with_elevation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/relative_wrapper_cardview_add_num_with_settings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_with_elevation"
+        app:layout_constraintBottom_toTopOf="@+id/num_list">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_add_num_with_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/blacklist_add_num_with_settings_card_elevation"
+            app:cardCornerRadius="@dimen/default_card_corner_radius">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_ignore_hidden_numbers_space"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_ignore_hidden_numbers_space_percent"
+                    android:orientation="vertical"/>
+
+                <Button
+                    android:id="@+id/button_add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/checkbox_ignore_hidden_numbers"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="1"
+                    android:layout_marginLeft="@dimen/blacklist_button_add_left_and_right_margin"
+                    android:layout_marginRight="@dimen/blacklist_button_add_left_and_right_margin"
+                    android:text="@string/blacklist_add_num_action" />
+
+                <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
+                    android:id="@id/checkbox_ignore_hidden_numbers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_ignore_hidden_numbers_space"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/button_add"
+                    app:layout_constraintVertical_weight="1"
+                    android:text="@string/blacklist_ignore_hidden_action" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/num_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relative_wrapper_cardview_add_num_with_settings"
+        tools:listitem="@layout/item_numberlist"/>
+
+    <include
+        android:id="@+id/progressbar_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_with_elevation"
+        layout="@layout/partial_progress"/>
+
+    <android.support.constraint.Group
+        android:id="@+id/group_numlist_with_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="relative_wrapper_cardview_add_num_with_settings,num_list" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="progressbar_view"/>
+
+</android.support.constraint.ConstraintLayout>

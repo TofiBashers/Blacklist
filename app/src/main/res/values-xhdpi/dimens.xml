@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="partial_item_time_and_weekday_settings_hyphen_size">22sp</dimen>
+    <dimen name="partial_time_text_time_size">18sp</dimen>
+    <item name="partial_time_guideline_vertical" type="dimen" format="float">0.75</item>
+    <item name="partial_time_guideline_horizontal" type="dimen" format="float">0.45</item>
+
+    <dimen name="item_numberlist_text_phone_number_size">30sp</dimen>
+    <dimen name="item_numberlist_height">100dp</dimen>
+    <dimen name="item_time_and_weekday_settings_height">130dp</dimen>
+    <dimen name="item_time_and_weekday_settings_height_checkbox_weekday_state_marginBottom">-20dp</dimen>
+    <item name="item_time_and_weekday_settings_guideline_between_checkbox_and_times_percent" type="dimen" format="float">0.46</item>
+    <item name="item_time_and_weekday_settings_guideline_for_hyphen" type="dimen" format="float">0.66</item>
+    <item name="item_time_and_weekday_settings_guideline_for_bottom_space" type="dimen" format="float">0.96</item>
+</resources>

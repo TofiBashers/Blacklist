@@ -1,0 +1,41 @@
+# Built application files
+*.apk
+*.ap_
+
+# Files for the Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# IntelliJ
+out/
+
+# Gradle files
+.gradle
+build/
+/*/build/
+.gradletasknamecache
+
+# Local configuration file (sdk path, etc)
+/local.properties
+ 
+# Misc
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/captures
+**/*.iml
+
+# Fabric properties
+/app/fabric.properties
+
+# signing_properties
+/signing_debug.properties
+/signing_release.properties
+
+# images
+/images
+
+# CI settings
+/files_enc_passwords.txt

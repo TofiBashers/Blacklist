@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1B5E20</color>
+    <color name="primary_light">#4c8c4a</color>
+    <color name="primary_dark">#003300</color>
+    <color name="primary_dark_text">#DD000000</color>
+    <color name="enabled_black_icons">#DD000000</color>
+    <color name="enabled_icons">#DD1B5E20</color>
+    <color name="disabled_icons">#601B5E20</color>
+    <color name="disabled_events_icons">#7EFF5252</color>
+    <color name="enabled_events_icons">#7E69F0AE</color>
+    <color name="enabled_events_icons_exp">#7E388E3C</color>
+    <color name="background">#fffafafa</color>
+    <color name="toolbar_text_color">#fffafafa</color>
+    <color name="divider_time_settings">#61000000</color>
+    <color name="divider_time_settings_ends">#61fafafa</color>
+    <color name="divider_blacklist">#1E000000</color>
+    <color name="time_picker_color">#388E3C</color>
+
+    <color name="button_default_text_disabled">#42000000</color>
+    <color name="button_default_color_pressed">#87757575</color>
+    <color name="button_default_color_normal">#60757575</color>
+    <color name="button_default_color_disabled">#1E000000</color>
+</resources>

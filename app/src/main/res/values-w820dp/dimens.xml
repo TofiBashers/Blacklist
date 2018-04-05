@@ -1,0 +1,4 @@
+<resources>
+
+    <dimen name="time_settings_weekview_paddings">64dp</dimen>
+</resources>

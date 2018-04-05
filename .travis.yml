@@ -1,0 +1,123 @@
+language: android
+sudo: required
+jdk: oraclejdk8
+
+before_cache:
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+
+env:
+  global:
+  - ANDROID_API=27
+  - ANDROID_BUILD_TOOLS=27.0.2
+  - APK_FINAL_NAME=Blacklist.apk
+
+  #keyPassword
+  - secure: "RLqv3X4lvNEyP57wG4NiBzYIybrqHlavcVuMIu5NutrLLoH+ih/LLdY+o/BLSThaNpbV4
+            5WwrOTxrsN1Ey/SBEsi2WD7dWWHCNyCGtZtkC1FGJ1z5NuWUWXnXd8V4cZ7fAwh8xQQ+zjcqq7/B6OPm
+            swJlYEkQkf1EgvQylx4GRQH33Dla21kaDHXkxPKvbBEfRFi7QDe+53TFg1ZNy5KseYtxLCim1FjfCwZ1
+            dZa1bIktqM+MljF3Lqoeqh/gSbq2VUTsXo0/Eujz57cP70IPuHxaCvPJndchyjAmMHl4yZQ3udX6FAxH
+            tnXGdvpqbuisCiuqDtaAKrRdCxFwbx6r3fasqtGCuzlxMur+jhp6UuI3b9LkUhwvVZgY8KgSTIaVIP8E
+            Sdj52oqzBusCiivo3xx+ccFQtyXwj0ajZaVtCtjIkEdYC00QmS4upd6rn1t8sApxUq/Wwgsvl6CHwN9g
+            iUy7fnqLiOxY2oI1B5zrNPwhrZUBHkhNqr3DAf38Jse5AWIWRmbhOcP1Oh3pUCNLWXONUFLZRTgXW6IE
+            UT4eukd5ufzecIztkHTtBbAezObtEHTkwcnROc5YTW+oApmSjwxHSsWKD6ei3jUE+gYXtMjJcqxlQ1bp
+            MiQiZY6bjvbXBXhd57ImlwAH+O1zR+W37dXMXDlBxgKTUjD09E6jZw="
+
+  #keyAlias
+  - secure: "D0yJK6vh0+ruHVZdXb18eiu/9JjkGxpTV3ULPDBSztBztmphr2SRf1s7yjVMgQqBuYLZ3
+            B+/TGa/6SCVUohQFGkm1J+O8FwvKI65Whb5ODGaukq6CGPCZJ8Hit2mzfWkRdCdXbqLaBII+DXcOq0ff
+            eEwrCXP7TUiVwAvl+noKuLY6TsoX4hB3g1hzz9oUbL6XaekrFk6FIKG71Rwn0AFyf12tbeV/znuUqSHp
+            Alp2XyjWrFdTM5B4SDJUYnarKwb1iE1s0DGR1h4gv7t40hRNLCJv8y+L4sCkfvawcCzZlwDqIImdLQp1
+            C/c+PR8TZ2qlgTEgXHyJ1NWU6eqJXiQ39ea9KrLhcoBGxd21NvaLrcAupv+tCZy0PXYc5uTnb5MliTTn
+            /N/+Ih+TfCin14Vt0aGuysV7SRuc5I+Kmh1ktl8a2vUVZmjRR2Nre6bwhCIZZTqG3UiOVRU7MLl4qWgu
+            pcfWDA43H9ScIKVMbZ0apKCg7fUzoIute14+ALPLjN1JTPLGAzK3xVjCnXBntIIiykrZEiyKa5FxgaTw
+            Cuagcbimc/ZN67a9brxmcUe+E93M5Iy72NoBpHFVMhsS2AXgMQb33fkabTXcXCPPwXqOCqDF2axhbTyG
+            L+Cjdy7zqkX9A82uACbywmzv4WhXlo99RfhN2tDpU93Qsw1T/IfflU="
+
+  #storePassword
+  - secure: "VYHF9Ig8Ef+y84LBhnfuH+UhOi7phtqhRijz6DXxWWz2FlbqoaK3JxdULXsy4ZPQKP4ro
+            +gxLr51HhdZ2F+OM06JSUmEe7yRQP+B8mSatAmWfxS1SwXIbwyTxvp9dw/dytlU8WrtNe6LNQSvcIL/F
+            w6ryvMzLo/X4FbSgdb3KLwJ0OhnE0Cn6ycErPX7/E/X9dK1tSCY5OIEXZqaSylrpQN3n0pXnA2WK+i/V
+            8Z/vlqzwNjE+4sE12Ek1rxGs6ianxl760lX5eNVoXX2GhQ/P5KfTyiu8asswhCd3An1VtRNr75xBahPX
+            oPtVA0aE7zRNLaa7Rm1OeMtmv2twZci6ToU+QQtKYvTQnvB2u/kVHSuD4tiFKcWcC9HbqPLL89dY3+lR
+            +28pBW8Vnz9AmkXrIsaRokwOT31B5GQruy8TGDjMMMlaXIaRdlzY6U8raYO4c7z23hvzsnDKFFxjmzfM
+            lVP0VEiD18URrAb5ZLb63r7/mKtNbdme2Sd3vx5tmn7ty9HLS8b0KmvNWwCNnfDxg/m1Lye69fFU9oJS
+            mCDDz4/E2Yy419/XC9Tdr7oUKk/mRfuu6DuN/Kqq8zaGQMnCOmSttB3Ov6um76uzBbhMFebc93ESizBL
+            YYfVTmJ6d/snMbqElHUALrQ7LGALzhKIMi+q8wNpswupdaG2eoLNd4="
+
+  #travisKeystoreEncPassword
+  - secure: "Dpi8sCgOIftwfLP5TIb/5Xw1kCqwAz12j1HHYsFEFPET2Z1pYRoyaPZGQSXtCtrCBcoHs
+            tp/lgYTjTJB7Wo66CrnMMOFWGf/TO2Zx6BDfACklHOwAarvBPHxKb3sigYWMpkLtXjPAoykOU++hfx8H
+            6dwjFyn8neztn82VwVKXcl9Y2ecHXzzibqPufItrqsknOlDy4u74sJDiyiH9/fA8grHVSJ5LvDj4m+2R
+            OzxDdlD5wqFHX8fqrcPnZPMg0XwzYBFikn54JegyH/jF7ge8HoUVo+R0xzhNzRdbJH8xj1M7xXXRtS0T
+            buNVdFDBVg8ay9U+B7vgW+8WAEI1TsVKoauPWedfyvEkmg6gPN7AEIvvblWbHYevpLmcOJU0q/CGJs+/
+            2Rmm6DXSGlNG0pjl8EtlH3n6XGhI9en5lIEWq3v3s2EIZcco6N66OCLoIO4mLUbWaVxplZAyD8TLqzDv
+            ySiMGt3E6kiS3K9WFsf7iD5ngeuPthFf9lIy7csEbAjAKgVBHoRD2nE16gotPg9cYoXbbTq62Rp4bSPx
+            fpelOZqkyT8eDCCVIbu+cxmETehojo9yHmDqq8YI2hNKZeVl6SktOrQMGFGI3FxHqE0gH9UxED4mpWBI
+            R66weaMuOMzAnFsFT2Ip5Dl/2Hb5sZU7Uibb9BEjXSiksSZybxE5IA="
+
+  #fabricPropertiesEncPassword
+  - secure: "JaN0w6Xc4vt4h+qxPgb1MLCLUS9e8IdhYtBbnqoWK03GIw0owLQ3tU1zOSkH2yysMQ91w
+            wLddNqTON5DLfHe+U6VUDNEkMJUBi4HJBO0LjcbY0QwnXS+j7ACfIngVQ4OPL+Y8R2nmlunTEIaSyMDB
+            K7w6fJxxIobz5LsYLm8OiZy7jBlIIsvQB+mshn160gi1CWFvrz8f/PbidHZXf+nPjtSvsSafxNqHqKqN
+            MPJtyZ+xt8CiCrR3H7PThkvsy61QIfqKCZntFyaDtRSmstEXGalq3HnFmtqAMkGLh+eYG4K3hoEq5Asl
+            w8zkVg52QhBohef4W7f8OvY+7N3fHJLbEMvjxcrmVK8vpgO1IhruNe9oymSsSB6cmir7dT+QMLh9m9OX
+            Sta+tbci71fzfa+C4kTsZutNtucngKyjxYNZRYUQMUovYcNHJD45phvJ88R9haT/RCbE/BNvRlDp+fRB
+            wBlXWu7qcfB9Opg9wlZZwn07eFgqyccxLRuCW2OwUTYZP0RR1h4a89lz8FvzdLtmHyYBhFREtVLAzpY6
+            DNwS0HM3rTghI0dsUNs9EMqzRi2h+44SKL5Nvp2ITI22dAX9E77WAG9UeEBllB+Oclba9p5kzYLHbedD
+            j2wAnr5waonXZhKdCywGaPnzeM2m9071Zq/OPxbIQs+8MtMuMy1jQA="
+android:
+  components:
+  - tools
+  - platform-tools
+  - tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API
+  - extra-android-support
+  - extra-google-m2repository
+  - extra-android-m2repository
+
+before_install:
+- openssl aes-256-cbc -k "$travisKeystoreEncPassword" -in travis.keystore.enc -out travis.keystore -d
+- cd app
+- openssl aes-256-cbc -k "$fabricPropertiesEncPassword" -in fabric.properties.enc -out fabric.properties -d
+- cd ..
+- chmod +x gradlew
+
+script:
+- "./gradlew clean build test --stacktrace"
+
+before_deploy:
+- cp $TRAVIS_BUILD_DIR/travis.keystore $HOME
+- cd app/build/outputs/apk/release
+- jarsigner -verbose -keystore $HOME/travis.keystore -storepass $storePassword
+  -keypass $keyPassword app-release-unsigned.apk $keyAlias
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v 4 app-release-unsigned.apk ${APK_FINAL_NAME}"
+- git tag -a v2.0 -m "Travis build 2.0 pushed a tag."
+- git push origin --tags
+- git fetch origin
+
+deploy:
+  provider: releases
+  file: $APK_FINAL_NAME
+  skip_cleanup: true
+  on:
+    branch: master
+    repo: TofiBashers/Black-List
+    jdk: oraclejdk8
+  api_key:
+    secure: "ZMk9HMYIWdqRkD03bqEn6p4qxkwXGTpm3DSA5Pg+bXI58U5pe3Ip9dEksH/aBvXhM8xLb
+      5IvMSMLmABK8fDi70QpFY98PRpt1bN/yV1zG2WGWXGunQr4y5aAJGykpsvXC+3b/sIBZ1xsdXVH7VyS9
+      h7oFZHpVO551s30w5F4tVL9hra0Vhh4yOVKMt3HqY1N6ZweSbRr7mctiQwRjqqhf/NhgGkBmarbWCP9B
+      mSqQnSKevyDFW1e/gBfr9D9d3+1Z9+E8HXJl8TJ1gCUB60rWNtFp0GQbbP3Ga629O7AZybhZfpQ+ZarC
+      9ErTtF3PYRvVI4bL+dSVwIGg3aVnWhZEUKu9OoTNldX7+RDxUkn1wFmHd9i5aGF7z9kHV7EdVS1vElIP
+      upaDfzV0ESPh3speAqqeHtDPp1W2YYK96/u60X+EQKRiIgjUayWNeCpPZWgcL76Vmk5SlpQQeQv9pO/s
+      SBxDl2ix86AhcKTeoeKFvP6zNEjewdC7/EnKSW7HVDy9aqoGUS3B5adlX47gvvlFE0i3l0fAQnaxWldN
+      4W27bM5SKTwThmh8upBaC+eGjwWvkK0BuqH1CqW7c0NwPy2KSaK+ih4qfSWoibZKG2ZT86XnKrRyprR6
+      eoGLU16XGGHK2bEbOeIhXYaFwMLZfGlEwTA99Jqum0U+yzzB6xwp0g="

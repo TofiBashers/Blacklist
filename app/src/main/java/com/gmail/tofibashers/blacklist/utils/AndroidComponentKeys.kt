@@ -1,0 +1,15 @@
+package com.gmail.tofibashers.blacklist.utils
+
+
+/**
+ * Created by TofiBashers on 25.01.2018.
+ */
+object AndroidComponentKeys {
+
+    const val TAG_TIMEPICKER_DIALOG = "TAG_TIMEPICKER_DIALOG"
+    const val TAG_SAVED_NUMBER_ALREADY_EXISTS_DIALOGFRAGMENT = "TAG_SAVED_NUMBER_ALREADY_EXISTS_DIALOGFRAGMENT"
+    const val BUNDLE_ON_TIME_CHANGE_VIEW_POSITION = "BUNDLE_ON_TIME_CHANGE_VIEW_POSITION"
+    const val BUNDLE_TIME_CHANGE_IS_BEGIN = "BUNDLE_TIME_CHANGE_IS_BEGIN"
+
+    const val REQUEST_CODE_OPTIONS_VIEW = 1
+}

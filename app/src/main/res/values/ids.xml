@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="timesettings_elem_order_pos_key" type="id"/>
+    <item name="timesettings_elem_is_begin_key" type="id"/>
+</resources>

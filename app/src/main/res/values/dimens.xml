@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="blacklist_add_num_with_settings_card_elevation">2dp</dimen>
+    <dimen name="blacklist_button_add_left_and_right_margin">40dp</dimen>
+    <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.5</item>
+    <dimen name="options_control_spaces">20dp</dimen>
+    <dimen name="options_spaces_between_textinput_and_checkbox">20dp</dimen>
+    <dimen name="options_space_between_ignore_sms_and_save_cancel_buttons">20dp</dimen>
+    <item name="options_guideline_vertical_content_left_border_percent" type="dimen" format="float">0.03</item>
+    <item name="options_guideline_vertical_change_button_right_end_percent" type="dimen" format="float">0.45</item>
+    <item name="options_guideline_vertical_content_right_border_percent" type="dimen" format="float">0.97</item>
+
+    <item name="time_settings_guideline_left_save_margin_percent" type="dimen" format="float">0.05</item>
+    <item name="time_settings_guideline_right_save_margin_percent" type="dimen" format="float">0.95</item>
+    <dimen name="time_settings_weekview_paddings">16dp</dimen>
+
+    <dimen name="divider_item_numberlist_width">10dp</dimen>
+    <dimen name="divider_item_numberlist_gradient_radius">100dp</dimen>
+    <dimen name="partial_item_time_and_weekday_settings_hyphen_size">25sp</dimen>
+    <dimen name="partial_time_set_time_button_enabled_elevation">2dp</dimen>
+    <dimen name="partial_time_set_time_button_disabled_elevation">0dp</dimen>
+    <dimen name="partial_time_set_time_button_card_corner_radius">4dp</dimen>
+    <dimen name="partial_time_text_time_size">25sp</dimen>
+    <item name="partial_time_guideline_vertical" type="dimen" format="float">0.8</item>
+    <item name="partial_time_guideline_horizontal" type="dimen" format="float">0.4</item>
+    <dimen name="partial_toolbar_card_elevation">4dp</dimen>
+    <dimen name="animations_progress_default_inner_radius">15dp</dimen>
+    <dimen name="animations_progress_default_thickness">4dp</dimen>
+    <dimen name="divider_default_height">1dp</dimen>
+
+    <dimen name="default_button_elevation">2dp</dimen>
+    <dimen name="default_card_corner_radius">0dp</dimen>
+    <dimen name="item_numberlist_height">100dp</dimen>
+    <dimen name="item_numberlist_text_phone_number_size">30sp</dimen>
+    <item name="item_numberlist_guideline_horizontal_for_button_options_percent" type="dimen" format="float">0.3</item>
+    <item name="item_numberlist_guideline_horizontal_between_text_and_space_percent" type="dimen" format="float">0.5</item>
+    <item name="item_numberlist_guideline_horizontal_between_space_and_images_percent" type="dimen" format="float">0.6</item>
+    <item name="item_numberlist_guideline_vertical_between_call_and_sms_img_percent" type="dimen" format="float">0.1</item>
+    <item name="item_numberlist_guideline_vertical_between_sms_and_space_img_percent" type="dimen" format="float">0.2</item>
+    <item name="item_numberlist_guideline_vertical_between_text_and_options_button_percent" type="dimen" format="float">0.93</item>
+
+    <dimen name="item_time_and_weekday_settings_height">120dp</dimen>
+    <dimen name="item_time_and_weekday_settings_height_checkbox_weekday_state_marginBottom">0dp</dimen>
+    <item name="item_time_and_weekday_settings_guideline_between_checkbox_and_times_percent" type="dimen" format="float">0.46</item>
+    <item name="item_time_and_weekday_settings_guideline_for_hyphen" type="dimen" format="float">0.66</item>
+    <item name="item_time_and_weekday_settings_guideline_for_bottom_space" type="dimen" format="float">0.96</item>
+    <item name="item_time_and_weekday_settings_guideline_left_time_margin_percent" type="dimen" format="float">0.13</item>
+    <item name="item_time_and_weekday_settings_guideline_left_vertical_percent" type="dimen" format="float">0.45</item>
+    <item name="item_time_and_weekday_settings_guideline_right_vertical_percent" type="dimen" format="float">0.55</item>
+    <item name="item_time_and_weekday_settings_guideline_right_time_margin_percent" type="dimen" format="float">0.87</item>
+</resources>

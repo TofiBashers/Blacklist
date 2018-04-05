@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Blacklist</string>
+    <string name="menu_settings">Settings</string>
+    <string name="options_cancel_action">Cancel</string>
+    <string name="options_ignore_calls_action">Ignore calls</string>
+    <string name="options_ignore_sms_action">Ignore SMS</string>
+    <string name="options_edit_number_action">Enter number</string>
+    <string name="options_change_ignoring_period_action">Change ignoring time</string>
+    <string name="options_ok_action">OK</string>
+    <string name="options_toolbar_edit_title">Edit phone number</string>
+    <string name="options_toolbar_create_title">Add phone number</string>
+    <string name="blacklist_add_num_action">Add phone number</string>
+    <string name="blacklist_ignore_hidden_action">Ignore hidden numbers</string>
+    <string name="blacklist_item_numberlist_menu_change_action">Change</string>
+    <string name="blacklist_item_numberlist_menu_delete_action">Delete</string>
+    <string name="blacklist_warning_update_to_incompatible_android_version">This blacklist works only on devices before 4.4 Android version ("KitKat").\nIf your device will be updated to 4.4 or higher version, please use blacklist capabilities, provided by your system.</string>
+    <string name="blacklist_warning_incompatible_android_version">Your system version is higher than 4.4.\nBecause of system restrictions, this blacklist correctly works only on devices before 4.4 ("KitKat").\nWe strongly recommend that you use blacklist capabilities, provided by your system, instead of this app.</string>
+    <string name="timesettings_toolbar_title">Ignoring time</string>
+    <string name="time_interval_hyphen">-</string>
+    <string name="dialog_error_saved_number_exists_now">The number is already in blacklist, try set other number.\n</string>
+    <string-array name="timesettings_weekday_titles">
+        <item name="sunday">Sunday</item>
+        <item name="monday">Monday</item>
+        <item name="tuesday">Tuesday</item>
+        <item name="wednesday">Wednesday</item>
+        <item name="thursday">Thursday</item>
+        <item name="friday">Friday</item>
+        <item name="saturday">Saturday</item>
+    </string-array>
+
+    <string name="action_save">Save</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_data_saving_error">Data saving error</string>
+
+    <string name="current_locale">en</string>
+</resources>

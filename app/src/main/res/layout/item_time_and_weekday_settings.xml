@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_root_time_and_weekday_settings"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_time_and_weekday_settings_height"
+    android:animateLayoutChanges="true"
+    >
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_between_checkbox_and_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_between_checkbox_and_times_percent"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_for_hyphen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_for_hyphen"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_for_bottom_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_for_bottom_space"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left_time_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_left_time_margin_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_left_vertical_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_right_vertical_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right_time_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_time_and_weekday_settings_guideline_right_time_margin_percent"
+        android:orientation="vertical"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_between_checkbox_and_times"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
+            android:id="@+id/checkbox_weekday_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/item_time_and_weekday_settings_height_checkbox_weekday_state_marginBottom"
+            tools:text="Sunday"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_left_time_margin"
+        app:layout_constraintRight_toRightOf="@id/guideline_left_vertical"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_for_bottom_space"
+        app:layout_constraintTop_toTopOf="@id/guideline_between_checkbox_and_times">
+
+        <include
+            android:id="@+id/include_begin_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/partial_time" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_hyphen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_left_vertical"
+        app:layout_constraintRight_toRightOf="@id/guideline_right_vertical"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_for_bottom_space"
+        app:layout_constraintTop_toTopOf="@id/guideline_for_hyphen"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="@dimen/partial_item_time_and_weekday_settings_hyphen_size"
+        android:text="@string/time_interval_hyphen" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_right_vertical"
+        app:layout_constraintRight_toRightOf="@id/guideline_right_time_margin"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_for_bottom_space"
+        app:layout_constraintTop_toTopOf="@id/guideline_between_checkbox_and_times">
+
+        <include
+            android:id="@+id/include_end_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/partial_time" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.TextInputLayout"
+    app:counterEnabled="true"
+    app:counterMaxLength="15"
+    app:errorEnabled="true"
+    app:hintTextAppearance="@style/HintTextAppearance"
+    app:errorTextAppearance="@style/ErrorTextAppearance">
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/edit_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_dark_text"
+        android:inputType="phone"
+        android:hint="@string/options_edit_number_action"
+        android:maxLength="15"/>
+
+</android.support.design.widget.TextInputLayout>
