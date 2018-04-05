@@ -33,7 +33,7 @@ android {
         }
     }
 
-    if(inCIServer()) {
+    if(!inCIServer()) {
         signingConfigs {
             def props = new Properties()
             release {
