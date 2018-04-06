@@ -16,4 +16,4 @@ Code features:
      * [Calligraphy](https://github.com/chrisjenx/Calligraphy)  
      * [joda-time-android](https://github.com/dlew/joda-time-android)  
      * Unit tests with [Mockito 2](http://site.mockito.org/) & [Robolectric](http://robolectric.org/)  
-     * Android codestyle with [Ribot styleguide](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md) 
+     * Android codestyle with [Ribot styleguide](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
