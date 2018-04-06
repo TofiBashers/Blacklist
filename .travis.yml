@@ -44,11 +44,6 @@ before_deploy:
 - "${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v 4 app-release-unsigned.apk app-release-unsigned-aligned.apk"
 - "${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/travis.keystore --ks-key-alias ${keyAlias} --ks-pass pass:${storePassword} --key-pass pass:${keyPassword} --out ${APK_FINAL_NAME} app-release-unsigned-aligned.apk"
 - "${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify ${APK_FINAL_NAME}"
-- git config --global user.email "travis@travis-ci.org"
-- git config --global user.name "Travis"
-- git tag -a v2.0 -m "Travis build 2.0 pushed a tag."
-- git push origin --tags
-- git fetch origin
 
 deploy:
   provider: releases
