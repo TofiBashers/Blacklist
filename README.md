@@ -4,6 +4,8 @@
 
 This is new version of old application for api 4.0-4.3.
 
+Full description and download on Google Play: https://play.google.com/store/apps/details?id=com.gmail.tofibashers.blacklist
+
 Code features:
   * [Kotlin](https://kotlinlang.org/)  
   * [Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html) + [RxJava 2](https://github.com/ReactiveX/RxJava) based architecture:  
