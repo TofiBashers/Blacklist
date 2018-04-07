@@ -92,13 +92,15 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${lifecycleVersion}"
-    implementation "com.google.firebase:firebase-database:${firebaseVersion}"
     kapt "android.arch.lifecycle:compiler:${lifecycleVersion}"
 
     // Room
-    implementation "android.arch.persistence.room:runtime:${lifecycleVersion}"
-    implementation "android.arch.persistence.room:rxjava2:${lifecycleVersion}"
-    kapt "android.arch.persistence.room:compiler:${lifecycleVersion}"
+    implementation "android.arch.persistence.room:runtime:${roomVersion}"
+    implementation "android.arch.persistence.room:rxjava2:${roomVersion}"
+    kapt "android.arch.persistence.room:compiler:${roomVersion}"
+
+    // Firebase (future)
+    implementation "com.google.firebase:firebase-database:${firebaseVersion}"
 
     // Dagger
     implementation "com.google.dagger:dagger:${daggerVersion}"
@@ -142,7 +144,7 @@ dependencies {
     testImplementation "android.arch.core:core-testing:${lifecycleVersion}"
 
     // Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:${lifecycleVersion}"
+    testImplementation "android.arch.persistence.room:testing:${roomVersion}"
 
     // Mockito Kotlin
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"

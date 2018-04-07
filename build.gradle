@@ -28,7 +28,7 @@ allprojects {
 
 ext{
     COMPILE_SDK_VERSION = 27
-    BUILD_TOOLS_VERSION = "27.0.2"
+    BUILD_TOOLS_VERSION = "27.0.3"
     DEFAULT_APPLICATION_ID = "com.gmail.tofibashers.blacklist"
     DEFAULT_VERSION_CODE = 2
     DEFAULT_VERSION_NAME = "2.0"
@@ -36,20 +36,21 @@ ext{
     DEFAULT_MAX_SDK_VERSION = 18
     DEFAULT_TARGET_SDK_VERSION = 27
 
-    supportLibraryVersion = "27.0.2"
-    multidexVersion = "1.0.2"
-    lifecycleVersion = "1.0.0"
+    supportLibraryVersion = "27.1.0"
+    multidexVersion = "1.0.3"
+    lifecycleVersion = "1.1.1"
+    roomVersion = "1.0.0"
     lifecyclePagingVersion = "1.0.0-alpha4-1"
-    constraintLayoutVersion = "1.1.0-beta5"
-    firebaseVersion = "11.8.0"
-    daggerVersion = "2.14.1"
+    constraintLayoutVersion = "1.1.0-beta6"
+    firebaseVersion = "12.0.1"
+    daggerVersion = "2.15"
     butterknifeVersion = "0.1.0-SNAPSHOT"
     rxjavaVersion = "2.1.8"
     rxRelayVersion = "2.0.0"
     rxAndroidVersion = "2.0.1"
     autoFactoryVersion = "1.0-beta5"
     jodaTimeVersion = "2.9.9.1"
-    timePickerVersion = "3.5.0"
+    timePickerVersion = "3.5.2"
     calligraphyVersion = "2.3.0"
     stethoVersion = "1.5.0"
     crashlyticsVersion = "2.9.1@aar"
