@@ -37,35 +37,53 @@
                 android:layout_height="wrap_content">
 
                 <android.support.constraint.Guideline
-                    android:id="@+id/guideline_vertical_ignore_hidden_numbers_space"
+                    android:id="@+id/guideline_vertical_button_add_left_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_button_add_left_margin_percent"
+                    android:orientation="vertical"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_button_add_right_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_button_add_right_margin_percent"
+                    android:orientation="vertical"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_checkbox_ignore_hidden_numbers_left_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_ignore_hidden_numbers_space_percent"
+                    android:orientation="vertical"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_checkbox_ignore_hidden_numbers_right_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent"
                     android:orientation="vertical"/>
 
                 <Button
                     android:id="@+id/button_add"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_button_add_left_margin"
+                    app:layout_constraintRight_toRightOf="@id/guideline_vertical_button_add_right_margin"
                     app:layout_constraintBottom_toTopOf="@+id/checkbox_ignore_hidden_numbers"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_weight="1"
-                    android:layout_marginLeft="@dimen/blacklist_button_add_left_and_right_margin"
-                    android:layout_marginRight="@dimen/blacklist_button_add_left_and_right_margin"
                     android:text="@string/blacklist_add_num_action" />
 
                 <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
                     android:id="@id/checkbox_ignore_hidden_numbers"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_ignore_hidden_numbers_space"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_checkbox_ignore_hidden_numbers_left_margin"
+                    app:layout_constraintRight_toRightOf="@id/guideline_vertical_checkbox_ignore_hidden_numbers_right_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/button_add"
                     app:layout_constraintVertical_weight="1"
-                    android:layout_marginRight="@dimen/blacklist_checkbox_ignore_hidden_right_margin"
                     android:text="@string/blacklist_ignore_hidden_action" />
 
             </android.support.constraint.ConstraintLayout>

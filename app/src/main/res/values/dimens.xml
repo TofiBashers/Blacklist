@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="blacklist_add_num_with_settings_card_elevation">2dp</dimen>
-    <dimen name="blacklist_button_add_left_and_right_margin">40dp</dimen>
-    <dimen name="blacklist_checkbox_ignore_hidden_right_margin">0dp</dimen>
     <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.5</item>
+    <item name="blacklist_guideline_vertical_button_add_left_margin_percent" type="dimen" format="float">0.15</item>
+    <item name="blacklist_guideline_vertical_button_add_right_margin_percent" type="dimen" format="float">0.85</item>
+    <item name="blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent" type="dimen" format="float">0.9</item>
     <dimen name="options_control_spaces">20dp</dimen>
     <dimen name="options_spaces_between_textinput_and_checkbox">20dp</dimen>
     <dimen name="options_space_between_ignore_sms_and_save_cancel_buttons">20dp</dimen>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.55</item>
+    <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.65</item>
     <item name="blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent" type="dimen" format="float">0.95</item>
 
     <dimen name="partial_item_time_and_weekday_settings_hyphen_size">25sp</dimen>

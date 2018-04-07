@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="blacklist_checkbox_ignore_hidden_right_margin">0dp</dimen>
-    <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.5</item>
+    <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.55</item>
+    <item name="blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent" type="dimen" format="float">1.0</item>
 
     <dimen name="partial_item_time_and_weekday_settings_hyphen_size">22sp</dimen>
     <dimen name="partial_time_text_time_size">25sp</dimen>
