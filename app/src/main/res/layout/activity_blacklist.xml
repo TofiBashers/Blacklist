@@ -65,6 +65,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/button_add"
                     app:layout_constraintVertical_weight="1"
+                    android:layout_marginRight="@dimen/blacklist_checkbox_ignore_hidden_right_margin"
                     android:text="@string/blacklist_ignore_hidden_action" />
 
             </android.support.constraint.ConstraintLayout>
