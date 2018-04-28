@@ -5,6 +5,7 @@ import com.gmail.tofibashers.blacklist.domain.*
 import com.gmail.tofibashers.blacklist.entity.MutableActivityIntervalsWithEnableAndValidState
 import com.gmail.tofibashers.blacklist.entity.TimeChangeInitData
 import com.gmail.tofibashers.blacklist.ui.common.DisposableViewModel
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import org.joda.time.LocalTime
 import javax.inject.Inject
@@ -39,7 +40,7 @@ constructor(
 
     fun onInitCancel(){
         requestsDisposable.clear()
-        navigationData.value = itemDetailsRouteFactory.create()
+        navigationData.value = itemDetailsRouteFactory.create(SavingResult.CANCELED)
     }
 
     fun onInitSave(){
@@ -99,7 +100,7 @@ constructor(
     private inner class SelectObserver : DisposableSavingCompletableObserver() {
 
         override fun onComplete() {
-            navigationData.value = itemDetailsRouteFactory.create()
+            navigationData.value = itemDetailsRouteFactory.create(SavingResult.SAVED)
         }
 
         override fun onError(error: Throwable) {

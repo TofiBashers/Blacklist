@@ -14,24 +14,24 @@ import io.reactivex.Maybe
 interface IDatabaseSource {
 
     /**
-     * Get items firstly and after all changes. Not modify any Backpressure policy.
+     * Get phoneNumberItems firstly and after all changes. Not modify any Backpressure policy.
      * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
      */
     fun getAllBlackListItemsWithChanges(): Flowable<List<DbBlacklistItem>>
 
     /**
-     * Get items firstly and after all changes. Not modify any Backpressure policy.
+     * Get phoneNumberItems firstly and after all changes. Not modify any Backpressure policy.
      * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
      */
     fun getAllBlacklistItemsWithIntervalsWithChanges(): Flowable<List<DbBlacklistItemWithActivityIntervals>>
 
     /**
-     * @return [Maybe] with item, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
+     * @return [Maybe] with phoneNumberItem, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
      */
     fun getBlacklistItemByNumber(number: String): Maybe<DbBlacklistItem>
 
     /**
-     * Delete item and clear orphaned [DbActivityInterval]'s formed in operation.
+     * Delete phoneNumberItem and clear orphaned [DbActivityInterval]'s formed in operation.
      * Operations execute in transaction.
      * Result [Completable] doesn't specify schedulers.
      */
@@ -50,7 +50,7 @@ interface IDatabaseSource {
     fun putBlacklistItemWithActivityIntervals(itemWithIntervals: DbBlacklistItemWithActivityIntervals): Completable
 
     /**
-     * @return [Maybe] with list of items, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
+     * @return [Maybe] with list of phoneNumberItems, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
      */
     fun getActivityIntervalsAssociatedWithBlacklistItem(blacklistItem: DbBlacklistItem): Maybe<List<DbActivityInterval>>
 }

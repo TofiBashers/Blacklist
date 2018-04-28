@@ -15,8 +15,16 @@
     <string name="blacklist_ignore_hidden_action">Ignore hidden numbers</string>
     <string name="blacklist_item_numberlist_menu_change_action">Change</string>
     <string name="blacklist_item_numberlist_menu_delete_action">Delete</string>
+    <string name="blacklist_item_numberlist_header_contacts_title">Contacts</string>
+    <string name="blacklist_item_numberlist_header_phone_numbers_title">Phone numbers</string>
+    <string name="blacklist_item_contact_not_all_ignored_title">Not all phone numbers are blocked</string>
+    <string name="blacklist_contact_options_toolbar_edit_title">Edit contact numbers</string>
+    <string name="blacklist_contact_options_toolbar_create_title">Add contact</string>
+    <string name="blacklist_contact_options_changed_or_deleted_error_title">Error: contact was changed or deleted</string>
     <string name="blacklist_warning_update_to_incompatible_android_version">This blacklist works only on devices before 4.4 Android version ("KitKat").\nIf your device will be updated to 4.4 or higher version, please use blacklist capabilities, provided by your system.</string>
     <string name="blacklist_warning_incompatible_android_version">Your system version is higher than 4.4.\nBecause of system restrictions, this blacklist correctly works only on devices before 4.4 ("KitKat").\nWe strongly recommend that you use blacklist capabilities, provided by your system, instead of this app.</string>
+    <string name="select_contact_toolbar_title">Select contact</string>
+    <string name="select_contact_without_phone_numbers_title">Without phone numbers</string>
     <string name="timesettings_toolbar_title">Ignoring time</string>
     <string name="time_interval_hyphen">-</string>
     <string name="dialog_error_saved_number_exists_now">The number is already in blacklist, try set other number.\n</string>

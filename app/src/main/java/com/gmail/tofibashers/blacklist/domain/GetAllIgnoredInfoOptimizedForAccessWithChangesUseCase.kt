@@ -1,12 +1,11 @@
 package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
+import com.gmail.tofibashers.blacklist.data.repo.BlacklistContactItemWithPhonesAndActivityIntervalsRepository
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemWithActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IPreferencesData
-import com.gmail.tofibashers.blacklist.entity.ActivityInterval
-import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSettings
-import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSettingsFactory
-import com.gmail.tofibashers.blacklist.entity.BlacklistItemWithActivityIntervals
+import com.gmail.tofibashers.blacklist.entity.*
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,6 +22,7 @@ import javax.inject.Singleton
 class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCase
 @Inject
 constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklistItemWithActivityIntervalsRepository,
+            private val blacklistContactItemWithPhonesAndIntervalsRepository: IBlacklistContactItemWithPhonesAndActivityIntervalsRepository,
             private val preferencesData: IPreferencesData,
             private val activityTimeIntervalWithIgnoreSettingsFactory: ActivityTimeIntervalWithIgnoreSettingsFactory)
     : IGetAllIgnoredInfoOptimizedForAccessWithChangesUseCase {
@@ -30,8 +30,7 @@ constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklist
 
     override fun build(): Observable<Pair<Boolean, HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>> {
         return Flowable.combineLatest(
-                blacklistItemWithActivityIntervalsRepository.getAllWithChanges()
-                        .concatMap { toNumberWithTimeAndIgnoreSettings(it) },
+                getAllBlacklistNumbersWithTimeAndIgnoreSettingsWithChanges(),
                 preferencesData.getIgnoreHiddenNumbersWithChanges(),
                 BiFunction{ numbersMap: HashMap<String, TimeAndIgnoreSettingsByWeekdayId>, ignoreHidden: Boolean ->
                     Pair(ignoreHidden, numbersMap)
@@ -42,12 +41,28 @@ constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklist
                 .toObservable()
     }
 
-    private fun toNumberWithTimeAndIgnoreSettings(itemsWithIntervals: List<BlacklistItemWithActivityIntervals>)
+    private fun getAllBlacklistNumbersWithTimeAndIgnoreSettingsWithChanges() : Flowable<HashMap<String, TimeAndIgnoreSettingsByWeekdayId>> {
+        return Flowable.combineLatest(
+                blacklistItemWithActivityIntervalsRepository.getAllWithChanges(),
+                blacklistContactItemWithPhonesAndIntervalsRepository.getAllWithChanges(),
+                BiFunction { phoneNumbers: List<BlacklistItemWithActivityIntervals>,
+                             contacts: List<BlacklistContactItemWithPhonesAndIntervals> ->
+                    Pair(phoneNumbers, contacts)
+                })
+                .flatMap { toNumbersWithTimeAndIgnoreSettings(it.first, it.second)}
+    }
+
+    private fun toNumbersWithTimeAndIgnoreSettings(numbersWithIntervals: List<BlacklistItemWithActivityIntervals>,
+                                                   contactsWithPhonesAndIntervals: List<BlacklistContactItemWithPhonesAndIntervals>)
             : Flowable<HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>{
-        return Flowable.fromIterable(itemsWithIntervals)
-                .concatMap { item: BlacklistItemWithActivityIntervals ->
-                    toPairNumberWithMapTimeByWeekday(item)
-                }
+        return Flowable.concat(
+                Flowable.fromIterable(numbersWithIntervals)
+                        .concatMap { item: BlacklistItemWithActivityIntervals ->
+                            toPairNumberWithMapTimeByWeekday(item)
+                        },
+                Flowable.fromIterable(contactsWithPhonesAndIntervals)
+                        .concatMap { Flowable.fromIterable(it.phones) }
+                        .concatMap { toPairNumberWithMapTimeByWeekday(it) })
                 .toMap({ numberWithTimePair: Pair<String, TimeAndIgnoreSettingsByWeekdayId> ->
                     numberWithTimePair.first },
                         { numberWithTimePair: Pair<String, TimeAndIgnoreSettingsByWeekdayId> ->
@@ -58,7 +73,7 @@ constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklist
                 .toFlowable()
     }
 
-    private fun toPairNumberWithMapTimeByWeekday(item: BlacklistItemWithActivityIntervals)
+    private fun toPairNumberWithMapTimeByWeekday(item: BaseBlacklistElementWithActivityIntervals)
             : Flowable<Pair<String, TimeAndIgnoreSettingsByWeekdayId>> {
         return Flowable.fromIterable(item.activityIntervals)
                 .toMap( { interval: ActivityInterval -> interval.weekDayId },

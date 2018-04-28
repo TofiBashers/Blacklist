@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_blacklist_contact_options_phone_height"
+    android:animateLayoutChanges="true">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_for_top_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_default_guideline_horizontal_for_top_margin"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_between_number_and_space_number_ignore_calls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_horizontal_between_number_and_space_number_ignore_calls_percent"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls_percent"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_between_ignore_calls_and_space_ignore_calls_ignore_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_horizontal_between_ignore_calls_and_space_ignore_calls_ignore_sms_percent"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms_percent"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_space_between_change_schedule_and_bottom_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_horizontal_space_between_change_schedule_and_bottom_margin_percent"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_horizontal_for_bottom_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_default_guideline_horizontal_for_bottom_margin"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_for_left_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_default_guideline_vertical_for_left_margin"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_between_checkboxes_and_change_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_vertical_between_checkboxes_and_change_schedule"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_for_right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_default_guideline_vertical_for_right_margin"
+        android:orientation="vertical"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_phone_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_for_left_margin"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_for_right_margin"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_between_number_and_space_number_ignore_calls"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_vertical|left"
+        android:textSize="@dimen/item_blacklist_contact_options_phone_text_phone_number_size"
+        android:maxLines="1"
+        tools:text="89600000001"/>
+
+    <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
+        android:id="@+id/checkbox_ignore_calls"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_for_left_margin"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_between_ignore_calls_and_space_ignore_calls_ignore_sms"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls"
+        android:text="@string/options_ignore_calls_action" />
+
+    <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
+        android:id="@+id/checkbox_ignore_sms"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_for_left_margin"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_for_bottom_margin"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms"
+        android:text="@string/options_ignore_sms_action" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_wrap_imagebutton_change_schedule"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_for_right_margin"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_space_between_change_schedule_and_bottom_margin"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="@dimen/partial_time_set_time_button_card_corner_radius"
+        tools:cardElevation="@dimen/partial_time_set_time_button_enabled_elevation">
+
+        <ImageButton
+            android:id="@+id/imagebutton_change_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:background="@color/background"
+            tools:src="@drawable/ic_change_ignoring_time_enabled_48dp"/>
+
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

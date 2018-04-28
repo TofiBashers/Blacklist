@@ -1,6 +1,6 @@
 package com.gmail.tofibashers.blacklist.domain
 
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class ValidateBlacklistItemForSaveSyncUseCase
 @Inject
 constructor() : IValidateBlacklistItemForSaveSyncUseCase {
-    override fun build(item: BlacklistItem): Single<Boolean> {
-        return Single.fromCallable { !item.number.isBlank() && (item.isSmsBlocked || item.isCallsBlocked) }
+    override fun build(phoneNumberItem: BlacklistPhoneNumberItem): Single<Boolean> {
+        return Single.fromCallable { !phoneNumberItem.number.isBlank() && (phoneNumberItem.isSmsBlocked || phoneNumberItem.isCallsBlocked) }
     }
 }

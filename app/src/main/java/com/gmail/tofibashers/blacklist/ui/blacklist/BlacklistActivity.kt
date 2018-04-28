@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.support.constraint.Group
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.*
-import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
@@ -16,19 +15,19 @@ import android.widget.*
 import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.GetBlacklistResult
 import com.gmail.tofibashers.blacklist.entity.SystemVerWarningType
+import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
 import com.gmail.tofibashers.blacklist.ui.options.OptionsActivity
+import com.gmail.tofibashers.blacklist.ui.select_contact.SelectContactActivity
 import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
-import com.gmail.tofibashers.blacklist.utils.OnClickListItemWithPositionListener
 import kotterknife.bindView
 import javax.inject.Inject
 
-class BlacklistActivity : BaseStateableViewActivity(),
-        View.OnClickListener,
-        OnClickListItemWithPositionListener {
+class BlacklistActivity : BaseStateableViewActivity<Group, Group>(),
+        View.OnClickListener {
 
-    override val loadingGroup: Group by bindView(R.id.group_progress)
-    override val dataGroup: Group by bindView(R.id.group_numlist_with_settings)
+    override val loadingView: Group by bindView(R.id.group_progress)
+    override val dataView: Group by bindView(R.id.group_numlist_with_settings)
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val cardWrapperAddNumWithSettings: CardView by bindView(R.id.cardview_add_num_with_settings)
     private val addButton: Button by bindView(R.id.button_add)
@@ -73,8 +72,11 @@ class BlacklistActivity : BaseStateableViewActivity(),
             }
         })
         viewModel.navigateSingleData.observe(this, Observer {
-            val optIntent = Intent(this, OptionsActivity::class.java)
-            startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_OPTIONS_VIEW)
+            when(it){
+                BlacklistNavRoute.OPTIONS -> navigateToPhoneOptions()
+                BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS -> navigateToContactOptions()
+                BlacklistNavRoute.SELECT_CONTACT -> navigateToSelectContact()
+            }
         })
         viewModel.warningMessageData.observe(this, Observer { showWarningDialog(it!!) })
     }
@@ -84,24 +86,6 @@ class BlacklistActivity : BaseStateableViewActivity(),
             R.id.button_add -> {
                 Log.w(null, "TryToAddNew")
                 viewModel.onInitCreateItem()
-            }
-        }
-    }
-
-    override fun onClickListItem(view: View, position: Int) {
-        when (view.id) {
-            R.id.imagebutton_options -> {
-                val clickedItem = blacklistAdapter.getItem(position)
-                val popupMenu = PopupMenu(this, view)
-                popupMenu.inflate(R.menu.listitem_options)
-                popupMenu.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.change_item -> viewModel.onInitItemChange(clickedItem)
-                        R.id.delete_item -> viewModel.onInitItemDelete(clickedItem)
-                    }
-                    true
-                }
-                popupMenu.show()
             }
         }
     }
@@ -130,9 +114,38 @@ class BlacklistActivity : BaseStateableViewActivity(),
                 .show()
     }
 
+    private fun navigateToPhoneOptions() {
+        val optIntent = Intent(this, OptionsActivity::class.java)
+        startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_OPTIONS_VIEW)
+    }
+
+    private fun navigateToContactOptions() {
+        val optIntent = Intent(this, BlacklistContactOptionsActivity::class.java)
+        startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_BLACKLIST_CONTACT_OPTIONS_VIEW)
+    }
+
+    private fun navigateToSelectContact() {
+        val optIntent = Intent(this, SelectContactActivity::class.java)
+        startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_SELECT_CONTACT_VIEW)
+    }
+
     private fun warningTypeToResId(warningType: SystemVerWarningType): Int = when(warningType){
         SystemVerWarningType.MAY_UPDATE_TO_INCOMPATIBLE_VER -> R.string.blacklist_warning_update_to_incompatible_android_version
         SystemVerWarningType.INCOMPATIBLE_VER -> R.string.blacklist_warning_update_to_incompatible_android_version
+    }
+
+    val contactClickListener = object : BlacklistContactItemWithIgnoredInfoHolder.ClickListener{
+
+        override fun onChangeClick(position: Int) = viewModel.onInitContactItemChange(position)
+
+        override fun onDeleteClick(position: Int) = viewModel.onInitContactItemDelete(position)
+    }
+
+    val phoneNumberClickListener = object : BlacklistPhoneNumberItemHolder.ClickListener{
+
+        override fun onDeleteClick(position: Int) = viewModel.onInitPhoneNumberItemDelete(position)
+
+        override fun onChangeClick(position: Int) = viewModel.onInitPhoneNumberItemChange(position)
     }
 
     private val ignoreHiddenChangeListener = CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton, isChecked: Boolean ->

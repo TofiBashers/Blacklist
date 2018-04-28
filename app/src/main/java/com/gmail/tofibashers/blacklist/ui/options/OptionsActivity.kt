@@ -14,20 +14,21 @@ import android.view.View
 import android.widget.*
 import com.gmail.tofibashers.blacklist.R
 
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.time_settings.TimeSettingsActivity
 import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 
 import kotterknife.bindView
 import javax.inject.Inject
 
-class OptionsActivity : BaseStateableViewActivity(),
+class OptionsActivity : BaseStateableViewActivity<Group, Group>(),
         View.OnClickListener{
 
-    override val loadingGroup: Group by bindView(R.id.group_progress)
-    override val dataGroup: Group by bindView(R.id.group_options_with_controls)
+    override val loadingView: Group by bindView(R.id.group_progress)
+    override val dataView: Group by bindView(R.id.group_options_with_controls)
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val ignoreCallsCheckBox: CheckBox by bindView(R.id.checkbox_ignore_calls)
     private val ignoreSMSCheckBox: CheckBox by bindView(R.id.checkbox_ignore_sms)
@@ -96,16 +97,16 @@ class OptionsActivity : BaseStateableViewActivity(),
     }
 
     private fun showNavigationToList(listRoute: OptionsNavData.ListRoute){
-        setResult(when(listRoute.optionsResult){
-            OptionsResult.OK -> Activity.RESULT_OK
-            OptionsResult.CANCELED -> Activity.RESULT_CANCELED
+        setResult(when(listRoute.savingResult){
+            SavingResult.SAVED -> Activity.RESULT_OK
+            SavingResult.CANCELED -> Activity.RESULT_CANCELED
         })
         finish()
     }
 
     private fun showDataStateWithParamsState(dataViewState: OptionsViewState.DataViewState){
         setViewState(ViewState.DATA)
-        val element: BlacklistItem = dataViewState.state.item
+        val element: BlacklistPhoneNumberItem = dataViewState.state.phoneNumberItem
         numberEditText.removeTextChangedListener(phoneNumberEditWatcher)
         numberEditText.setTextKeepState(element.number)
         numberEditText.addTextChangedListener(phoneNumberEditWatcher)

@@ -3,12 +3,13 @@ package com.gmail.tofibashers.blacklist.ui
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.domain.IDeleteAllSelectionsUseCase
 import com.gmail.tofibashers.blacklist.domain.IGetInteractionModeWithSelectedBlackListItemUseCase
-import com.gmail.tofibashers.blacklist.domain.ISaveBlacklistItemWithDeleteSelectionsUseCase
+import com.gmail.tofibashers.blacklist.domain.ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase
 import com.gmail.tofibashers.blacklist.domain.IValidateBlacklistItemForSaveSyncUseCase
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
-import com.gmail.tofibashers.blacklist.entity.InteractionModeWithBlacklistItemAndValidState
+import com.gmail.tofibashers.blacklist.entity.InteractionModeWithBlacklistPhoneNumberItemAndValidState
 import com.gmail.tofibashers.blacklist.entity.NumberAlreadyExistsException
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import com.gmail.tofibashers.blacklist.ui.options.*
 import com.nhaarman.mockito_kotlin.*
@@ -34,7 +35,7 @@ class OptionsViewModelTest {
     lateinit var mockGetInteractionModeWithItemUseCase: IGetInteractionModeWithSelectedBlackListItemUseCase
 
     @Mock
-    lateinit var mockSaveBlacklistItemWithDeleteSelectionsUseCase: ISaveBlacklistItemWithDeleteSelectionsUseCase
+    lateinit var mockSaveBlacklistPhoneItemWithDeleteSelectionsUseCase: ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase
 
     @Mock
     lateinit var mockDeleteAllSelectionsUseCase: IDeleteAllSelectionsUseCase
@@ -73,7 +74,7 @@ class OptionsViewModelTest {
     @Before
     fun setUp() {
         testViewModel = OptionsViewModel(mockGetInteractionModeWithItemUseCase,
-                mockSaveBlacklistItemWithDeleteSelectionsUseCase,
+                mockSaveBlacklistPhoneItemWithDeleteSelectionsUseCase,
                 mockDeleteAllSelectionsUseCase,
                 mockSyncValidateBlacklistItemForSaveUseCase,
                 mockDataViewStateFactory,
@@ -88,8 +89,8 @@ class OptionsViewModelTest {
     @Test
     fun testOnInitGetItemValue_setValueToView(){
 
-        val testInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
-                BlacklistItem(number = "123",
+        val testInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
+                BlacklistPhoneNumberItem(number = "123",
                         isCallsBlocked = true,
                         isSmsBlocked = true),
                 true)
@@ -103,7 +104,7 @@ class OptionsViewModelTest {
                         .observeOn(testScheduler))
 
         doAnswer { invocationOnMock ->
-            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistItemAndValidState) }
+            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistPhoneNumberItemAndValidState) }
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
 
@@ -133,10 +134,10 @@ class OptionsViewModelTest {
     @Test
     fun testOnInitGetItemValueThenInitSaveSuccess_navigateToList(){
 
-        val testItem = BlacklistItem(number = "123",
+        val testItem = BlacklistPhoneNumberItem(number = "123",
                 isCallsBlocked = true,
                 isSmsBlocked = true)
-        val testInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
+        val testInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
                 testItem,
                 true)
 
@@ -147,15 +148,15 @@ class OptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemUseCase.build())
                 .thenReturn(Single.just(deepCopy(testInteractionMode)))
-        whenever(mockSaveBlacklistItemWithDeleteSelectionsUseCase.build(testItem))
+        whenever(mockSaveBlacklistPhoneItemWithDeleteSelectionsUseCase.build(testItem))
                 .thenReturn(Completable.complete()
                         .subscribeOn(testSaveScheduler))
 
         doAnswer { invocationOnMock ->
-            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistItemAndValidState) }
+            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistPhoneNumberItemAndValidState) }
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
-        whenever(mockListRouteFactory.create(OptionsResult.OK)).thenReturn(mockListRoute)
+        whenever(mockListRouteFactory.create(SavingResult.SAVED)).thenReturn(mockListRoute)
 
         testViewModel.onInitGetItem()
         testViewModel.onInitSave()
@@ -174,10 +175,10 @@ class OptionsViewModelTest {
     @Test
     fun testOnInitGetItemValueThenInitSaveNumberAlreadyExistsException_navigateToNumberAlreadyExists(){
 
-        val testItem = BlacklistItem(number = "123",
+        val testItem = BlacklistPhoneNumberItem(number = "123",
                 isCallsBlocked = true,
                 isSmsBlocked = true)
-        val testModeWithItem = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
+        val testModeWithItem = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
                 testItem,
                 true)
 
@@ -188,12 +189,12 @@ class OptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemUseCase.build())
                 .thenReturn(Single.just(deepCopy(testModeWithItem)))
-        whenever(mockSaveBlacklistItemWithDeleteSelectionsUseCase.build(testItem))
+        whenever(mockSaveBlacklistPhoneItemWithDeleteSelectionsUseCase.build(testItem))
                 .thenReturn(Completable.error(NumberAlreadyExistsException())
                         .subscribeOn(testSaveScheduler))
 
         doAnswer { invocationOnMock ->
-            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistItemAndValidState) }
+            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistPhoneNumberItemAndValidState) }
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
         whenever(mockNumberAlreadyExistsRouteFactory.create()).thenReturn(mockSavedNumberAlreadyExistsRoute)
@@ -227,8 +228,8 @@ class OptionsViewModelTest {
     @Test
     fun testOnInitGetItemValueThenInitCancelSuccess_navigateToList(){
 
-        val testInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
-                BlacklistItem(number = "123",
+        val testInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
+                BlacklistPhoneNumberItem(number = "123",
                         isCallsBlocked = true,
                         isSmsBlocked = true),
                 true)
@@ -245,10 +246,10 @@ class OptionsViewModelTest {
                         .subscribeOn(testCancelScheduler))
 
         doAnswer { invocationOnMock ->
-            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistItemAndValidState) }
+            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistPhoneNumberItemAndValidState) }
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
-        whenever(mockListRouteFactory.create(OptionsResult.CANCELED)).thenReturn(mockListRoute)
+        whenever(mockListRouteFactory.create(SavingResult.CANCELED)).thenReturn(mockListRoute)
 
         testViewModel.onInitGetItem()
         testViewModel.onInitCancel()
@@ -270,18 +271,18 @@ class OptionsViewModelTest {
         val testInitValidToSave = true
         val testModifValidToSave = false
         val testModifNumber = ""
-        val testInitBlacklistItem = BlacklistItem(number = "123",
+        val testInitBlacklistItem = BlacklistPhoneNumberItem(number = "123",
                 isCallsBlocked = true,
                 isSmsBlocked = true)
-        val testInitBlacklistItemWithModifNumber = BlacklistItem(number = testModifNumber,
+        val testInitBlacklistItemWithModifNumber = BlacklistPhoneNumberItem(number = testModifNumber,
                 isCallsBlocked = true,
                 isSmsBlocked = true)
 
-        val testInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
+        val testInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
                 testInitBlacklistItem,
                 testInitValidToSave)
 
-        val expResInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
+        val expResInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
                 testInitBlacklistItemWithModifNumber,
                 testModifValidToSave)
 
@@ -296,7 +297,7 @@ class OptionsViewModelTest {
                         .observeOn(testSyncScheduler))
 
         doAnswer { invocationOnMock ->
-            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistItemAndValidState) }
+            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistPhoneNumberItemAndValidState) }
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
         testViewModel.onInitGetItem()
@@ -318,18 +319,18 @@ class OptionsViewModelTest {
         val testModifIsCallsBlocked = false
         val testInitValidToSave = true
         val testModifValidToSave = false
-        val testInitBlacklistItem = BlacklistItem(number = "123",
+        val testInitBlacklistItem = BlacklistPhoneNumberItem(number = "123",
                 isCallsBlocked = testInitIsCallsBlocked,
                 isSmsBlocked = false)
-        val testBlacklistItemWithModifIsCallsBlocked = BlacklistItem(number = "123",
+        val testBlacklistItemWithModifIsCallsBlocked = BlacklistPhoneNumberItem(number = "123",
                 isCallsBlocked = testModifIsCallsBlocked,
                 isSmsBlocked = false)
 
-        val testInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
+        val testInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
                 testInitBlacklistItem,
                 testInitValidToSave)
 
-        val expResInteractionMode = InteractionModeWithBlacklistItemAndValidState(InteractionMode.CREATE,
+        val expResInteractionMode = InteractionModeWithBlacklistPhoneNumberItemAndValidState(InteractionMode.CREATE,
                 testBlacklistItemWithModifIsCallsBlocked,
                 testModifValidToSave)
 
@@ -346,7 +347,7 @@ class OptionsViewModelTest {
                         .observeOn(testSyncScheduler))
 
         doAnswer { invocationOnMock ->
-            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistItemAndValidState) }
+            OptionsViewState.DataViewState(invocationOnMock.arguments[0] as InteractionModeWithBlacklistPhoneNumberItemAndValidState) }
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
 
@@ -362,12 +363,12 @@ class OptionsViewModelTest {
         verify(mockViewStateData, times(2)).value = expResViewState
     }
 
-    private fun deepCopy(srcMode: InteractionModeWithBlacklistItemAndValidState) : InteractionModeWithBlacklistItemAndValidState{
-        return InteractionModeWithBlacklistItemAndValidState(srcMode.mode,
-                BlacklistItem(srcMode.item.dbId,
-                        srcMode.item.number,
-                        srcMode.item.isCallsBlocked,
-                        srcMode.item.isSmsBlocked),
+    private fun deepCopy(srcMode: InteractionModeWithBlacklistPhoneNumberItemAndValidState) : InteractionModeWithBlacklistPhoneNumberItemAndValidState {
+        return InteractionModeWithBlacklistPhoneNumberItemAndValidState(srcMode.mode,
+                BlacklistPhoneNumberItem(srcMode.phoneNumberItem.dbId,
+                        srcMode.phoneNumberItem.number,
+                        srcMode.phoneNumberItem.isCallsBlocked,
+                        srcMode.phoneNumberItem.isSmsBlocked),
                 srcMode.isValidToSave)
     }
 }

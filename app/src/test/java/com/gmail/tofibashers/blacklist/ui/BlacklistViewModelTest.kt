@@ -2,9 +2,7 @@ package com.gmail.tofibashers.blacklist.ui
 
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.domain.*
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
-import com.gmail.tofibashers.blacklist.entity.GetBlacklistResult
-import com.gmail.tofibashers.blacklist.entity.SystemVerWarningType
+import com.gmail.tofibashers.blacklist.entity.*
 import com.gmail.tofibashers.blacklist.ui.blacklist.*
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import com.nhaarman.mockito_kotlin.*
@@ -35,13 +33,19 @@ class BlacklistViewModelTest {
     lateinit var mockSaveIgnoreHiddenNumbersUseCase: ISaveIgnoreHiddenNumbersSyncUseCase
 
     @Mock
-    lateinit var mockSelectBlacklistElementUseCase: ISelectEditModeAndBlacklistItemUseCase
+    lateinit var mockSelectPhoneNumberItemUseCase: ISelectEditModeAndPhoneNumberItemUseCase
 
     @Mock
     lateinit var mockSelectCreateModeUseCase: ISelectCreateModeUseCase
 
     @Mock
-    lateinit var mockDeleteBlacklistItemUseCase: IDeleteBlacklistItemUseCase
+    lateinit var mockDeletePhoneNumberItemUseCase: IDeletePhoneNumberItemUseCase
+
+    @Mock
+    lateinit var mockSelectContactItemUseCase: ISelectEditModeAndContactItemUseCase
+
+    @Mock
+    lateinit var mockDeleteBlacklistContactItemUseCase: IDeleteBlacklistContactItemUseCase
 
     @Mock
     lateinit var mockListViewStateFactory: BlacklistViewState_ListViewStateFactory
@@ -68,9 +72,11 @@ class BlacklistViewModelTest {
     fun setUp() {
         testViewModel = BlacklistViewModel(mockGetBlacklistItemsUseCase,
                 mockSaveIgnoreHiddenNumbersUseCase,
-                mockSelectBlacklistElementUseCase,
+                mockSelectPhoneNumberItemUseCase,
                 mockSelectCreateModeUseCase,
-                mockDeleteBlacklistItemUseCase,
+                mockDeletePhoneNumberItemUseCase,
+                mockSelectContactItemUseCase,
+                mockDeleteBlacklistContactItemUseCase,
                 mockListViewStateFactory,
                 mockLoadingViewStateFactory,
                 mockViewStateData,
@@ -90,24 +96,36 @@ class BlacklistViewModelTest {
     }
 
     @Test
-    fun testOnInitGetListValues_setListsToView(){
+    fun testOnInitGetListsValues_setListsToView(){
 
         val testWarning = GetBlacklistResult.SystemVerWarning(SystemVerWarningType.MAY_UPDATE_TO_INCOMPATIBLE_VER)
         val testResults = listOf(
                 GetBlacklistResult.ListWithIgnoreResult(listOf(
-                        BlacklistItem(number = "123",
+                        SectionBlacklistItem.Header(SectionBlacklistItem.Header.Type.NUMBERS),
+                        SectionBlacklistItem.PhoneNumber(BlacklistPhoneNumberItem(number = "123",
                                 isCallsBlocked = true,
-                                isSmsBlocked = true),
-                        BlacklistItem(number = "456",
-                                isCallsBlocked = true,
-                                isSmsBlocked = false)), false),
+                                isSmsBlocked = true)),
+                        SectionBlacklistItem.Header(SectionBlacklistItem.Header.Type.CONTACTS),
+                        SectionBlacklistItem.Contact(BlacklistContactItemWithNonIgnoredNumbersFlag(dbId = 0,
+                                deviceDbId = 0,
+                                deviceKey = "131",
+                                name = "testContact",
+                                photoUrl = "url",
+                                withNonIgnoredNumbers = true))),
+                        false),
                 GetBlacklistResult.ListWithIgnoreResult(listOf(
-                        BlacklistItem(number = "789",
+                        SectionBlacklistItem.Header(SectionBlacklistItem.Header.Type.NUMBERS),
+                        SectionBlacklistItem.PhoneNumber(BlacklistPhoneNumberItem(number = "789",
                                 isCallsBlocked = true,
-                                isSmsBlocked = true),
-                        BlacklistItem(number = "000",
-                                isCallsBlocked = true,
-                                isSmsBlocked = false)), true))
+                                isSmsBlocked = true)),
+                        SectionBlacklistItem.Header(SectionBlacklistItem.Header.Type.CONTACTS),
+                        SectionBlacklistItem.Contact(BlacklistContactItemWithNonIgnoredNumbersFlag(dbId = 1,
+                                deviceDbId = 1,
+                                deviceKey = "145",
+                                name = "testContact2",
+                                photoUrl = "url2",
+                                withNonIgnoredNumbers = true))),
+                        true))
 
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
         val testDataSubject = PublishSubject.create<GetBlacklistResult>()
@@ -139,19 +157,27 @@ class BlacklistViewModelTest {
     }
 
     @Test
-    fun testOnInitItemChangeSuccess_navToOptions(){
+    fun testOnInitGetListSuccessThenPhoneItemChangeSuccess_navToOptions(){
 
-        val testBlacklistItem = BlacklistItem(10, "12", true, true)
+        val testPosition = 0
+        val testBlacklistPhoneItem = BlacklistPhoneNumberItem(10, "12", true, true)
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
         val testScheduler = TestScheduler()
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.PhoneNumber(testBlacklistPhoneItem)),
+                ignoreHidden = true)
 
-        whenever(mockSelectBlacklistElementUseCase.build(testBlacklistItem))
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockSelectPhoneNumberItemUseCase.build(testBlacklistPhoneItem))
                 .thenReturn(Completable.complete().observeOn(testScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
 
-        testViewModel.onInitItemChange(testBlacklistItem)
+        testViewModel.onInitGetList()
+        testViewModel.onInitPhoneNumberItemChange(testPosition)
 
-        verify(mockViewStateData, times(1)).value  = mockLoadingViewState
+        verify(mockViewStateData, times(2)).value  = mockLoadingViewState
         verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.OPTIONS
 
         testScheduler.triggerActions()
@@ -160,17 +186,86 @@ class BlacklistViewModelTest {
     }
 
     @Test
-    fun testOnInitItemChangeError_throw(){
+    fun testOnInitGetListSuccessThenPhoneItemChangeError_throw(){
 
-        val testBlacklistItem = BlacklistItem(10, "12", true, true)
+        val testPosition = 0
+        val testBlacklistPhoneItem = BlacklistPhoneNumberItem(10, "12", true, true)
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.PhoneNumber(testBlacklistPhoneItem)),
+                ignoreHidden = true)
+
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        val testException = RuntimeException()
+        expectedExceptionRule.expectCause(errorTypeAndEqualsCause(RuntimeException::class, testException))
+
+        whenever(mockSelectPhoneNumberItemUseCase.build(testBlacklistPhoneItem))
+                .thenReturn(Completable.error(testException))
+
+        testViewModel.onInitGetList()
+        testViewModel.onInitPhoneNumberItemChange(testPosition)
+    }
+
+    @Test
+    fun testOnInitContactItemChangeSuccess_navToOptions(){
+
+        val testPosition = 0
+        val testBlacklistContactItem = BlacklistContactItemWithNonIgnoredNumbersFlag(dbId = 0,
+                deviceDbId = 0,
+                deviceKey = "123",
+                name = "testContact",
+                photoUrl = "url",
+                withNonIgnoredNumbers = true)
+        val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val testScheduler = TestScheduler()
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.Contact(testBlacklistContactItem)),
+                ignoreHidden = true)
+
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockSelectContactItemUseCase.build(testBlacklistContactItem))
+                .thenReturn(Completable.complete().observeOn(testScheduler))
+        whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+
+        testViewModel.onInitGetList()
+        testViewModel.onInitContactItemChange(testPosition)
+
+        verify(mockViewStateData, times(2)).value  = mockLoadingViewState
+        verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS
+
+        testScheduler.triggerActions()
+
+        verify(mockNavigateSingleData, times(1)).value = BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS
+    }
+
+    @Test
+    fun testOnInitContactItemChangeError_throw(){
+
+        val testPosition = 0
+        val testBlacklistContactItem = BlacklistContactItemWithNonIgnoredNumbersFlag(dbId = 0,
+                deviceDbId = 0,
+                deviceKey = "123",
+                name = "testContact",
+                photoUrl = "url",
+                withNonIgnoredNumbers = true)
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.Contact(testBlacklistContactItem)),
+                ignoreHidden = true)
 
         val testException = RuntimeException()
         expectedExceptionRule.expectCause(errorTypeAndEqualsCause(RuntimeException::class, testException))
 
-        whenever(mockSelectBlacklistElementUseCase.build(testBlacklistItem))
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockSelectContactItemUseCase.build(testBlacklistContactItem))
                 .thenReturn(Completable.error(testException))
 
-        testViewModel.onInitItemChange(testBlacklistItem)
+        testViewModel.onInitGetList()
+        testViewModel.onInitContactItemChange(testPosition)
     }
 
     @Test
@@ -207,33 +302,131 @@ class BlacklistViewModelTest {
     }
 
     @Test
-    fun testOnInitItemDeleteSuccess_nothing(){
+    fun testOnInitAddContactItemSuccess_navToSelectContact(){
 
-        val testBlacklistItem = BlacklistItem(10, "12", true, true)
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val testScheduler = TestScheduler()
 
-        whenever(mockDeleteBlacklistItemUseCase.build(testBlacklistItem))
-                .thenReturn(Completable.complete())
+        whenever(mockSelectCreateModeUseCase.build())
+                .thenReturn(Completable.complete()
+                        .observeOn(testScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
 
-        testViewModel.onInitItemDelete(testBlacklistItem)
+        testViewModel.onInitAddContactItem()
 
         verify(mockViewStateData, times(1)).value  = mockLoadingViewState
+        verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.SELECT_CONTACT
+
+        testScheduler.triggerActions()
+
+        verify(mockNavigateSingleData, times(1)).value = BlacklistNavRoute.SELECT_CONTACT
+    }
+
+    @Test
+    fun testOnInitGetListSuccessThenPhoneItemDeleteSuccess_nothing(){
+
+        val testPosition = 0
+        val testBlacklistItem = BlacklistPhoneNumberItem(10, "12", true, true)
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.PhoneNumber(testBlacklistItem)),
+                ignoreHidden = true)
+        val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val mockListViewState : BlacklistViewState.ListViewState = mock()
+
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockDeletePhoneNumberItemUseCase.build(testBlacklistItem))
+                .thenReturn(Completable.complete())
+        whenever(mockListViewStateFactory.create(any())).thenReturn(mockListViewState)
+        whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+
+        testViewModel.onInitGetList()
+        testViewModel.onInitPhoneNumberItemDelete(testPosition)
+
+        verify(mockViewStateData, times(1)).value  = mockListViewState
+        verify(mockViewStateData, times(2)).value  = mockLoadingViewState
         verifyNoMoreInteractions(mockViewStateData, mockNavigateSingleData)
     }
 
     @Test
-    fun testOnInitItemDeleteError_throw(){
+    fun testOnInitGetListSuccessThenPhoneItemDeleteError_throw(){
 
-        val testBlacklistItem = BlacklistItem(10, "12", true, true)
+        val testPosition = 0
+        val testBlacklistItem = BlacklistPhoneNumberItem(10, "12", true, true)
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.PhoneNumber(testBlacklistItem)),
+                ignoreHidden = true)
+        val testException = RuntimeException()
+        expectedExceptionRule.expectCause(errorTypeAndEqualsCause(RuntimeException::class, testException))
+
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockDeletePhoneNumberItemUseCase.build(testBlacklistItem))
+                .thenReturn(Completable.error(testException))
+
+        testViewModel.onInitGetList()
+        testViewModel.onInitPhoneNumberItemDelete(testPosition)
+    }
+
+    @Test
+    fun testOnInitGetListSuccessThenContactItemDeleteSuccess_nothing(){
+
+        val testPosition = 0
+        val testContactItem = BlacklistContactItemWithNonIgnoredNumbersFlag(dbId = 0,
+                deviceDbId = 0,
+                deviceKey = "123",
+                name = "testContact",
+                photoUrl = "url",
+                withNonIgnoredNumbers = true)
+        val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val mockListViewState : BlacklistViewState.ListViewState = mock()
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.Contact(testContactItem)),
+                ignoreHidden = true)
+
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockDeleteBlacklistContactItemUseCase.build(testContactItem))
+                .thenReturn(Completable.complete())
+        whenever(mockListViewStateFactory.create(any())).thenReturn(mockListViewState)
+        whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+
+        testViewModel.onInitGetList()
+        testViewModel.onInitContactItemDelete(testPosition)
+
+        verify(mockViewStateData, times(1)).value = mockListViewState
+        verify(mockViewStateData, times(2)).value = mockLoadingViewState
+        verifyNoMoreInteractions(mockViewStateData, mockNavigateSingleData)
+    }
+
+    @Test
+    fun testOnInitGetListSuccessThenContactItemDeleteError_throw(){
+
+        val testPosition = 0
+        val testContactItem = BlacklistContactItemWithNonIgnoredNumbersFlag(dbId = 0,
+                deviceDbId = 0,
+                deviceKey = "123",
+                name = "testContact",
+                photoUrl = "url",
+                withNonIgnoredNumbers = true)
+        val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
+                listOf(SectionBlacklistItem.Contact(testContactItem)),
+                ignoreHidden = true)
 
         val testException = RuntimeException()
         expectedExceptionRule.expectCause(errorTypeAndEqualsCause(RuntimeException::class, testException))
 
-        whenever(mockDeleteBlacklistItemUseCase.build(testBlacklistItem))
+        whenever(mockGetBlacklistItemsUseCase.build())
+                .thenReturn(Observable.just<GetBlacklistResult>(testGetResult)
+                        .compose{ asNeverComplete(it) })
+        whenever(mockDeleteBlacklistContactItemUseCase.build(testContactItem))
                 .thenReturn(Completable.error(testException))
 
-        testViewModel.onInitItemDelete(testBlacklistItem)
+        testViewModel.onInitGetList()
+        testViewModel.onInitContactItemDelete(testPosition)
     }
 
     @Test
@@ -262,4 +455,6 @@ class BlacklistViewModelTest {
 
         testViewModel.onIgnoreHiddenStateChanged(testIgnoreHidden)
     }
+
+    private fun <T> asNeverComplete(source: Observable<T>) : Observable<T> = Observable.concat(source, Observable.never())
 }

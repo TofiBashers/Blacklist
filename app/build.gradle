@@ -33,7 +33,7 @@ android {
         }
     }
 
-    if(!inCIServer()) {
+    if (!inCIServer()) {
         signingConfigs {
             def props = new Properties()
             release {
@@ -64,7 +64,8 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
-            returnDefaultValues = true //only for use in RxAndroidPlugins.setMainThreadSchedulerHandler
+            returnDefaultValues = true
+            //only for use in RxAndroidPlugins.setMainThreadSchedulerHandler
         }
     }
 }
@@ -92,6 +93,7 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${lifecycleVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     kapt "android.arch.lifecycle:compiler:${lifecycleVersion}"
 
     // Room
@@ -121,6 +123,9 @@ dependencies {
 
     // Calligraphy
     implementation "uk.co.chrisjenx:calligraphy:${calligraphyVersion}"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:${picassoVersion}"
 
     // Joda Time
     implementation "net.danlew:android.joda:${jodaTimeVersion}"
@@ -155,3 +160,4 @@ dependencies {
     // Robolectric
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
 }
+apply plugin: 'kotlin-android-extensions'

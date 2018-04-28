@@ -10,6 +10,17 @@
 
     <dimen name="item_numberlist_text_phone_number_size">27sp</dimen>
     <dimen name="item_numberlist_height">100dp</dimen>
+
+    <dimen name="item_blacklist_header_text_header_size">27sp</dimen>
+
+    <dimen name="item_blacklist_contact_text_contact_name_size">27sp</dimen>
+
+    <dimen name="item_blacklist_contact_options_contact_info_text_contact_name_size">27sp</dimen>
+
+    <dimen name="item_blacklist_contact_options_phone_text_phone_number_size">27sp</dimen>
+
+    <dimen name="item_select_contact_text_contact_name_size">27sp</dimen>
+
     <dimen name="item_time_and_weekday_settings_height">120dp</dimen>
     <dimen name="item_time_and_weekday_settings_height_checkbox_weekday_state_marginBottom">-20dp</dimen>
     <item name="item_time_and_weekday_settings_guideline_between_checkbox_and_times_percent" type="dimen" format="float">0.36</item>

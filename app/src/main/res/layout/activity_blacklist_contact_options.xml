@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.blacklist_contact_options.BlacklistContactOptionsActivity">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_content_left_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/blacklist_contact_options_guideline_vertical_content_left_border_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_between_ok_and_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/blacklist_contact_options_guideline_vertical_between_ok_and_cancel_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_content_right_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/blacklist_contact_options_guideline_vertical_content_right_border_percent"
+        android:orientation="vertical"/>
+
+    <com.gmail.tofibashers.blacklist.ui.common.ToolbarWrapperWithBottomElevation
+        android:id="@+id/toolbar_with_elevation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/contact_with_options_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_with_elevation"
+        app:layout_constraintBottom_toTopOf="@+id/button_cancel"
+        app:layout_constraintVertical_weight="18"
+        tools:listitem="@layout/item_numberlist"/>
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toRightOf="@+id/guideline_vertical_between_ok_and_cancel"
+        app:layout_constraintTop_toBottomOf="@id/contact_with_options_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="13"
+        android:text="@string/options_cancel_action" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_between_ok_and_cancel"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
+        app:layout_constraintTop_toBottomOf="@id/contact_with_options_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/action_save" />
+
+    <include
+        android:id="@+id/progressbar_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_with_elevation"
+        layout="@layout/partial_progress"/>
+
+    <android.support.constraint.Group
+        android:id="@+id/group_contact_with_options_with_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="contact_with_options_list,
+                button_cancel,
+                button_save" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="progressbar_view"/>
+
+</android.support.constraint.ConstraintLayout >

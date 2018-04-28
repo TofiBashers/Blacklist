@@ -2,9 +2,10 @@ package com.gmail.tofibashers.blacklist.ui.options
 
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.domain.*
-import com.gmail.tofibashers.blacklist.entity.InteractionModeWithBlacklistItemAndValidState
+import com.gmail.tofibashers.blacklist.entity.InteractionModeWithBlacklistPhoneNumberItemAndValidState
 import com.gmail.tofibashers.blacklist.entity.NumberAlreadyExistsException
 import com.gmail.tofibashers.blacklist.ui.common.DisposableViewModel
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ class OptionsViewModel
 @Inject
 constructor(
         private val getInteractionModeWithItemUseCase: IGetInteractionModeWithSelectedBlackListItemUseCase,
-        private val saveBlacklistItemWithDeleteSelectionsUseCase: ISaveBlacklistItemWithDeleteSelectionsUseCase,
+        private val saveWithDeleteSelectionsUseCase: ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase,
         private val deleteAllSelectionsUseCase: IDeleteAllSelectionsUseCase,
         private val syncValidateBlacklistItemForSaveUseCase: IValidateBlacklistItemForSaveSyncUseCase,
         private val dataViewStateFactory: OptionsViewState_DataViewStateFactory,
@@ -28,7 +29,7 @@ constructor(
         val navigateSingleData: SingleLiveEvent<OptionsNavData>
 ) : DisposableViewModel(){
 
-    private var state: InteractionModeWithBlacklistItemAndValidState? = null
+    private var state: InteractionModeWithBlacklistPhoneNumberItemAndValidState? = null
 
     fun onInitGetItem(){
         viewStateData.value = loadingViewStateFactory.create()
@@ -38,7 +39,7 @@ constructor(
 
     fun onInitSave(){
         viewStateData.value = loadingViewStateFactory.create()
-        saveBlacklistItemWithDeleteSelectionsUseCase.build(state!!.item)
+        saveWithDeleteSelectionsUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SaveItemObserver())
     }
 
@@ -54,26 +55,26 @@ constructor(
     }
 
     fun onNumberChanged(number: String){
-        state!!.item.number = number
-        syncValidateBlacklistItemForSaveUseCase.build(state!!.item)
+        state!!.phoneNumberItem.number = number
+        syncValidateBlacklistItemForSaveUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SyncValidateItemObserver())
     }
 
     fun onSetIsCallsBlocked(isCallsBlocked: Boolean){
-        state!!.item.isCallsBlocked = isCallsBlocked
-        syncValidateBlacklistItemForSaveUseCase.build(state!!.item)
+        state!!.phoneNumberItem.isCallsBlocked = isCallsBlocked
+        syncValidateBlacklistItemForSaveUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SyncValidateItemObserver())
     }
 
     fun onSetIsSmsBlocked(isSmsBlocked: Boolean){
-        state!!.item.isSmsBlocked = isSmsBlocked
-        syncValidateBlacklistItemForSaveUseCase.build(state!!.item)
+        state!!.phoneNumberItem.isSmsBlocked = isSmsBlocked
+        syncValidateBlacklistItemForSaveUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SyncValidateItemObserver())
     }
 
-    private inner class GetInteractionModeWithSelectedItemAndValidObserver : DisposableSavingSingleObserver<InteractionModeWithBlacklistItemAndValidState>() {
+    private inner class GetInteractionModeWithSelectedItemAndValidObserver : DisposableSavingSingleObserver<InteractionModeWithBlacklistPhoneNumberItemAndValidState>() {
 
-        override fun onSuccess(modeWithItemAndState: InteractionModeWithBlacklistItemAndValidState) {
+        override fun onSuccess(modeWithItemAndState: InteractionModeWithBlacklistPhoneNumberItemAndValidState) {
             state = modeWithItemAndState
             viewStateData.value = dataViewStateFactory.create(state)
         }
@@ -86,7 +87,7 @@ constructor(
     private inner class SaveItemObserver : DisposableSavingCompletableObserver() {
 
         override fun onComplete() {
-            navigateSingleData.value = listRouteFactory.create(OptionsResult.OK)
+            navigateSingleData.value = listRouteFactory.create(SavingResult.SAVED)
         }
 
         override fun onError(error: Throwable) {
@@ -101,7 +102,7 @@ constructor(
     private inner class RemoveAllSelectionsObserver : DisposableSavingCompletableObserver() {
 
         override fun onComplete() {
-            navigateSingleData.value = listRouteFactory.create(OptionsResult.CANCELED)
+            navigateSingleData.value = listRouteFactory.create(SavingResult.CANCELED)
         }
 
         override fun onError(error: Throwable) {

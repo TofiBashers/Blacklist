@@ -32,4 +32,7 @@ constructor(){
 
     fun toMemoryActivityIntervalsList(intervals: List<ActivityInterval>) : List<MemoryActivityInterval> =
             intervals.map { toMemoryActivityInterval(it) }
+
+    fun toMultipleMemoryActivityIntervalsLists(intervalsList: List<List<ActivityInterval>>) : List<List<MemoryActivityInterval>> =
+            intervalsList.map { toMemoryActivityIntervalsList(it) }
 }

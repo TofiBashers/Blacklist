@@ -14,8 +14,11 @@
     <color name="toolbar_text_color">#fffafafa</color>
     <color name="divider_time_settings">#61000000</color>
     <color name="divider_time_settings_ends">#61fafafa</color>
+    <color name="divider_blacklist_contact_options">#61000000</color>
+    <color name="divider_blacklist_contact_options_ends">#61fafafa</color>
     <color name="divider_blacklist">#1E000000</color>
     <color name="time_picker_color">#388E3C</color>
+    <color name="contact_default_photo_color">#89757575</color>
 
     <color name="button_default_text_disabled">#42000000</color>
     <color name="button_default_color_pressed">#87757575</color>

@@ -4,8 +4,8 @@ import com.gmail.tofibashers.blacklist.data.datasource.IDatabaseSource
 import com.gmail.tofibashers.blacklist.data.datasource.IMemoryDatasource
 import com.gmail.tofibashers.blacklist.data.db.entity.mapper.DbBlacklistItemMapper
 import com.gmail.tofibashers.blacklist.data.memory.mapper.MemoryBlacklistItemMapper
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistItemMapper
+import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneItemMapper
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -25,34 +25,34 @@ constructor(
         private val databaseSource: IDatabaseSource,
         private val memoryDatasource: IMemoryDatasource,
         private val dbBlacklistItemMapper: DbBlacklistItemMapper,
-        private val blacklistItemMapper: BlacklistItemMapper,
+        private val blacklistPhoneItemMapper: BlacklistPhoneItemMapper,
         private val memoryBlacklistItemMapper: MemoryBlacklistItemMapper
 ) : IBlacklistItemRepository {
 
-    override fun getAllWithChanges(): Flowable<List<BlacklistItem>> {
+    override fun getAllWithChanges(): Flowable<List<BlacklistPhoneNumberItem>> {
         return databaseSource.getAllBlackListItemsWithChanges()
                 .map { dbBlacklistItemMapper.toBlacklistItemsList(it) }
     }
 
-    override fun getByNumber(number: String): Maybe<BlacklistItem> =
+    override fun getByNumber(number: String): Maybe<BlacklistPhoneNumberItem> =
             databaseSource.getBlacklistItemByNumber(number)
                     .map { dbBlacklistItemMapper.toBlacklistItem(it) }
 
-    override fun deleteBlacklistItem(blacklistItem: BlacklistItem): Completable {
-        return Single.fromCallable { blacklistItemMapper.toDbBlacklistItem(blacklistItem) }
+    override fun deleteBlacklistItem(blacklistPhoneNumberItem: BlacklistPhoneNumberItem): Completable {
+        return Single.fromCallable { blacklistPhoneItemMapper.toDbBlacklistItem(blacklistPhoneNumberItem) }
                 .flatMapCompletable { databaseSource.deleteBlackListItem(it) }
     }
 
-    override fun removeSelectedBlackListItem(): Completable =
+    override fun removeSelectedBlacklistPhoneNumberItem(): Completable =
             memoryDatasource.removeSelectedBlackListItem()
 
-    override fun getSelectedBlackListItem(): Maybe<BlacklistItem> {
+    override fun getSelectedBlacklistPhoneNumberItem(): Maybe<BlacklistPhoneNumberItem> {
         return memoryDatasource.getSelectedBlackListItem()
                 .map(memoryBlacklistItemMapper::toBlacklistItem)
     }
 
-    override fun putSelectedBlackListItem(blacklistItem: BlacklistItem): Completable {
-        return Single.fromCallable { blacklistItemMapper.toMemoryBlacklistItem(blacklistItem) }
+    override fun putSelectedBlacklistPhoneNumberItem(blacklistPhoneNumberItem: BlacklistPhoneNumberItem): Completable {
+        return Single.fromCallable { blacklistPhoneItemMapper.toMemoryBlacklistItem(blacklistPhoneNumberItem) }
                 .flatMapCompletable(memoryDatasource::putSelectedBlackListItem)
     }
 

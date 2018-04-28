@@ -52,6 +52,7 @@ ext{
     jodaTimeVersion = "2.9.9.1"
     timePickerVersion = "3.5.2"
     calligraphyVersion = "2.3.0"
+    picassoVersion = "2.71828"
     stethoVersion = "1.5.0"
     crashlyticsVersion = "2.9.1@aar"
     mockitoKotlinVersion = "1.5.0"

@@ -1,8 +1,6 @@
 package com.gmail.tofibashers.blacklist.domain
 
-import com.gmail.tofibashers.blacklist.data.repo.IActivityIntervalRepository
-import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemRepository
-import com.gmail.tofibashers.blacklist.data.repo.IInteractionModeRepository
+import com.gmail.tofibashers.blacklist.data.repo.*
 import io.reactivex.Completable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,12 +15,16 @@ class DeleteAllSelectionsSyncUseCase
 constructor(
         private val blacklistElementRepository: IBlacklistItemRepository,
         private val activityIntervalRepository: IActivityIntervalRepository,
-        private val interactionModeRepository: IInteractionModeRepository
+        private val interactionModeRepository: IInteractionModeRepository,
+        private val blacklistContactItemRepository: IBlacklistContactItemRepository,
+        private val whitelistContactItemRepository: IWhitelistContactItemRepository
 ): IDeleteAllSelectionsSyncUseCase {
 
     override fun build(): Completable {
-        return blacklistElementRepository.removeSelectedBlackListItem()
+        return blacklistElementRepository.removeSelectedBlacklistPhoneNumberItem()
                 .andThen(activityIntervalRepository.removeSelectedActivityIntervals())
                 .andThen(interactionModeRepository.removeSelectedMode())
+                .andThen(whitelistContactItemRepository.removeSelected())
+                .andThen(blacklistContactItemRepository.removeSelected())
     }
 }

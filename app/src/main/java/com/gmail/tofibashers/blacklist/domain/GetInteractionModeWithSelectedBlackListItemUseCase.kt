@@ -19,26 +19,26 @@ class GetInteractionModeWithSelectedBlackListItemUseCase
 constructor(
         private val blacklistElementRepository: IBlacklistItemRepository,
         private val interactionModeRepository: IInteractionModeRepository,
-        private val blacklistItemFactory: BlacklistItemFactory,
-        private val interactionModeWithBlacklistItemAndValidStateFactory: InteractionModeWithBlacklistItemAndValidStateFactory
+        private val blacklistPhoneNumberItemFactory: BlacklistPhoneNumberItemFactory,
+        private val interactionModeWithBlacklistItemAndValidStateFactory: InteractionModeWithBlacklistPhoneNumberItemAndValidStateFactory
 ) : IGetInteractionModeWithSelectedBlackListItemUseCase {
 
-    override fun build(): Single<InteractionModeWithBlacklistItemAndValidState> {
+    override fun build(): Single<InteractionModeWithBlacklistPhoneNumberItemAndValidState> {
         return interactionModeRepository.getSelectedMode()
                 .switchIfEmpty(Single.error(RuntimeException("InteractionMode not selected!")))
                 .flatMap { mode: InteractionMode ->
                     Single.defer {
                         if(mode == InteractionMode.CREATE) {
-                            Single.fromCallable { blacklistItemFactory.create() }
-                                    .map {item: BlacklistItem ->
-                                        interactionModeWithBlacklistItemAndValidStateFactory.create(mode, item, false)
+                            Single.fromCallable { blacklistPhoneNumberItemFactory.create() }
+                                    .map { phoneNumberItem: BlacklistPhoneNumberItem ->
+                                        interactionModeWithBlacklistItemAndValidStateFactory.create(mode, phoneNumberItem, false)
                                     }
                         }
                         else{
-                            blacklistElementRepository.getSelectedBlackListItem()
+                            blacklistElementRepository.getSelectedBlacklistPhoneNumberItem()
                                     .switchIfEmpty(Single.error(RuntimeException("Item not selected when InteractionMode.EDIT")))
-                                    .map {item: BlacklistItem ->
-                                        interactionModeWithBlacklistItemAndValidStateFactory.create(mode, item, true)
+                                    .map { phoneNumberItem: BlacklistPhoneNumberItem ->
+                                        interactionModeWithBlacklistItemAndValidStateFactory.create(mode, phoneNumberItem, true)
                                     }
                         }
                     }

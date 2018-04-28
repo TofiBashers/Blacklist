@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+
+            <size
+                android:height="@dimen/divider_default_height"/>
+            <gradient
+                android:type="linear"
+                android:angle="0"
+                android:centerColor="@color/divider_blacklist_contact_options"
+                android:endColor="@color/divider_blacklist_contact_options_ends"
+                android:startColor="@color/divider_blacklist_contact_options_ends" />
+        </shape>
+    </item>
+</selector>

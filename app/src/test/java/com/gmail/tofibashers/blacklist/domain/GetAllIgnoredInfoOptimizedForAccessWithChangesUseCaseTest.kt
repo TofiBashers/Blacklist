@@ -2,12 +2,10 @@ package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.RxSchedulersOverrideRule
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemWithActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IPreferencesData
-import com.gmail.tofibashers.blacklist.entity.ActivityInterval
-import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSettings
-import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSettingsFactory
-import com.gmail.tofibashers.blacklist.entity.BlacklistItemWithActivityIntervals
+import com.gmail.tofibashers.blacklist.entity.*
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doAnswer
 import com.nhaarman.mockito_kotlin.whenever
@@ -32,6 +30,9 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
     lateinit var mockBlacklistItemWithActivityIntervalsRepository: IBlacklistItemWithActivityIntervalsRepository
 
     @Mock
+    lateinit var mockBlacklistContactItemWithPhonesAndActivityIntervalsRepository: IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
+
+    @Mock
     lateinit var mockPreferencesData: IPreferencesData
 
     @Mock
@@ -52,6 +53,9 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
         whenever(mockBlacklistItemWithActivityIntervalsRepository.getAllWithChanges())
                 .thenReturn(Flowable.fromIterable(testAndResData.testBlacklistItemsWithIntervalsWithChanges)
                         .compose { asNeverComplete(it) } )
+        whenever(mockBlacklistContactItemWithPhonesAndActivityIntervalsRepository.getAllWithChanges())
+                .thenReturn(Flowable.fromIterable(testAndResData.testContactsWithPhonesAndIntervals)
+                        .compose { asNeverComplete(it) } )
         whenever(mockPreferencesData.getIgnoreHiddenNumbersWithChanges())
                 .thenReturn(Flowable.fromIterable(testAndResData.testIgnoreHiddenWithChanges)
                         .compose { asNeverComplete(it) } )
@@ -70,6 +74,9 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
         val testAndResData = generateNonEmptyIntervalsWithIgnoreHidden()
         whenever(mockBlacklistItemWithActivityIntervalsRepository.getAllWithChanges())
                 .thenReturn(Flowable.fromIterable(testAndResData.testBlacklistItemsWithIntervalsWithChanges)
+                        .compose { asNeverComplete(it) } )
+        whenever(mockBlacklistContactItemWithPhonesAndActivityIntervalsRepository.getAllWithChanges())
+                .thenReturn(Flowable.fromIterable(testAndResData.testContactsWithPhonesAndIntervals)
                         .compose { asNeverComplete(it) } )
         whenever(mockPreferencesData.getIgnoreHiddenNumbersWithChanges())
                 .thenReturn(Flowable.fromIterable(testAndResData.testIgnoreHiddenWithChanges)
@@ -99,12 +106,16 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
     private fun generateEmptyIntervalsWithNotIgnoreHidden() : TestDataWithExpectedRes {
         return TestDataWithExpectedRes(listOf(false),
                 listOf(emptyList()),
+                listOf(emptyList()),
                 listOf(Pair(false, HashMap())))
     }
 
     private fun generateNonEmptyIntervalsWithIgnoreHidden() : TestDataWithExpectedRes {
-        val resNumbers = listOf("123", "456")
-        val resWeekdayIdsOfNums = listOf(listOf(1, 3), listOf(2, 5))
+        val resPhoneNumbers = listOf("123", "456")
+        val resContactPhoneNumbers = listOf("5535", "9994")
+        val resWeekdayIdsOfPhoneNums = listOf(listOf(1, 3), listOf(2, 5))
+        val resWeekdayIdsOfContactPhoneNums = listOf(listOf(2, 4, 7), listOf(1))
+        val resContactNames = listOf("contact1", "contact2")
         val resBeginTime = LocalTime.MIDNIGHT
         val resEndTime = LocalTime(23, 59, 59, 999)
         val resIsCallsBlocked = true
@@ -113,9 +124,18 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
                 resIsSmsBlocked, resBeginTime, resEndTime)
 
         val resHashMap = HashMap<String, TimeAndIgnoreSettingsByWeekdayId>().apply {
-            for((resInd, resNum) in resNumbers.withIndex()){
+            for((resInd, resNum) in resPhoneNumbers.withIndex()){
                 val resTimeAndIgnoreSettingsByWeekdayId = TimeAndIgnoreSettingsByWeekdayId().apply {
-                    val weekdayIdsForNum = resWeekdayIdsOfNums[resInd]
+                    val weekdayIdsForNum = resWeekdayIdsOfPhoneNums[resInd]
+                    for(resWeekdayId in weekdayIdsForNum){
+                        put(resWeekdayId, resActivityTimeIntervalWithIgnoreSettings)
+                    }
+                }
+                put(resNum, resTimeAndIgnoreSettingsByWeekdayId)
+            }
+            for((resInd, resNum) in resContactPhoneNumbers.withIndex()){
+                val resTimeAndIgnoreSettingsByWeekdayId = TimeAndIgnoreSettingsByWeekdayId().apply {
+                    val weekdayIdsForNum = resWeekdayIdsOfContactPhoneNums[resInd]
                     for(resWeekdayId in weekdayIdsForNum){
                         put(resWeekdayId, resActivityTimeIntervalWithIgnoreSettings)
                     }
@@ -124,7 +144,7 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
             }
         }
 
-        val testIntervalsForItem: List<List<ActivityInterval>> = resWeekdayIdsOfNums.map { listOfNum: List<Int> ->
+        val testIntervalsForItem: List<List<ActivityInterval>> = resWeekdayIdsOfPhoneNums.map { listOfNum: List<Int> ->
             listOfNum.map{ weekdayId: Int ->
                 ActivityInterval(weekDayId = weekdayId,
                         beginTime = resBeginTime,
@@ -132,14 +152,33 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
             }
         }
 
-        val testItemsWithIntervals = testIntervalsForItem.mapIndexed { index, list ->
-            BlacklistItemWithActivityIntervals(number = resNumbers[index],
+        val testIntervalsForContactItemsWithSinglePhones: List<List<ActivityInterval>> =
+                resWeekdayIdsOfContactPhoneNums.map { listOfNum: List<Int> ->
+                    listOfNum.map{ weekdayId: Int ->
+                        ActivityInterval(weekDayId = weekdayId,
+                                beginTime = resBeginTime,
+                                endTime = resEndTime)
+                    }
+        }
+
+        val testPhoneItemsWithIntervals = testIntervalsForItem.mapIndexed { index, list ->
+            BlacklistItemWithActivityIntervals(number = resPhoneNumbers[index],
                     isCallsBlocked = resIsCallsBlocked,
                     isSmsBlocked = resIsSmsBlocked,
                     activityIntervals = list)
         }
+
+        val testContactItemsWithIntervals = testIntervalsForContactItemsWithSinglePhones.mapIndexed { index, list ->
+            BlacklistContactItemWithPhonesAndIntervals(name = resContactNames[index],
+                    photoUrl = "http://",
+                    phones = listOf(BlacklistContactPhoneWithActivityIntervals(number = resContactPhoneNumbers[index],
+                            isCallsBlocked = resIsCallsBlocked,
+                            isSmsBlocked = resIsSmsBlocked,
+                            activityIntervals = list)))
+        }
         return TestDataWithExpectedRes(listOf(true),
-                listOf(testItemsWithIntervals),
+                listOf(testPhoneItemsWithIntervals),
+                listOf(testContactItemsWithIntervals),
                 listOf(Pair(true, resHashMap)))
     }
 
@@ -147,5 +186,6 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
 
     private data class TestDataWithExpectedRes(val testIgnoreHiddenWithChanges: List<Boolean>,
                                                val testBlacklistItemsWithIntervalsWithChanges: List<List<BlacklistItemWithActivityIntervals>>,
+                                               val testContactsWithPhonesAndIntervals: List<List<BlacklistContactItemWithPhonesAndIntervals>>,
                                                val resPairEvents: List<Pair<Boolean, HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>>)
 }

@@ -12,7 +12,7 @@ interface ISetEnableActivityIntervalAndValidateToSaveSyncUseCase {
 
     /**
      * Result [Single] doesn't specify any schedulers.
-     * @return new [MutableActivityIntervalsWithEnableAndValidState] with updated enabled and valid state.
+     * @return new [MutableActivityIntervalsWithEnableAndValidState] with updated enabled and valid modeWithState.
      * Original parameter [sourceList] not modificated.
      */
     fun build(indexOfItem: Int,

@@ -25,13 +25,13 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideISaveBlacklistElementUseCase(useCase: SaveBlacklistItemWithDeleteSelectionsUseCase)
-            : ISaveBlacklistItemWithDeleteSelectionsUseCase
+    abstract fun provideISaveBlacklistElementUseCase(useCase: SaveBlacklistPhoneItemWithDeleteSelectionsUseCase)
+            : ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase
 
     @Binds
     @Singleton
-    abstract fun provideISelectBlacklistElementAndEditModeUseCase(useCase: SelectEditModeAndBlacklistItemUseCase)
-            : ISelectEditModeAndBlacklistItemUseCase
+    abstract fun provideISelectBlacklistElementAndEditModeUseCase(useCase: SelectEditModeAndPhoneNumberItemUseCase)
+            : ISelectEditModeAndPhoneNumberItemUseCase
 
     @Binds
     @Singleton
@@ -40,8 +40,8 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideIDeleteBlacklistItemUseCase(useCase: DeleteBlacklistItemUseCase)
-            : IDeleteBlacklistItemUseCase
+    abstract fun provideIDeleteBlacklistItemUseCase(useCase: DeletePhoneNumberItemUseCase)
+            : IDeletePhoneNumberItemUseCase
 
     @Binds
     @Singleton
@@ -97,4 +97,49 @@ abstract class UseCaseModule {
     @Singleton
     abstract fun provideICreateTimeChangeInitDataSyncUseCase(useCase: CreateTimeChangeInitDataUseCase)
             : ICreateTimeChangeInitDataUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideIGetAllNonIgnoredContactsUseCase(useCase: GetAllNonIgnoredContactsUseCase)
+            : IGetAllNonIgnoredContactsWithChangesUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideISelectContactItemUseCase(useCase: SelectContactItemUseCase)
+            : ISelectContactItemUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideIValidateBlacklistContactPhoneNumbersForSaveSyncUseCase(useCase: ValidateBlacklistContactPhoneNumbersForSaveSyncUseCase)
+            : IValidateBlacklistContactPhoneNumbersForSaveSyncUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideIGetInteractionModeWithSelectedBlacklistContactItemUseCase(useCase: GetInteractionModeWithSelectedBlacklistContactItemUseCase)
+            : IGetInteractionModeWithSelectedBlacklistContactItemUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideISelectForEditActivityIntervalsOfBlacklistContactPhoneUseCase(useCase: SelectForEditActivityIntervalsOfBlacklistContactPhoneUseCase)
+            : ISelectForEditActivityIntervalsOfBlacklistContactPhoneUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervals(useCase: SaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervals)
+            : ISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideISaveBlacklistContactItemWithDeleteSelectionsUseCase(useCase: SaveBlacklistContactItemWithDeleteSelectionsUseCase)
+            : ISaveBlacklistContactItemWithDeleteSelectionsUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideISelectEditModeAndContactItemUseCase(useCase: SelectEditModeAndContactItemUseCase)
+            : ISelectEditModeAndContactItemUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideIDeleteBlacklistContactItemUseCase(useCase: DeleteBlacklistContactItemUseCase)
+            : IDeleteBlacklistContactItemUseCase
 }

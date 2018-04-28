@@ -5,9 +5,10 @@ import com.gmail.tofibashers.blacklist.data.datasource.IMemoryDatasource
 import com.gmail.tofibashers.blacklist.data.db.entity.mapper.DbActivityIntervalMapper
 import com.gmail.tofibashers.blacklist.data.memory.mapper.MemoryActivityIntervalMapper
 import com.gmail.tofibashers.blacklist.entity.ActivityInterval
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.mapper.ActivityIntervalMapper
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistItemMapper
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneItemMapper
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -28,13 +29,18 @@ constructor(
         private val dbActivityIntervalMapper: DbActivityIntervalMapper,
         private val memoryActivityIntervalMapper: MemoryActivityIntervalMapper,
         private val activityIntervalMapper: ActivityIntervalMapper,
-        private val blacklistItemMapper: BlacklistItemMapper
+        private val blacklistPhoneItemMapper: BlacklistPhoneItemMapper
 ): IActivityIntervalRepository {
 
-    override fun getActivityIntervalsAssociatedWithBlacklistItem(item: BlacklistItem): Maybe<List<ActivityInterval>> {
-        return Maybe.fromCallable { blacklistItemMapper.toDbBlacklistItem(item) }
+    override fun getActivityIntervalsAssociatedWithBlacklistItem(phoneNumberItem: BlacklistPhoneNumberItem): Maybe<List<ActivityInterval>> {
+        return Maybe.fromCallable { blacklistPhoneItemMapper.toDbBlacklistItem(phoneNumberItem) }
                 .flatMap(databaseSource::getActivityIntervalsAssociatedWithBlacklistItem)
                 .map(dbActivityIntervalMapper::toActivityIntervalsList)
+    }
+
+    //TODO: not implemented
+    override fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Maybe<List<ActivityInterval>> {
+        return Maybe.empty()
     }
 
     override fun getSelectedActivityIntervals(): Maybe<List<ActivityInterval>> {
@@ -50,4 +56,17 @@ constructor(
 
     override fun removeSelectedActivityIntervals(): Completable =
             memoryDatasource.removeSelectedActivityIntervals()
+
+    override fun getSelectedMultipleActivityIntervalsLists(): Maybe<List<List<ActivityInterval>>> {
+        return memoryDatasource.getSelectedMultipleActivityIntervalsLists()
+                .map(memoryActivityIntervalMapper::toMultipleActivityIntervalsLists)
+    }
+
+    override fun removeSelectedMultipleActivityIntervalsLists(): Completable =
+            memoryDatasource.removeSelectedMultipleActivityIntervalsLists()
+
+    override fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<ActivityInterval>>): Completable {
+        return Single.fromCallable { activityIntervalMapper.toMultipleMemoryActivityIntervalsLists(activityIntervalsLists) }
+                .flatMapCompletable(memoryDatasource::putSelectedMultipleActivityIntervalsLists)
+    }
 }

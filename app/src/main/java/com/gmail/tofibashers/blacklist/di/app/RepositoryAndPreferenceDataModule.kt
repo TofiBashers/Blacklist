@@ -25,6 +25,31 @@ abstract class RepositoryAndPreferenceDataModule {
 
     @Binds
     @Singleton
+    abstract fun provideIContactItemRepository(repository: WhitelistContactItemRepository)
+            : IWhitelistContactItemRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactItemRepository(repository: BlacklistContactItemRepository)
+            : IBlacklistContactItemRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactItemWithPhonesAndActivityIntervalsRepository(repository: BlacklistContactItemWithPhonesAndActivityIntervalsRepository)
+            : IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactPhoneRepository(repository: BlacklistContactPhoneRepository)
+            : IBlacklistContactPhoneRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIContactPhoneRepository(repository: WhitelistContactPhoneRepository)
+            : IWhitelistContactPhoneRepository
+
+    @Binds
+    @Singleton
     abstract fun provideIModeRepository(repository: InteractionModeRepository) : IInteractionModeRepository
 
     @Binds

@@ -3,12 +3,12 @@ package com.gmail.tofibashers.blacklist.di.app
 import android.app.Activity
 import android.app.Service
 import com.gmail.tofibashers.blacklist.SmsAndCallsTrackingService
-import com.gmail.tofibashers.blacklist.di.activity.BlacklistActivitySubcomponent
-import com.gmail.tofibashers.blacklist.di.activity.OptionsActivitySubcomponent
-import com.gmail.tofibashers.blacklist.di.activity.TimeSettingsActivitySubcomponent
+import com.gmail.tofibashers.blacklist.di.activity.*
 import com.gmail.tofibashers.blacklist.di.service.TrackingServiceSubcomponent
 import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistActivity
+import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
 import com.gmail.tofibashers.blacklist.ui.options.OptionsActivity
+import com.gmail.tofibashers.blacklist.ui.select_contact.SelectContactActivity
 import com.gmail.tofibashers.blacklist.ui.time_settings.TimeSettingsActivity
 import dagger.Binds
 import dagger.Module
@@ -26,6 +26,8 @@ import dagger.multibindings.IntoMap
         subcomponents = arrayOf(
                 BlacklistActivitySubcomponent::class,
                 OptionsActivitySubcomponent::class,
+                SelectContactActivitySubcomponent::class,
+                BlacklistContactOptionsActivitySubcomponent::class,
                 TimeSettingsActivitySubcomponent::class,
                 TrackingServiceSubcomponent::class
         ))
@@ -41,6 +43,18 @@ abstract class AndroidBindingsModule {
     @IntoMap
     @ActivityKey(BlacklistActivity::class)
     abstract fun provideMainActivityInjector(blacklistActivityComponentBuilder: BlacklistActivitySubcomponent.Builder)
+            : AndroidInjector.Factory<out Activity>
+
+    @Binds
+    @IntoMap
+    @ActivityKey(SelectContactActivity::class)
+    abstract fun provideSelectContactActivityInjector(selectContactActivityComponentBuilder: SelectContactActivitySubcomponent.Builder)
+            : AndroidInjector.Factory<out Activity>
+
+    @Binds
+    @IntoMap
+    @ActivityKey(BlacklistContactOptionsActivity::class)
+    abstract fun provideBlacklistContactOptionsActivityInjector(blacklistContactOptionsActivityComponentBuilder: BlacklistContactOptionsActivitySubcomponent.Builder)
             : AndroidInjector.Factory<out Activity>
 
     @Binds
