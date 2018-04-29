@@ -20,6 +20,20 @@ android {
         maxSdkVersion DEFAULT_MAX_SDK_VERSION
         targetSdkVersion DEFAULT_TARGET_SDK_VERSION
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
     }
 
     buildTypes {
@@ -150,6 +164,7 @@ dependencies {
 
     // Test helpers for Room
     testImplementation "android.arch.persistence.room:testing:${roomVersion}"
+    androidTestImplementation "android.arch.persistence.room:testing:${roomVersion}"
 
     // Mockito Kotlin
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
@@ -159,5 +174,10 @@ dependencies {
 
     // Robolectric
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
+
+    // Android test runner
+    androidTestImplementation "com.android.support:support-annotations:${supportLibraryVersion}"
+    androidTestImplementation "com.android.support.test:runner:${androidTestRunnerVersion}"
+    androidTestImplementation "com.android.support.test:rules:${androidTestRunnerVersion}"
 }
 apply plugin: 'kotlin-android-extensions'

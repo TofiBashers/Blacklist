@@ -60,6 +60,7 @@ ext{
     junitVersion = "4.12"
     hamcrestJunitVersion = "2.0.0.0"
     robolectricVersion = "3.8"
+    androidTestRunnerVersion = "1.0.1"
 
     inCIServer = { -> System.getenv('TRAVIS') != null }
 }

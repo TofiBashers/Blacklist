@@ -6,6 +6,7 @@ import com.gmail.tofibashers.blacklist.BuildConfig
 import com.gmail.tofibashers.blacklist.data.datasource.DatabaseSource
 import com.gmail.tofibashers.blacklist.data.datasource.IDatabaseSource
 import com.gmail.tofibashers.blacklist.data.db.BlacklistDatabase
+import com.gmail.tofibashers.blacklist.data.db.Migrations
 import com.gmail.tofibashers.blacklist.data.db.dao.IActivityIntervalDao
 import com.gmail.tofibashers.blacklist.data.db.dao.IBlackListItemDao
 import com.gmail.tofibashers.blacklist.data.db.dao.IJoinBlacklistItemActivityIntervalDao
@@ -28,10 +29,12 @@ class DatabaseModule {
     fun provideDatabase(appContext: Context) : BlacklistDatabase {
         return if(BuildConfig.DEBUG) Room.inMemoryDatabaseBuilder(appContext,
                 BlacklistDatabase::class.java)
+                .addMigrations(Migrations.MIGRATION_1_2)
                 .build()
         else Room.databaseBuilder(appContext,
-                    BlacklistDatabase::class.java, BlacklistDatabase.DB_NAME)
-                    .build()
+                BlacklistDatabase::class.java, BlacklistDatabase.DB_NAME)
+                .addMigrations(Migrations.MIGRATION_1_2)
+                .build()
     }
 
     @Singleton

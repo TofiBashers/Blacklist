@@ -1,0 +1,148 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "f6d5ec14c90f373510fc0bf07e5c1e30",
+    "entities": [
+      {
+        "tableName": "blacklist_item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `number` TEXT NOT NULL, `ignore_calls` INTEGER NOT NULL, `ignore_sms` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ignoreCalls",
+            "columnName": "ignore_calls",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ignoreSms",
+            "columnName": "ignore_sms",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_blacklist_item_number",
+            "unique": true,
+            "columnNames": [
+              "number"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_blacklist_item_number` ON `${TABLE_NAME}` (`number`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "activity_interval",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `weekday_id` INTEGER NOT NULL, `begin_time` TEXT NOT NULL, `end_time` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dayOfWeek",
+            "columnName": "weekday_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beginTime",
+            "columnName": "begin_time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endTime",
+            "columnName": "end_time",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "blacklist_item_activity_interval",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`blacklist_item_id` INTEGER NOT NULL, `activity_interval_id` INTEGER NOT NULL, PRIMARY KEY(`blacklist_item_id`, `activity_interval_id`), FOREIGN KEY(`activity_interval_id`) REFERENCES `activity_interval`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`blacklist_item_id`) REFERENCES `blacklist_item`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "blacklistItemId",
+            "columnName": "blacklist_item_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activityIntervalId",
+            "columnName": "activity_interval_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "blacklist_item_id",
+            "activity_interval_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "activity_interval",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "activity_interval_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          },
+          {
+            "table": "blacklist_item",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "blacklist_item_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f6d5ec14c90f373510fc0bf07e5c1e30\")"
+    ]
+  }
+}

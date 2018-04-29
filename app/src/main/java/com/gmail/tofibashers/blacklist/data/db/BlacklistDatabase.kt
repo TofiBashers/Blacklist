@@ -1,15 +1,19 @@
 package com.gmail.tofibashers.blacklist.data.db
 
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
+import android.arch.persistence.room.migration.Migration
 import com.gmail.tofibashers.blacklist.data.db.converters.LocalTimeISO8601StringConverter
 import com.gmail.tofibashers.blacklist.data.db.dao.IActivityIntervalDao
 import com.gmail.tofibashers.blacklist.data.db.dao.IBlackListItemDao
 import com.gmail.tofibashers.blacklist.data.db.dao.IJoinBlacklistItemActivityIntervalDao
-import com.gmail.tofibashers.blacklist.data.db.entity.DbActivityInterval
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
-import com.gmail.tofibashers.blacklist.data.db.entity.DbJoinBlacklistItemActivityInterval
+import com.gmail.tofibashers.blacklist.data.db.entity.*
+import com.gmail.tofibashers.blacklist.data.db.table_constants.ActivityIntervalTable
+import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactItemTable
+import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactPhoneItemTable
+import com.gmail.tofibashers.blacklist.data.db.table_constants.JoinBlacklistContactPhoneItemActivityIntervalTable
 
 
 /**
@@ -17,11 +21,14 @@ import com.gmail.tofibashers.blacklist.data.db.entity.DbJoinBlacklistItemActivit
  */
 
 @Database(
-        version = BlacklistDatabase.DB_VERSION,
+        version = BlacklistDatabase.DB_CURRENT_VERSION,
         entities = arrayOf(
                 DbBlacklistItem::class,
                 DbActivityInterval::class,
-                DbJoinBlacklistItemActivityInterval::class
+                DbBlacklistContactItem::class,
+                DbBlacklistContactPhoneItem::class,
+                DbJoinBlacklistItemActivityInterval::class,
+                DbJoinBlacklistContactPhoneItemActivityInterval::class
         ))
 @TypeConverters(LocalTimeISO8601StringConverter::class)
 abstract class BlacklistDatabase : RoomDatabase() {
@@ -31,7 +38,7 @@ abstract class BlacklistDatabase : RoomDatabase() {
     abstract fun joinBlacklistItemActivityIntervalDao() : IJoinBlacklistItemActivityIntervalDao
 
     companion object {
-        const val DB_VERSION = 1
+        const val DB_CURRENT_VERSION = 2
         const val DB_NAME = "db_blacklist"
     }
 }
