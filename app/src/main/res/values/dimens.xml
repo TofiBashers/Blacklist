@@ -2,8 +2,10 @@
 <resources>
     <dimen name="blacklist_add_num_with_settings_card_elevation">2dp</dimen>
     <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.5</item>
-    <item name="blacklist_guideline_vertical_button_add_left_margin_percent" type="dimen" format="float">0.15</item>
-    <item name="blacklist_guideline_vertical_button_add_right_margin_percent" type="dimen" format="float">0.85</item>
+    <item name="blacklist_guideline_vertical_button_add_contact_left_margin_percent" type="dimen" format="float">0.05</item>
+    <item name="blacklist_guideline_vertical_button_add_contact_right_percent" type="dimen" format="float">0.49</item>
+    <item name="blacklist_guideline_vertical_button_add_left_percent" type="dimen" format="float">0.51</item>
+    <item name="blacklist_guideline_vertical_button_add_right_margin_percent" type="dimen" format="float">0.95</item>
     <item name="blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent" type="dimen" format="float">0.9</item>
     <dimen name="options_control_spaces">20dp</dimen>
     <dimen name="options_spaces_between_textinput_and_checkbox">20dp</dimen>

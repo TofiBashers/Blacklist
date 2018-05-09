@@ -1,7 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
-import com.gmail.tofibashers.blacklist.entity.WhitelistContactItem
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -15,7 +14,7 @@ interface IBlacklistContactItemRepository  : IBaseSelectionOperationsRepository<
     /**
      * @return - [Maybe] with [BlacklistContactItem], if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
      */
-    fun getByDeviceIdAndDeviceKey(deviceDbId: Long? = null, deviceKey: String? = null) : Maybe<BlacklistContactItem>
+    fun getByDbId(dbId: Long? = null) : Maybe<BlacklistContactItem>
 
     /**
      * Returns sorted List of [BlacklistContactItem] after subscribe, and after any change.

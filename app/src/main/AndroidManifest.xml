@@ -37,6 +37,7 @@
         </receiver>
 
         <service android:name=".SmsAndCallsTrackingService" />
+        <service android:name=".data.SynchronizeDataService" />
 
         <activity
             android:name=".ui.time_settings.TimeSettingsActivity"

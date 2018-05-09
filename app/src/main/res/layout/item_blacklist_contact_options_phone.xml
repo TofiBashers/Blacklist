@@ -130,7 +130,7 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:background="@color/background"
-            tools:src="@drawable/ic_change_ignoring_time_enabled_48dp"/>
+            android:src="@drawable/ic_change_ignoring_time_enabled_48dp"/>
 
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

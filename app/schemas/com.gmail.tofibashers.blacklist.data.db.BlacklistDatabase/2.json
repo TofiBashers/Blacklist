@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "637771558f9a85236841d6e7720041c4",
+    "identityHash": "a5d4ec31a039a4ab352ace4fa295c94d",
     "entities": [
       {
         "tableName": "blacklist_item",
@@ -135,7 +135,7 @@
       },
       {
         "tableName": "blacklist_contact_phone_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `blacklist_contact_id` INTEGER NOT NULL, `device_db_id` INTEGER, `number` TEXT NOT NULL, `ignore_calls` INTEGER NOT NULL, `ignore_sms` INTEGER NOT NULL, FOREIGN KEY(`blacklist_contact_id`) REFERENCES `blacklist_contact_item`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `blacklist_contact_id` INTEGER, `device_db_id` INTEGER, `number` TEXT NOT NULL, `ignore_calls` INTEGER NOT NULL, `ignore_sms` INTEGER NOT NULL, FOREIGN KEY(`blacklist_contact_id`) REFERENCES `blacklist_contact_item`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -147,7 +147,7 @@
             "fieldPath": "blacklistContactId",
             "columnName": "blacklist_contact_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "deviceDbId",
@@ -307,7 +307,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"637771558f9a85236841d6e7720041c4\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a5d4ec31a039a4ab352ace4fa295c94d\")"
     ]
   }
 }

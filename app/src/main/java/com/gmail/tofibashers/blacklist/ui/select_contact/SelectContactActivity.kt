@@ -1,5 +1,6 @@
 package com.gmail.tofibashers.blacklist.ui.select_contact
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.View
 import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import kotterknife.bindView
 import javax.inject.Inject
 
@@ -47,8 +49,7 @@ class SelectContactActivity : BaseStateableViewActivity<View, RecyclerView>() {
         viewModel.navigateSingleData.observe(this, Observer {
             when(it){
                 is SelectContactNavData.EditContactRoute -> startEditContactView(it)
-                is SelectContactNavData.BlacklistContactOptionsRoute -> startBlacklistContactOptionsViewWithFinish()
-                is SelectContactNavData.ParentRoute -> finish()
+                is SelectContactNavData.ParentRoute -> finishWithResult(it)
             }
         })
 
@@ -71,6 +72,7 @@ class SelectContactActivity : BaseStateableViewActivity<View, RecyclerView>() {
     }
 
     private fun showData(dataViewState: SelectContactViewState.DataViewState){
+        setViewState(ViewState.DATA)
         selectContactAdapter.set(dataViewState.state)
     }
 
@@ -82,9 +84,11 @@ class SelectContactActivity : BaseStateableViewActivity<View, RecyclerView>() {
         startActivity(editIntent)
     }
 
-    private fun startBlacklistContactOptionsViewWithFinish(){
-        val editIntent = Intent(this, BlacklistContactOptionsActivity::class.java)
-        startActivity(editIntent)
+    private fun finishWithResult(parentRoute: SelectContactNavData.ParentRoute) {
+        setResult(when(parentRoute.result){
+            SavingResult.SAVED -> Activity.RESULT_OK
+            SavingResult.CANCELED -> Activity.RESULT_CANCELED
+        })
         finish()
     }
 

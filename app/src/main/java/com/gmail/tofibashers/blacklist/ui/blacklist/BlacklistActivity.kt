@@ -31,6 +31,7 @@ class BlacklistActivity : BaseStateableViewActivity<Group, Group>(),
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val cardWrapperAddNumWithSettings: CardView by bindView(R.id.cardview_add_num_with_settings)
     private val addButton: Button by bindView(R.id.button_add)
+    private val addContactButton: Button by bindView(R.id.button_add_contact)
     private val ignoreHiddenCheckBox: AppCompatCheckBox by bindView(R.id.checkbox_ignore_hidden_numbers)
     private val list: RecyclerView by bindView(R.id.num_list)
 
@@ -53,6 +54,7 @@ class BlacklistActivity : BaseStateableViewActivity<Group, Group>(),
         }
 
         addButton.setOnClickListener(this)
+        addContactButton.setOnClickListener(this)
         ignoreHiddenCheckBox.setOnCheckedChangeListener(ignoreHiddenChangeListener)
 
         val layoutManager = LinearLayoutManager(this)
@@ -87,6 +89,7 @@ class BlacklistActivity : BaseStateableViewActivity<Group, Group>(),
                 Log.w(null, "TryToAddNew")
                 viewModel.onInitCreateItem()
             }
+            R.id.button_add_contact -> viewModel.onInitAddContactItem()
         }
     }
 
@@ -94,6 +97,10 @@ class BlacklistActivity : BaseStateableViewActivity<Group, Group>(),
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_CANCELED){
             viewModel.onAdditionOrCreationCancelled()
+            return
+        }
+        if(requestCode == AndroidComponentKeys.REQUEST_CODE_SELECT_CONTACT_VIEW){
+            navigateToContactOptions()
         }
     }
 

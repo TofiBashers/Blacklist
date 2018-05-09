@@ -13,4 +13,7 @@ object ActivityIntervalTable {
     const val END_TIME = "end_time"
 
     const val _ID_WITH_TABLE_PREFIX = TABLE_NAME + "." + _ID
+    const val WEEKDAY_ID_WITH_TABLE_PREFIX = TABLE_NAME + "." + WEEKDAY_ID
+    const val BEGIN_TIME_WITH_TABLE_PREFIX = TABLE_NAME + "." + BEGIN_TIME
+    const val END_TIME_WITH_TABLE_PREFIX = TABLE_NAME + "." + END_TIME
 }

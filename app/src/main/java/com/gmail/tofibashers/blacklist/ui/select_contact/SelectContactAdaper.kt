@@ -16,6 +16,10 @@ class SelectContactAdaper(private val contactClickListener: SelectContactViewHol
 
     override fun getItemCount(): Int = list.count()
 
+    override fun getItemViewType(position: Int): Int {
+        return ITEM_CONTACT_TYPE
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             ITEM_CONTACT_TYPE -> SelectContactViewHolder(contactClickListener, parent)

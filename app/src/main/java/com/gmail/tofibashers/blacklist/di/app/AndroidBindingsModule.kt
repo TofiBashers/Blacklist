@@ -3,7 +3,9 @@ package com.gmail.tofibashers.blacklist.di.app
 import android.app.Activity
 import android.app.Service
 import com.gmail.tofibashers.blacklist.SmsAndCallsTrackingService
+import com.gmail.tofibashers.blacklist.data.SynchronizeDataService
 import com.gmail.tofibashers.blacklist.di.activity.*
+import com.gmail.tofibashers.blacklist.di.service.SynchronizeDataServiceSubcomponent
 import com.gmail.tofibashers.blacklist.di.service.TrackingServiceSubcomponent
 import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistActivity
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
@@ -29,7 +31,8 @@ import dagger.multibindings.IntoMap
                 SelectContactActivitySubcomponent::class,
                 BlacklistContactOptionsActivitySubcomponent::class,
                 TimeSettingsActivitySubcomponent::class,
-                TrackingServiceSubcomponent::class
+                TrackingServiceSubcomponent::class,
+                SynchronizeDataServiceSubcomponent::class
         ))
 abstract class AndroidBindingsModule {
 
@@ -67,5 +70,11 @@ abstract class AndroidBindingsModule {
     @IntoMap
     @ServiceKey(SmsAndCallsTrackingService::class)
     abstract fun provideTrackingServiceInjector(trackingServiceComponentBuilder: TrackingServiceSubcomponent.Builder)
+            : AndroidInjector.Factory<out Service>
+
+    @Binds
+    @IntoMap
+    @ServiceKey(SynchronizeDataService::class)
+    abstract fun provideSynchronizeDataServiceInjector(syncServiceComponentBuilder: SynchronizeDataServiceSubcomponent.Builder)
             : AndroidInjector.Factory<out Service>
 }

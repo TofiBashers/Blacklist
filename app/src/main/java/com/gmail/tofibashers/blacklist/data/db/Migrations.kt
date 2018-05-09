@@ -25,7 +25,7 @@ object Migrations {
 
             database.execSQL("CREATE TABLE ${BlacklistContactPhoneItemTable.TABLE_NAME} (" +
                     "${BlacklistContactPhoneItemTable._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "${BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID} INTEGER NOT NULL, " +
+                    "${BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID} INTEGER, " +
                     "${BlacklistContactPhoneItemTable.DEVICE_DB_ID} INTEGER, " +
                     "${BlacklistContactPhoneItemTable.NUMBER} TEXT NOT NULL, " +
                     "${BlacklistContactPhoneItemTable.IGNORE_CALLS} INTEGER NOT NULL, " +

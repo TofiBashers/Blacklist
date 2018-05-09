@@ -8,6 +8,7 @@ import com.gmail.tofibashers.blacklist.entity.ActivityInterval
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.mapper.ActivityIntervalMapper
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactItemMapper
 import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneItemMapper
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -29,6 +30,7 @@ constructor(
         private val dbActivityIntervalMapper: DbActivityIntervalMapper,
         private val memoryActivityIntervalMapper: MemoryActivityIntervalMapper,
         private val activityIntervalMapper: ActivityIntervalMapper,
+        private val blacklistContactItemMappe: BlacklistContactItemMapper,
         private val blacklistPhoneItemMapper: BlacklistPhoneItemMapper
 ): IActivityIntervalRepository {
 
@@ -38,9 +40,10 @@ constructor(
                 .map(dbActivityIntervalMapper::toActivityIntervalsList)
     }
 
-    //TODO: not implemented
-    override fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Maybe<List<ActivityInterval>> {
-        return Maybe.empty()
+    override fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Single<List<ActivityInterval>> {
+        return Single.fromCallable { blacklistContactItemMappe.toDbBlacklistContactItem(contactItem) }
+                .flatMap(databaseSource::getActivityIntervalsAssociatedWithBlacklistContactItem)
+                .map(dbActivityIntervalMapper::toActivityIntervalsList)
     }
 
     override fun getSelectedActivityIntervals(): Maybe<List<ActivityInterval>> {

@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
  * Created by TofiBashers on 27.04.2018.
  */
 
-fun loadContactImageByUrlOrDefault(target: ImageView, imageUrl: String) {
+fun loadContactImageByUrlOrDefault(target: ImageView, imageUrl: String?) {
     return Picasso.get()
             .load(imageUrl)
             .transform(CircleImageTranformation())

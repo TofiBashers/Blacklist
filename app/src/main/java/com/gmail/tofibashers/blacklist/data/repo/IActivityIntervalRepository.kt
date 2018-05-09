@@ -5,6 +5,7 @@ import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.Single
 
 
 /**
@@ -21,10 +22,9 @@ interface IActivityIntervalRepository {
 
     /**
      * Get value by , if exists.
-     * Result [Maybe] doesn't specify schedulers.
-     * @return - [Maybe] with value, if value exists. Otherwise, empty [Maybe]
+     * Result [Single] doesn't specify schedulers.
      */
-    fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Maybe<List<ActivityInterval>>
+    fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Single<List<ActivityInterval>>
 
     /**
      * Remove value stored as "selected", if not stored - do nothing and completes.

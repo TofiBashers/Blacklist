@@ -31,7 +31,6 @@ constructor(
         return Single.fromCallable { blacklistContactItemWithNonIgnoredNumbersFlagMapper.toBlacklistContactItem(item) }
                 .flatMapCompletable { contactItem: BlacklistContactItem ->
                     activityIntervalsRepository.getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem)
-                            .switchIfEmpty(Single.error(OutdatedDataException()))
                             .flatMapCompletable { intervals: List<ActivityInterval> ->
                                 interactionModeRepository.putSelectedMode(InteractionMode.EDIT)
                                         .andThen(blacklistContactRepository.putSelected(contactItem))

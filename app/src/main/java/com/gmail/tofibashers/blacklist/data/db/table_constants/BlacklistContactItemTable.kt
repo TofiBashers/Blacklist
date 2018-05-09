@@ -14,4 +14,6 @@ object BlacklistContactItemTable {
     const val PHOTO_URL = "photo_url"
 
     const val _ID_WITH_TABLE_PREFIX = TABLE_NAME + "." + _ID
+    const val DEVICE_DB_ID_WITH_TABLE_PREFIX = TABLE_NAME + "." + DEVICE_DB_ID
+    const val DEVICE_LOOKUP_KEY_WITH_TABLE_PREFIX = TABLE_NAME + "." + DEVICE_LOOKUP_KEY
 }

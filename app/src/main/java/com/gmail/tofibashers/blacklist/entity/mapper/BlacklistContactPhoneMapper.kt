@@ -1,7 +1,9 @@
 package com.gmail.tofibashers.blacklist.entity.mapper
 
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
-import com.gmail.tofibashers.blacklist.entity.*
+import com.gmail.tofibashers.blacklist.data.device.DeviceContactPhoneItem
+import com.gmail.tofibashers.blacklist.entity.ActivityInterval
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneWithActivityIntervals
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,4 +37,9 @@ constructor(){
         }
     }
 
+    fun toDeviceContactPhone(blacklistPhone: BlacklistContactPhoneNumberItem) : DeviceContactPhoneItem =
+            DeviceContactPhoneItem(blacklistPhone.deviceDbId, blacklistPhone.number)
+
+    fun toDeviceContactPhoneList(blacklistPhones: List<BlacklistContactPhoneNumberItem>) : List<DeviceContactPhoneItem> =
+            blacklistPhones.map { toDeviceContactPhone(it) }
 }

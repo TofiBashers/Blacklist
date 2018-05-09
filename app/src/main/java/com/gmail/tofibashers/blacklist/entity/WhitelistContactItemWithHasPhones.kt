@@ -11,5 +11,5 @@ import com.google.auto.factory.AutoFactory
 data class WhitelistContactItemWithHasPhones(var deviceDbId: Long,
                                              var deviceKey: String,
                                              var name: String,
-                                             var photoUrl: String,
+                                             var photoUrl: String? = null,
                                              var hasPhones: Boolean)

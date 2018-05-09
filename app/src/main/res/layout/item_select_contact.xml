@@ -97,7 +97,7 @@
         app:layout_constraintRight_toRightOf="@id/guideline_vertical_between_contact_text_and_options_button"
         app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_beteen_contact_name_and_with_disabled_to_select"
         app:layout_constraintTop_toTopOf="@id/guideline_horizontal_for_top_margin"
-        android:gravity="center"
+        android:gravity="left"
         android:textSize="@dimen/item_numberlist_text_phone_number_size"
         android:maxLines="1"
         tools:text="Ivan Ivanov"/>

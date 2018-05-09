@@ -12,4 +12,4 @@ data class BlacklistContactItem(var dbId: Long? = null,
                                 var deviceDbId: Long? = null,
                                 var deviceKey: String? = null,
                                 var name: String,
-                                var photoUrl: String)
+                                var photoUrl: String? = null)

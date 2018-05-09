@@ -12,6 +12,7 @@
     <string name="options_toolbar_edit_title">Edit phone number</string>
     <string name="options_toolbar_create_title">Add phone number</string>
     <string name="blacklist_add_num_action">Add phone number</string>
+    <string name="blacklist_add_contact_action">Add contact</string>
     <string name="blacklist_ignore_hidden_action">Ignore hidden numbers</string>
     <string name="blacklist_item_numberlist_menu_change_action">Change</string>
     <string name="blacklist_item_numberlist_menu_delete_action">Delete</string>

@@ -9,7 +9,7 @@ import kotterknife.bindView
 
 class SectionHeaderHolder(
         parent: ViewGroup
-) : BaseViewHolder<SectionBlacklistItem.Header>(R.layout.item_numberlist, parent){
+) : BaseViewHolder<SectionBlacklistItem.Header>(R.layout.item_blacklist_header, parent){
 
     private val headerTextView: TextView by bindView(R.id.text_header)
 

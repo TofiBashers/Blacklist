@@ -24,7 +24,7 @@ data class DbBlacklistContactPhoneItem(
         val id: Long? = null,
 
         @ColumnInfo(name = BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID)
-        val blacklistContactId: Long,
+        var blacklistContactId: Long? = null,
 
         @ColumnInfo(name = BlacklistContactPhoneItemTable.DEVICE_DB_ID)
         val deviceDbId: Long? = null,
@@ -36,4 +36,11 @@ data class DbBlacklistContactPhoneItem(
         val ignoreCalls: Boolean,
 
         @ColumnInfo(name = BlacklistContactPhoneItemTable.IGNORE_SMS)
-        val ignoreSms: Boolean)
+        val ignoreSms: Boolean) {
+
+        /**
+         * Only for combined classes with empty constructor. Not call manually in business logic!
+         */
+        @Ignore
+        constructor() : this(blacklistContactId = -1, number = "", ignoreSms = true, ignoreCalls = true)
+}

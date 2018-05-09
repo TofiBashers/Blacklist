@@ -21,6 +21,7 @@ import javax.inject.Singleton
         UseCaseModule::class,
         RepositoryAndPreferenceDataModule::class,
         DatabaseModule::class,
+        DeviceDataModule::class,
         MemoryStorageModule::class,
         AppModule::class))
 @Singleton

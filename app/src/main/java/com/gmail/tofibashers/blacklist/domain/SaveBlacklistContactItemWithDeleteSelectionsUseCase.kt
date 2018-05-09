@@ -1,11 +1,12 @@
 package com.gmail.tofibashers.blacklist.domain
 
-import android.util.Log
-import com.gmail.tofibashers.blacklist.data.repo.*
+import com.gmail.tofibashers.blacklist.data.repo.IActivityIntervalRepository
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemRepository
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
+import com.gmail.tofibashers.blacklist.data.repo.IInteractionModeRepository
 import com.gmail.tofibashers.blacklist.entity.*
 import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactItemMapper
 import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactPhoneMapper
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneItemMapper
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -63,7 +64,7 @@ constructor(
     }
 
     private fun validateBlacklistContactExists(contactItem: BlacklistContactItem): Completable {
-        return blacklistContactItemRepository.getByDeviceIdAndDeviceKey(contactItem.deviceDbId, contactItem.deviceKey)
+        return blacklistContactItemRepository.getByDbId(contactItem.deviceDbId)
                 .switchIfEmpty(Single.error(OutdatedDataException()))
                 .toCompletable()
     }

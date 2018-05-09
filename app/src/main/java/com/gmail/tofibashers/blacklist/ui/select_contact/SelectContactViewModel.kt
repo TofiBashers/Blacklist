@@ -5,6 +5,7 @@ import com.gmail.tofibashers.blacklist.domain.IGetAllNonIgnoredContactsWithChang
 import com.gmail.tofibashers.blacklist.domain.ISelectContactItemUseCase
 import com.gmail.tofibashers.blacklist.entity.WhitelistContactItemWithHasPhones
 import com.gmail.tofibashers.blacklist.ui.common.DisposableViewModel
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import javax.inject.Inject
 
@@ -19,7 +20,6 @@ constructor(
         private val getAllNonIgnoredContactsUseCase: IGetAllNonIgnoredContactsWithChangesUseCase,
         private val parentRouteFactory: SelectContactNavData_ParentRouteFactory,
         private val editContactRouteFactory: SelectContactNavData_EditContactRouteFactory,
-        private val blacklistContactOptionsRouteFactory: SelectContactNavData_BlacklistContactOptionsRouteFactory,
         private val loadingViewStateFactory: SelectContactViewState_LoadingViewStateFactory,
         private val dataViewStateFactory: SelectContactViewState_DataViewStateFactory,
         val viewStateData: MutableLiveData<SelectContactViewState>,
@@ -47,7 +47,7 @@ constructor(
 
     fun onInitCancel(){
         requestsDisposable.clear()
-        navigateSingleData.value = parentRouteFactory.create()
+        navigateSingleData.value = parentRouteFactory.create(SavingResult.CANCELED)
     }
 
     private inner class GetContactsObserver : DisposableSavingObserver<List<WhitelistContactItemWithHasPhones>>() {
@@ -68,7 +68,7 @@ constructor(
     private inner class SelectItemObserver : DisposableSavingCompletableObserver() {
 
         override fun onComplete() {
-            navigateSingleData.value = blacklistContactOptionsRouteFactory.create()
+            navigateSingleData.value = parentRouteFactory.create(SavingResult.SAVED)
         }
 
         override fun onError(error: Throwable) {

@@ -6,6 +6,7 @@ import com.gmail.tofibashers.blacklist.domain.ISelectContactItemUseCase
 import com.gmail.tofibashers.blacklist.entity.*
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsNavData
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsViewState
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import com.gmail.tofibashers.blacklist.ui.select_contact.*
 import com.nhaarman.mockito_kotlin.*
@@ -39,9 +40,6 @@ class SelectContactViewModelTest {
     lateinit var mockEditContactRouteFactory: SelectContactNavData_EditContactRouteFactory
 
     @Mock
-    lateinit var mockBlacklistContactOptionsRouteFactory: SelectContactNavData_BlacklistContactOptionsRouteFactory
-
-    @Mock
     lateinit var mockLoadingViewStateFactory: SelectContactViewState_LoadingViewStateFactory
 
     @Mock
@@ -61,7 +59,6 @@ class SelectContactViewModelTest {
                 mockGetAllNonIgnoredContactsUseCase,
                 mockParentRouteFactory,
                 mockEditContactRouteFactory,
-                mockBlacklistContactOptionsRouteFactory,
                 mockLoadingViewStateFactory,
                 mockDataViewStateFactory,
                 mockViewStateData,
@@ -158,7 +155,7 @@ class SelectContactViewModelTest {
                 hasPhones = true)
         val testResult = listOf(testContactItem)
         val mockLoadingViewState: SelectContactViewState.LoadingViewState = mock()
-        val testOptRoute = SelectContactNavData.BlacklistContactOptionsRoute()
+        val testOptRoute = SelectContactNavData.ParentRoute(SavingResult.SAVED)
         val testSelectScheduler = TestScheduler()
 
         whenever(mockGetAllNonIgnoredContactsUseCase.build())
@@ -173,7 +170,7 @@ class SelectContactViewModelTest {
                 .whenever(mockDataViewStateFactory).create(any())
         whenever(mockLoadingViewStateFactory.create())
                 .thenReturn(mockLoadingViewState)
-        whenever(mockBlacklistContactOptionsRouteFactory.create())
+        whenever(mockParentRouteFactory.create(SavingResult.SAVED))
                 .thenReturn(testOptRoute)
 
         testViewModel.onInitGetList()

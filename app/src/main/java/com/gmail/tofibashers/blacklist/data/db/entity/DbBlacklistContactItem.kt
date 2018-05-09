@@ -1,9 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.db.entity
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactItemTable
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTable
 
@@ -27,4 +24,11 @@ data class DbBlacklistContactItem(
         val name: String,
 
         @ColumnInfo(name = BlacklistContactItemTable.PHOTO_URL)
-        val photoUrl: String? = null)
+        val photoUrl: String? = null
+){
+        /**
+         * Only for combined classes with empty constructor. Not call manually in business logic!
+         */
+        @Ignore
+        constructor() : this(name = "")
+}

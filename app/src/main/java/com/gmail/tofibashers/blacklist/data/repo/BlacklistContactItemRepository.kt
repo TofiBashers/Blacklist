@@ -1,10 +1,10 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
+import com.gmail.tofibashers.blacklist.data.datasource.IDatabaseSource
 import com.gmail.tofibashers.blacklist.data.datasource.IMemoryDatasource
-import com.gmail.tofibashers.blacklist.data.datasource.MemoryDatasource
+import com.gmail.tofibashers.blacklist.data.db.entity.mapper.DbBlacklistContactItemMapper
 import com.gmail.tofibashers.blacklist.data.memory.mapper.MemoryBlacklistContactItemMapper
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
-import com.gmail.tofibashers.blacklist.entity.WhitelistContactItem
 import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactItemMapper
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -21,17 +21,25 @@ import javax.inject.Singleton
 class BlacklistContactItemRepository
 @Inject
 constructor(private val memoryDatasource: IMemoryDatasource,
+            private val databaseSource: IDatabaseSource,
             private val memoryBlacklistContactItemMapper: MemoryBlacklistContactItemMapper,
+            private val dbBlacklistContactItemMapper: DbBlacklistContactItemMapper,
             private val blacklistContactItemMapper: BlacklistContactItemMapper): IBlacklistContactItemRepository {
 
-    //TODO: not implemented
-    override fun getByDeviceIdAndDeviceKey(deviceDbId: Long?, deviceKey: String?): Maybe<BlacklistContactItem> = Maybe.empty()
+    override fun getByDbId(dbId: Long?): Maybe<BlacklistContactItem> {
+        return databaseSource.getBlacklistContactItemById(dbId)
+                .map { dbBlacklistContactItemMapper.toBlacklistContactItem(it) }
+    }
 
-    //TODO: not implemented
-    override fun getAllSortedByNameAscWithChanges(): Flowable<List<BlacklistContactItem>> = Flowable.concat(Flowable.just(listOf()), Flowable.never())
+    override fun getAllSortedByNameAscWithChanges(): Flowable<List<BlacklistContactItem>> {
+        return databaseSource.getAllBlacklistContactItemsSortedByNameAscWithChanges()
+                .map { dbBlacklistContactItemMapper.toBlacklistContactItemsList(it) }
+    }
 
-    //TODO: not implemented
-    override fun delete(item: BlacklistContactItem): Completable = Completable.complete()
+    override fun delete(item: BlacklistContactItem): Completable {
+        return Single.fromCallable { blacklistContactItemMapper.toDbBlacklistContactItem(item) }
+                .flatMapCompletable { databaseSource.deleteBlacklistContactItem(it) }
+    }
 
     override fun removeSelected(): Completable = memoryDatasource.removeSelectedBlacklistContactItem()
 

@@ -8,7 +8,7 @@ import com.google.auto.factory.AutoFactory
  * Created by TofiBashers on 15.04.2018.
  */
 @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
-data class MemoryWhitelistContactItem(var deviceDbId: Long,
-                                      var deviceKey: String,
+data class MemoryWhitelistContactItem(var deviceDbId: Long? = null,
+                                      var deviceKey: String? = null,
                                       var name: String,
-                                      var photoUrl: String)
+                                      var photoUrl: String? = null)

@@ -6,9 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.arch.persistence.room.migration.Migration
 import com.gmail.tofibashers.blacklist.data.db.converters.LocalTimeISO8601StringConverter
-import com.gmail.tofibashers.blacklist.data.db.dao.IActivityIntervalDao
-import com.gmail.tofibashers.blacklist.data.db.dao.IBlackListItemDao
-import com.gmail.tofibashers.blacklist.data.db.dao.IJoinBlacklistItemActivityIntervalDao
+import com.gmail.tofibashers.blacklist.data.db.dao.*
 import com.gmail.tofibashers.blacklist.data.db.entity.*
 import com.gmail.tofibashers.blacklist.data.db.table_constants.ActivityIntervalTable
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactItemTable
@@ -36,6 +34,9 @@ abstract class BlacklistDatabase : RoomDatabase() {
     abstract fun blackListItemDao() : IBlackListItemDao
     abstract fun activityIntervalDao() : IActivityIntervalDao
     abstract fun joinBlacklistItemActivityIntervalDao() : IJoinBlacklistItemActivityIntervalDao
+    abstract fun blacklistContactItemDao() : IBlacklistContactItemDao
+    abstract fun blacklistContactPhoneItemDao() : IBlacklistContactPhoneItemDao
+    abstract fun joinBlacklistContactPhoneItemActivityIntervalDao() : IJoinBlacklistContactPhoneItemActivityIntervalDao
 
     companion object {
         const val DB_CURRENT_VERSION = 2

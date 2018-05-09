@@ -1,6 +1,10 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
+import com.gmail.tofibashers.blacklist.data.datasource.IDatabaseSource
+import com.gmail.tofibashers.blacklist.data.datasource.IDeviceDatasource
 import com.gmail.tofibashers.blacklist.data.datasource.IMemoryDatasource
+import com.gmail.tofibashers.blacklist.data.db.entity.mapper.DbBlacklistContactItemMapper
+import com.gmail.tofibashers.blacklist.data.device.mapper.DeviceContactItemMapper
 import com.gmail.tofibashers.blacklist.data.memory.mapper.MemoryWhitelistContactItemMapper
 import com.gmail.tofibashers.blacklist.entity.WhitelistContactItem
 import com.gmail.tofibashers.blacklist.entity.mapper.WhitelistContactItemMapper
@@ -19,11 +23,18 @@ import javax.inject.Singleton
 class WhitelistContactItemRepository
 @Inject
 constructor(private val memoryDatasource: IMemoryDatasource,
+            private val databaseSource: IDatabaseSource,
+            private val deviceDatasource: IDeviceDatasource,
+            private val dbBlacklistContactItemMapper: DbBlacklistContactItemMapper,
             private val whitelistContactItemMapper: WhitelistContactItemMapper,
+            private val deviceContactItemMapper: DeviceContactItemMapper,
             private val memoryWhitelistContactItemMapper: MemoryWhitelistContactItemMapper): IWhitelistContactItemRepository {
 
     override fun getAllSortedByNameAscWithChanges(): Flowable<List<WhitelistContactItem>> {
-        TODO("not implemented")
+        return databaseSource.getAllBlacklistContactItemsSortedByNameAscWithChanges()
+                .map { dbBlacklistContactItemMapper.toDeviceContactItemsList(it) }
+                .switchMap { deviceDatasource.getAllContactsExcludeSortedByNameAscWithChanges(it) }
+                .map { deviceContactItemMapper.toWhitelistContactList(it) }
     }
 
     override fun removeSelected(): Completable = memoryDatasource.removeSelectedContactItem()

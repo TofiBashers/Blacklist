@@ -1,8 +1,12 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
+import com.gmail.tofibashers.blacklist.data.datasource.IDatabaseSource
+import com.gmail.tofibashers.blacklist.data.db.entity.mapper.DbBlacklistContactItemWithPhonesAndIntervalsMapper
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItemWithPhonesAndIntervals
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactItemWithPhonesAndIntervalsMapper
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,11 +17,19 @@ import javax.inject.Singleton
 @Singleton
 class BlacklistContactItemWithPhonesAndActivityIntervalsRepository
 @Inject
-constructor() : IBlacklistContactItemWithPhonesAndActivityIntervalsRepository{
+constructor(private val databaseSource: IDatabaseSource,
+            private val blacklistContactItemWithPhonesAndIntervalsMapper: BlacklistContactItemWithPhonesAndIntervalsMapper,
+            private val dbBlacklistContactItemWithPhonesAndIntervalsMapper: DbBlacklistContactItemWithPhonesAndIntervalsMapper) : IBlacklistContactItemWithPhonesAndActivityIntervalsRepository{
 
-    //TODO: not implemented
-    override fun getAllWithChanges(): Flowable<List<BlacklistContactItemWithPhonesAndIntervals>> = Flowable.concat(Flowable.just(listOf()), Flowable.never())
+    override fun getAllWithChanges(): Flowable<List<BlacklistContactItemWithPhonesAndIntervals>> {
+        return databaseSource.getBlacklistContactItemWithPhonesAndActivityIntervalsWithChanges()
+                .map { dbBlacklistContactItemWithPhonesAndIntervalsMapper.toBlacklistContactItemWithPhonesAndIntervalsList(it) }
+    }
 
-    //TODO: not implemented
-    override fun put(itemWithPhonesAndIntervals: BlacklistContactItemWithPhonesAndIntervals): Completable = Completable.complete()
+    override fun put(itemWithPhonesAndIntervals: BlacklistContactItemWithPhonesAndIntervals): Completable {
+        return Single.fromCallable {
+            blacklistContactItemWithPhonesAndIntervalsMapper.toDbBlacklistContactItemWithPhonesAndIntervals(itemWithPhonesAndIntervals)
+        }
+                .flatMapCompletable { databaseSource.putBlacklistContactItemWithPhonesAndActivityIntervals(it) }
+    }
 }

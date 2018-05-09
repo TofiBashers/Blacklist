@@ -1,11 +1,7 @@
 package com.gmail.tofibashers.blacklist.data.datasource
 
-import com.gmail.tofibashers.blacklist.data.db.entity.DbActivityInterval
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItemWithActivityIntervals
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Maybe
+import com.gmail.tofibashers.blacklist.data.db.entity.*
+import io.reactivex.*
 
 
 /**
@@ -14,13 +10,13 @@ import io.reactivex.Maybe
 interface IDatabaseSource {
 
     /**
-     * Get phoneNumberItems firstly and after all changes. Not modify any Backpressure policy.
+     * Get blacklistItems firstly and after all changes. Not modify any Backpressure policy.
      * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
      */
     fun getAllBlackListItemsWithChanges(): Flowable<List<DbBlacklistItem>>
 
     /**
-     * Get phoneNumberItems firstly and after all changes. Not modify any Backpressure policy.
+     * Get blacklistItems firstly and after all changes. Not modify any Backpressure policy.
      * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
      */
     fun getAllBlacklistItemsWithIntervalsWithChanges(): Flowable<List<DbBlacklistItemWithActivityIntervals>>
@@ -31,7 +27,7 @@ interface IDatabaseSource {
     fun getBlacklistItemByNumber(number: String): Maybe<DbBlacklistItem>
 
     /**
-     * Delete phoneNumberItem and clear orphaned [DbActivityInterval]'s formed in operation.
+     * Delete blacklistItems and clear orphaned [DbActivityInterval]'s formed in operation.
      * Operations execute in transaction.
      * Result [Completable] doesn't specify schedulers.
      */
@@ -53,4 +49,102 @@ interface IDatabaseSource {
      * @return [Maybe] with list of phoneNumberItems, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
      */
     fun getActivityIntervalsAssociatedWithBlacklistItem(blacklistItem: DbBlacklistItem): Maybe<List<DbActivityInterval>>
+
+    /**
+     * @return [Single] with list of activityIntervals, associated with [blacklistItem]. Result [Single] doesn't specify schedulers.
+     */
+    fun getActivityIntervalsAssociatedWithBlacklistContactItem(blacklistItem: DbBlacklistContactItem): Single<List<DbActivityInterval>>
+
+    /**
+     * Get all [DbBlacklistContactItem]'s
+     * Result [Single] doesn't modify any schedulers.
+     */
+    fun getAllBlacklistContactItems(): Single<List<DbBlacklistContactItem>>
+
+    /**
+     * @return list of [DbBlacklistContactItem] firstly and after all changes, sorted by [DbBlacklistContactItem.name] asc.
+     * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
+     */
+    fun getAllBlacklistContactItemsSortedByNameAscWithChanges(): Flowable<List<DbBlacklistContactItem>>
+
+    /**
+     * Get blacklistContactItems firstly and after all changes. Not modify any Backpressure policy.
+     * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
+     */
+    fun getBlacklistContactItemWithPhonesAndActivityIntervalsWithChanges(): Flowable<List<DbBlacklistContactItemWithPhonesAndIntervals>>
+
+    /**
+     * @return [Maybe] with blacklistContactItem with [id], if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
+     */
+    fun getBlacklistContactItemById(id: Long?): Maybe<DbBlacklistContactItem>
+
+    /**
+     * Delete [DbBlacklistContactItem] and clear orphaned [DbBlacklistContactPhoneItem]'s and [DbActivityInterval]'s formed in operation.
+     * Operations execute in transaction.
+     * @return [Completable] when operation completes, regardless of really entity delete.
+     * Result [Completable] doesn't specify schedulers.
+     */
+    fun deleteBlacklistContactItem(blacklistContactItem: DbBlacklistContactItem): Completable
+
+    /**
+     * Delete [DbBlacklistContactItem]'s and clear orphaned [DbBlacklistContactPhoneItem]'s and [DbActivityInterval]'s formed in operation.
+     * Operations execute in transaction.
+     * @return [Completable] when operation completes, regardless of count of really deleted entities.
+     * Result [Completable] doesn't specify schedulers.
+     */
+    fun deleteBlacklistContactItems(items: List<DbBlacklistContactItem>): Completable
+
+    /**
+     * Insert or update [DbBlacklistContactItem]'s, depends of their ids is exists. If exists
+     * - updates entity, else - inserts.
+     * Operations execute in transaction.
+     * @param items list of items to update/insert.
+     * @return [Completable] when operation completes, regardless of count of really deleted entities.
+     * Result [Completable] doesn't specify schedulers.
+     */
+    fun putBlacklistContactItems(items: List<DbBlacklistContactItem>): Completable
+
+    /**
+     * Insert or update [DbBlacklistContactItem], then insert their phones and activity intervals if it non persist,
+     * and update association with [DbBlacklistContactPhoneItem] and [DbActivityInterval].
+     * if [DbActivityInterval] not associated, comparsion with existent performed by concatenation of [DbActivityInterval.beginTime],
+     * [DbActivityInterval.endTime] and [DbActivityInterval.dayOfWeek].
+     * Also removes orphaned [DbActivityInterval]'s, formed in this operation.
+     * Operations execute in transaction.
+     * Result [Completable] doesn't specify schedulers.
+     * @param items - contains [DbBlacklistItem] and list of [DbBlacklistContactPhoneItem] and [DbActivityInterval]'s
+     */
+    fun putBlacklistContactItemWithPhonesAndActivityIntervals(items: DbBlacklistContactItemWithPhonesAndIntervals): Completable
+
+    /**
+     * Get all blacklistContactPhoneItems
+     * Result [Single] doesn't modify any schedulers, never calls onComplete().
+     */
+    fun getAllBlacklistContactPhones(): Single<List<DbBlacklistContactPhoneItem>>
+
+    /**
+     * Get all blacklistContactPhoneItems, associated with [item]
+     * Result [Single] doesn't modify any schedulers, never calls onComplete().
+     */
+    fun getBlacklistContactPhonesAssociatedWithBlacklistContactItem(item: DbBlacklistContactItem): Single<List<DbBlacklistContactPhoneItem>>
+
+    /**
+     * Get all blacklistContactPhoneItems, associated with [DbBlacklistContactItem] by its
+     * [DbBlacklistContactItem.deviceDbId] and [DbBlacklistContactItem.deviceLookupKey]
+     * Result [Single] doesn't modify any schedulers, never calls onComplete().
+     */
+    fun getBlacklistContactPhonesByBlacklistContactItemByDeviceDbIdAndLookupKey(item: DbBlacklistContactItem): Single<List<DbBlacklistContactPhoneItem>>
+
+    /**
+     * Delete [DbBlacklistContactPhoneItem] and clear orphaned [DbActivityInterval]'s formed in operation.
+     * Operations execute in transaction.
+     * @return [Completable] when operation completes, regardless of count of really deleted entities.
+     * Result [Completable] doesn't specify schedulers.
+     */
+    fun deleteBlacklistContactPhoneItems(items: List<DbBlacklistContactPhoneItem>): Completable
+
+    /**
+     * @return [CompletableTransformer], that can transform completable to execute in transaction.
+     */
+    fun inTransactionCompletable(): CompletableTransformer
 }

@@ -37,10 +37,24 @@
                 android:layout_height="wrap_content">
 
                 <android.support.constraint.Guideline
-                    android:id="@+id/guideline_vertical_button_add_left_margin"
+                    android:id="@+id/guideline_vertical_button_add_contact_left_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_button_add_left_margin_percent"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_button_add_contact_left_margin_percent"
+                    android:orientation="vertical"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_button_add_contact_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_button_add_contact_right_percent"
+                    android:orientation="vertical"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_vertical_button_add_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="@dimen/blacklist_guideline_vertical_button_add_left_percent"
                     android:orientation="vertical"/>
 
                 <android.support.constraint.Guideline
@@ -65,10 +79,21 @@
                     android:orientation="vertical"/>
 
                 <Button
+                    android:id="@+id/button_add_contact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/guideline_vertical_button_add_contact_left_margin"
+                    app:layout_constraintRight_toRightOf="@id/guideline_vertical_button_add_contact_right"
+                    app:layout_constraintBottom_toTopOf="@+id/checkbox_ignore_hidden_numbers"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="1"
+                    android:text="@string/blacklist_add_contact_action" />
+
+                <Button
                     android:id="@+id/button_add"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_button_add_left_margin"
+                    app:layout_constraintLeft_toRightOf="@id/guideline_vertical_button_add_left"
                     app:layout_constraintRight_toRightOf="@id/guideline_vertical_button_add_right_margin"
                     app:layout_constraintBottom_toTopOf="@+id/checkbox_ignore_hidden_numbers"
                     app:layout_constraintTop_toTopOf="parent"

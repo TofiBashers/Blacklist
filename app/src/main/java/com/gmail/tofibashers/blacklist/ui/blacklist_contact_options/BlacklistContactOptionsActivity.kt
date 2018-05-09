@@ -21,9 +21,9 @@ import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 import kotterknife.bindView
 import javax.inject.Inject
 
-class BlacklistContactOptionsActivity : BaseStateableViewActivity<View, Group>(), BlacklistContactOptionsPhoneNumberViewHolder.StateChangeListener, View.OnClickListener {
+class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(), BlacklistContactOptionsPhoneNumberViewHolder.StateChangeListener, View.OnClickListener {
 
-    override val loadingView: View by bindView(R.id.progressbar_view)
+    override val loadingView: Group by bindView(R.id.group_progress)
     override val dataView: Group by bindView(R.id.group_contact_with_options_with_controls)
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val okButton: Button by bindView(R.id.button_save)
@@ -95,12 +95,12 @@ class BlacklistContactOptionsActivity : BaseStateableViewActivity<View, Group>()
     }
 
     override fun onIgnoreSmsCheckedChanged(position: Int, isChecked: Boolean) =
-            viewModel.onSetIsSmsBlocked(position, isChecked)
+            viewModel.onSetIsSmsBlocked(position-1, isChecked)
 
     override fun onIgnoreCallsCheckedChanged(position: Int, isChecked: Boolean) =
-            viewModel.onSetIsCallsBlocked(position, isChecked)
+            viewModel.onSetIsCallsBlocked(position-1, isChecked)
 
-    override fun onChangeScheduleClick(position: Int) = viewModel.onInitChangeSchedule(position)
+    override fun onChangeScheduleClick(position: Int) = viewModel.onInitChangeSchedule(position-1)
 
     private fun showNavigationToListWithChangedOrDeletedError() {
         Toast.makeText(applicationContext,
@@ -125,6 +125,7 @@ class BlacklistContactOptionsActivity : BaseStateableViewActivity<View, Group>()
     }
 
     private fun showDataStateWithParamsState(dataViewState: BlacklistContactOptionsViewState.DataViewState) {
+        setViewState(ViewState.DATA)
         val modeWithState = dataViewState.modeWithState
         setTitle(
                 if (modeWithState.mode == InteractionMode.CREATE) R.string.blacklist_contact_options_toolbar_create_title

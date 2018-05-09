@@ -1,5 +1,7 @@
 package com.gmail.tofibashers.blacklist.di.app
 
+import com.gmail.tofibashers.blacklist.data.ISynchronizeDataUseCase
+import com.gmail.tofibashers.blacklist.data.SynchronizeDataUseCase
 import com.gmail.tofibashers.blacklist.data.repo.*
 import dagger.Binds
 import dagger.Module
@@ -64,4 +66,8 @@ abstract class RepositoryAndPreferenceDataModule {
     @Binds
     @Singleton
     abstract fun provideIDeviceData(deviceData: DeviceData) : IDeviceData
+
+    @Binds
+    @Singleton
+    abstract fun provideISynchronizeDataUseCase(synchronizeDataUseCase: SynchronizeDataUseCase) : ISynchronizeDataUseCase
 }

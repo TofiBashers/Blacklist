@@ -22,7 +22,7 @@ interface IWhitelistContactPhoneRepository {
      *
      * Result [Single] doesn't modify any schedulers.
      */
-    fun getAllAssociatedWithWhitelistContact(whitelistContactItem: WhitelistContactItem) : Single<List<WhitelistContactPhone>>
+    fun getAllAssociatedWithContact(whitelistContactItem: WhitelistContactItem) : Single<List<WhitelistContactPhone>>
 
     /**
      * @return count of [WhitelistContactPhone], associated with [whitelistContactItem].

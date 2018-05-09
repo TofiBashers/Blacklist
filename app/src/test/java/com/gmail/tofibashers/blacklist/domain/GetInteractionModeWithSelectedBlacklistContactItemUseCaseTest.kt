@@ -130,7 +130,7 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
                 .thenReturn(testAndRes.testAssociatedBlacklistContactNumbersSingle)
         whenever(mockBlacklistContactItemMapper.toWhitelistContactItem(testAndRes.testSelectedBlacklistContact))
                 .thenReturn(testAndRes.testMappedWhitelistContact)
-        whenever(mockWhitelistContactPhoneRepository.getAllAssociatedWithWhitelistContact(testAndRes.testMappedWhitelistContact))
+        whenever(mockWhitelistContactPhoneRepository.getAllAssociatedWithContact(testAndRes.testMappedWhitelistContact))
                 .thenReturn(testAndRes.testAssociatedContactNumbersSingle)
         doAnswer { invocationOnMock -> InteractionModeWithBlacklistContactItemAndNumbersAndValidState(
                 invocationOnMock.arguments[0] as InteractionMode,

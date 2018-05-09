@@ -1,5 +1,6 @@
 package com.gmail.tofibashers.blacklist.entity.mapper
 
+import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistContactItem
 import com.gmail.tofibashers.blacklist.data.memory.MemoryBlacklistContactItem
 import com.gmail.tofibashers.blacklist.entity.*
 import javax.inject.Inject
@@ -52,6 +53,14 @@ constructor(){
 
     fun toMemoryBlacklistContactItem(blacklistContact: BlacklistContactItem) : MemoryBlacklistContactItem =
             MemoryBlacklistContactItem(
+                    blacklistContact.dbId,
+                    blacklistContact.deviceDbId,
+                    blacklistContact.deviceKey,
+                    blacklistContact.name,
+                    blacklistContact.photoUrl)
+
+    fun toDbBlacklistContactItem(blacklistContact: BlacklistContactItem) : DbBlacklistContactItem =
+            DbBlacklistContactItem(
                     blacklistContact.dbId,
                     blacklistContact.deviceDbId,
                     blacklistContact.deviceKey,

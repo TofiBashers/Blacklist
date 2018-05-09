@@ -142,4 +142,9 @@ abstract class UseCaseModule {
     @Singleton
     abstract fun provideIDeleteBlacklistContactItemUseCase(useCase: DeleteBlacklistContactItemUseCase)
             : IDeleteBlacklistContactItemUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideICreateDefaultActivityIntervalsForNonLocalizedWeekSyncUseCase(useCase: CreateDefaultActivityIntervalsForNonLocalizedWeekSyncUseCase)
+            : ICreateDefaultActivityIntervalsForNonLocalizedWeekSyncUseCase
 }

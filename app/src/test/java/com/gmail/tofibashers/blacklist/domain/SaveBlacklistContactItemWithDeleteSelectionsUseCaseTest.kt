@@ -97,7 +97,7 @@ class SaveBlacklistContactItemWithDeleteSelectionsUseCaseTest {
 
         whenever(mockInteractionModeRepository.getSelectedMode())
                 .thenReturn(testData.maybeInteractionMode)
-        whenever(mockBlacklistContactItemRepository.getByDeviceIdAndDeviceKey(testData.testInpContactItem.deviceDbId, testData.testInpContactItem.deviceKey))
+        whenever(mockBlacklistContactItemRepository.getByDbId(testData.testInpContactItem.dbId))
                 .thenReturn(testData.testMaybeValidBlacklistContactByDevideIdAndKey)
         whenever(mockActivityIntervalRepository.getSelectedMultipleActivityIntervalsLists())
                 .thenReturn(testData.testMaybeSelectedMultipleActivityIntervalsList)
@@ -117,8 +117,7 @@ class SaveBlacklistContactItemWithDeleteSelectionsUseCaseTest {
 
         whenever(mockInteractionModeRepository.getSelectedMode())
                 .thenReturn(testData.maybeInteractionMode)
-        whenever(mockBlacklistContactItemRepository.getByDeviceIdAndDeviceKey(testData.testInpContactItem.deviceDbId,
-                testData.testInpContactItem.deviceKey))
+        whenever(mockBlacklistContactItemRepository.getByDbId(testData.testInpContactItem.dbId))
                 .thenReturn(testData.testMaybeValidBlacklistContactByDevideIdAndKey)
         whenever(mockActivityIntervalRepository.getSelectedMultipleActivityIntervalsLists())
                 .thenReturn(testData.testMaybeSelectedMultipleActivityIntervalsList)

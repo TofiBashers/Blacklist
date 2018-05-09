@@ -1,5 +1,6 @@
 package com.gmail.tofibashers.blacklist.ui.select_contact
 
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.utils.BaseFactory
 import com.google.auto.factory.AutoFactory
 
@@ -10,11 +11,8 @@ import com.google.auto.factory.AutoFactory
 sealed class SelectContactNavData {
 
     @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
-    class BlacklistContactOptionsRoute : SelectContactNavData()
-
-    @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
     data class EditContactRoute(val contactId: Long, val contactKey: String) : SelectContactNavData()
 
     @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
-    class ParentRoute : SelectContactNavData()
+    data class ParentRoute(val result: SavingResult) : SelectContactNavData()
 }

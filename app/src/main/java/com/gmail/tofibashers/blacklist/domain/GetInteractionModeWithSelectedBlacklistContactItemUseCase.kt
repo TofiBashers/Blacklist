@@ -80,7 +80,7 @@ constructor(
         return Single.fromCallable { blacklistContactItemMapper.toWhitelistContactItem(blacklistContactItem) }
                 .flatMapObservable { sourceContact: WhitelistContactItem ->
                     Observable.concat(
-                            whitelistContactPhoneRepository.getAllAssociatedWithWhitelistContact(sourceContact)
+                            whitelistContactPhoneRepository.getAllAssociatedWithContact(sourceContact)
                                     .map { contactPhonesToBlacklistContactPhonesWithDefaultSettings(it) }
                                     .flattenAsObservable { it },
                             blacklistContactPhoneRepository.getAllAssociatedWithBlacklistContact(blacklistContactItem)

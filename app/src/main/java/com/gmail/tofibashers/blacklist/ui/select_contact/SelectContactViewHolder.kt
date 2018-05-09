@@ -36,7 +36,7 @@ class SelectContactViewHolder(
 
     override fun bind(item: WhitelistContactItemWithHasPhones){
         contactInfoGroup.isEnabled = item.hasPhones
-        disabledToSelectInfoGroup.visibility = if(item.hasPhones) View.VISIBLE else View.INVISIBLE
+        disabledToSelectInfoGroup.visibility = if(item.hasPhones) View.INVISIBLE else View.VISIBLE
         contactNameView.text = item.name
         loadContactImageByUrlOrDefault(contactImageView, item.photoUrl)
     }

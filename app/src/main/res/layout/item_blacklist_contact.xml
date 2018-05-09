@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_guideline_horizontal_bottom_options_button_percent"
-        android:orientation="vertical"/>
+        android:orientation="horizontal"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_horizontal_beteen_contact_name_and_with_non_ignored"
@@ -94,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_between_contact_image_and_text"
-        app:layout_constraintRight_toRightOf="@id/guideline_vertical_for_right_margin"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_between_contact_text_and_options_button"
         app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_beteen_contact_name_and_with_non_ignored"
         app:layout_constraintTop_toTopOf="@id/guideline_horizontal_for_top_margin"
         android:gravity="center"

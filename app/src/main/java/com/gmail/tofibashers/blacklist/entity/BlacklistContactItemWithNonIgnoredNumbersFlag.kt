@@ -12,5 +12,5 @@ data class BlacklistContactItemWithNonIgnoredNumbersFlag(var dbId: Long? = null,
                                                          var deviceDbId: Long? = null,
                                                          var deviceKey: String? = null,
                                                          var name: String,
-                                                         var photoUrl: String,
+                                                         var photoUrl: String? = null,
                                                          var withNonIgnoredNumbers: Boolean)

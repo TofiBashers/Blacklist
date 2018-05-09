@@ -6,6 +6,7 @@ import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItemWithJoinsBl
 import com.gmail.tofibashers.blacklist.data.db.entity.DbJoinBlacklistItemActivityInterval
 import com.gmail.tofibashers.blacklist.data.db.table_constants.ActivityIntervalTable
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTable
+import com.gmail.tofibashers.blacklist.data.db.table_constants.JoinBlacklistContactPhoneItemActivityIntervalTable
 import com.gmail.tofibashers.blacklist.data.db.table_constants.JoinBlacklistItemActivityIntervalTable
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -26,8 +27,8 @@ abstract class IJoinBlacklistItemActivityIntervalDao {
     fun removeAllJoinsWithBlacklistItemIdAsCompletable(blacklistItemId: Long?) : Completable =
             Completable.fromCallable { removeAllJoinsWithBlacklistItemId(blacklistItemId) }
 
-    fun removeActivityIntervalsNonAssociatedWithBlacklistItemsAsCompletable() : Completable =
-            Completable.fromCallable { removeActivityIntervalsNonAssociatedWithBlacklistItems() }
+    fun removeActivityIntervalsNonAssociatedWithBlacklistItemsAndBlacklistContactPhoneItemsAsCompletable() : Completable =
+            Completable.fromCallable { removeActivityIntervalsNonAssociatedWithBlacklistItemsAndBlacklistContactPhoneItems() }
 
     @Query("SELECT * FROM " + JoinBlacklistItemActivityIntervalTable.TABLE_NAME
             + " INNER JOIN " + ActivityIntervalTable.TABLE_NAME
@@ -61,6 +62,9 @@ abstract class IJoinBlacklistItemActivityIntervalDao {
     @Query("DELETE FROM " + ActivityIntervalTable.TABLE_NAME
             + " WHERE " + ActivityIntervalTable._ID + " NOT IN"
             + "(SELECT DISTINCT " + JoinBlacklistItemActivityIntervalTable.ACTIVITY_INTERVAL_ID
-            + " FROM " + JoinBlacklistItemActivityIntervalTable.TABLE_NAME + ")")
-    protected abstract fun removeActivityIntervalsNonAssociatedWithBlacklistItems()
+            + " FROM " + JoinBlacklistItemActivityIntervalTable.TABLE_NAME + ")"
+            + " AND " + ActivityIntervalTable._ID + " NOT IN"
+            + "(SELECT DISTINCT " + JoinBlacklistContactPhoneItemActivityIntervalTable.ACTIVITY_INTERVAL_ID
+            + " FROM " + JoinBlacklistContactPhoneItemActivityIntervalTable.TABLE_NAME + ")")
+    protected abstract fun removeActivityIntervalsNonAssociatedWithBlacklistItemsAndBlacklistContactPhoneItems()
 }
