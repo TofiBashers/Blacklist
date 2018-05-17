@@ -2,10 +2,8 @@ package com.gmail.tofibashers.blacklist.ui
 
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.domain.IGetAllNonIgnoredContactsWithChangesUseCase
-import com.gmail.tofibashers.blacklist.domain.ISelectContactItemUseCase
+import com.gmail.tofibashers.blacklist.domain.ISelectWhitelistContactItemWithPhonesUseCase
 import com.gmail.tofibashers.blacklist.entity.*
-import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsNavData
-import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsViewState
 import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
 import com.gmail.tofibashers.blacklist.ui.select_contact.*
@@ -28,7 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class SelectContactViewModelTest {
 
     @Mock
-    lateinit var mockSelectContactItemUseCase: ISelectContactItemUseCase
+    lateinit var mockSelectWhitelistContactItemWithPhonesUseCase: ISelectWhitelistContactItemWithPhonesUseCase
 
     @Mock
     lateinit var mockGetAllNonIgnoredContactsUseCase: IGetAllNonIgnoredContactsWithChangesUseCase
@@ -55,7 +53,7 @@ class SelectContactViewModelTest {
 
     @Before
     fun setUp() {
-        testViewModel = SelectContactViewModel(mockSelectContactItemUseCase,
+        testViewModel = SelectContactViewModel(mockSelectWhitelistContactItemWithPhonesUseCase,
                 mockGetAllNonIgnoredContactsUseCase,
                 mockParentRouteFactory,
                 mockEditContactRouteFactory,
@@ -161,7 +159,7 @@ class SelectContactViewModelTest {
         whenever(mockGetAllNonIgnoredContactsUseCase.build())
                 .thenReturn(Observable.just(testResult)
                         .compose { asNeverComplete(it) })
-        whenever(mockSelectContactItemUseCase.build(testContactItem))
+        whenever(mockSelectWhitelistContactItemWithPhonesUseCase.build(testContactItem))
                 .thenReturn(Completable.complete()
                         .observeOn(testSelectScheduler))
         doAnswer { invocationOnMock ->

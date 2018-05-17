@@ -1,9 +1,7 @@
 package com.gmail.tofibashers.blacklist.domain
 
-import com.gmail.tofibashers.blacklist.entity.ActivityInterval
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem
 import io.reactivex.Maybe
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,12 +13,14 @@ import javax.inject.Singleton
 @Singleton
 class ValidateBlacklistContactPhoneNumbersForSaveSyncUseCase
 @Inject
-constructor(): IValidateBlacklistContactPhoneNumbersForSaveSyncUseCase {
+constructor(private val validateBlacklistContactPhoneNumberForSaveSyncUseCase: ValidateBaseBlacklistPhoneForSaveSyncUseCase)
+    : IValidateBlacklistContactPhoneNumbersForSaveSyncUseCase {
 
     override fun build(phoneNumbers: List<BlacklistContactPhoneNumberItem>): Single<Boolean> {
         return Maybe.fromCallable {
             phoneNumbers.find {
-                item: BlacklistContactPhoneNumberItem -> item.isCallsBlocked || item.isSmsBlocked
+                validateBlacklistContactPhoneNumberForSaveSyncUseCase.build(it)
+                        .blockingGet()
             }
         }
                 .map { true }

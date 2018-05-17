@@ -42,6 +42,10 @@ abstract class IActivityIntervalDao {
     abstract fun updateActivityInterval(dbActivityInterval: DbActivityInterval) : Int
 
     @Query("SELECT * FROM " + ActivityIntervalTable.TABLE_NAME
+            + " WHERE " + ActivityIntervalTable._ID + " = :id")
+    abstract fun getActivityIntervalByIdOrException(id: Long?) : Single<DbActivityInterval>
+
+    @Query("SELECT * FROM " + ActivityIntervalTable.TABLE_NAME
             + " WHERE " + ActivityIntervalTable.WEEKDAY_ID + " = :weekdayId"
             + " AND " + ActivityIntervalTable.BEGIN_TIME + " = :beginTime"
             + " AND " + ActivityIntervalTable.END_TIME + " = :endTime")

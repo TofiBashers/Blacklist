@@ -42,7 +42,7 @@ class BlacklistViewModelTest {
     lateinit var mockDeletePhoneNumberItemUseCase: IDeletePhoneNumberItemUseCase
 
     @Mock
-    lateinit var mockSelectContactItemUseCase: ISelectEditModeAndContactItemUseCase
+    lateinit var mockSelectContactItemUseCase: ISelectEditModeAndBlacklistContactItemWithPhonesAndIntervalsUseCase
 
     @Mock
     lateinit var mockDeleteBlacklistContactItemUseCase: IDeleteBlacklistContactItemUseCase

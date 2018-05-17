@@ -17,7 +17,9 @@ constructor(
         private val activityIntervalRepository: IActivityIntervalRepository,
         private val interactionModeRepository: IInteractionModeRepository,
         private val blacklistContactItemRepository: IBlacklistContactItemRepository,
-        private val whitelistContactItemRepository: IWhitelistContactItemRepository
+        private val whitelistContactItemRepository: IWhitelistContactItemRepository,
+        private val blacklistContactPhoneWithActivityIntervalsRepository: IBlacklistContactPhoneWithActivityIntervalsRepository,
+        private val whitelistContactPhoneRepository: WhitelistContactPhoneRepository
 ): IDeleteAllSelectionsSyncUseCase {
 
     override fun build(): Completable {
@@ -26,5 +28,7 @@ constructor(
                 .andThen(interactionModeRepository.removeSelectedMode())
                 .andThen(whitelistContactItemRepository.removeSelected())
                 .andThen(blacklistContactItemRepository.removeSelected())
+                .andThen(blacklistContactPhoneWithActivityIntervalsRepository.removeSelectedList())
+                .andThen(whitelistContactPhoneRepository.removeSelectedList())
     }
 }

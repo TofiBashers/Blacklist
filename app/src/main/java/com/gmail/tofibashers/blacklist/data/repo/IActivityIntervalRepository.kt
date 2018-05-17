@@ -24,6 +24,7 @@ interface IActivityIntervalRepository {
      * Get value by , if exists.
      * Result [Single] doesn't specify schedulers.
      */
+    @Deprecated("not need")
     fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Single<List<ActivityInterval>>
 
     /**
@@ -49,6 +50,7 @@ interface IActivityIntervalRepository {
      * Remove multiple intervals lists, stored as "selected" (with [putSelectedMultipleActivityIntervalsLists]), if not stored - do nothing and completes.
      * Result [Completable] doesn't specify schedulers.
      */
+    @Deprecated("all logic replaced by BlacklistContactPhoneWithActivityIntervalsRepository")
     fun removeSelectedMultipleActivityIntervalsLists(): Completable
 
     /**
@@ -56,12 +58,14 @@ interface IActivityIntervalRepository {
      * Result [Maybe] doesn't specify schedulers.
      * @return - [Maybe] with list, if it exists. Otherwise, empty [Maybe]
      */
+    @Deprecated("all logic replaced by BlacklistContactPhoneWithActivityIntervalsRepository")
     fun getSelectedMultipleActivityIntervalsLists(): Maybe<List<List<ActivityInterval>>>
 
     /**
      * Insert or update multiple intervals lists, stored as "selected" (with [putSelectedMultipleActivityIntervalsLists])
      * Result [Completable] doesn't specify schedulers.
      */
+    @Deprecated("all logic replaced by BlacklistContactPhoneWithActivityIntervalsRepository")
     fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<ActivityInterval>>): Completable
 
 }

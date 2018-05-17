@@ -20,7 +20,7 @@ constructor(
         private val selectPhoneNumberElementUseCase: ISelectEditModeAndPhoneNumberItemUseCase,
         private val selectCreateModeUseCase: ISelectCreateModeUseCase,
         private val deletePhoneNumberItemUseCase: IDeletePhoneNumberItemUseCase,
-        private val selectContactItemUseCase: ISelectEditModeAndContactItemUseCase,
+        private val selectContactItemUseCase: ISelectEditModeAndBlacklistContactItemWithPhonesAndIntervalsUseCase,
         private val deleteContactItemUseCase: IDeleteBlacklistContactItemUseCase,
         private val listViewStateFactory: BlacklistViewState_ListViewStateFactory,
         private val loadingViewStateFactory: BlacklistViewState_LoadingViewStateFactory,

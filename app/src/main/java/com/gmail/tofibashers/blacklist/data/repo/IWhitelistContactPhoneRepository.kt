@@ -1,14 +1,18 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneWithActivityIntervals
 import com.gmail.tofibashers.blacklist.entity.WhitelistContactItem
 import com.gmail.tofibashers.blacklist.entity.WhitelistContactPhone
+import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 
 /**
  * Created by TofiBashers on 14.04.2018.
  */
-interface IWhitelistContactPhoneRepository {
+interface IWhitelistContactPhoneRepository : IBaseListSelectionOperationRepository<WhitelistContactPhone>{
 
     /**
      * @return list of [WhitelistContactPhone], associated with [whitelistContactItem], sorted by number.

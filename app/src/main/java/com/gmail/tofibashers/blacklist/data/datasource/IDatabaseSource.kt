@@ -53,6 +53,7 @@ interface IDatabaseSource {
     /**
      * @return [Single] with list of activityIntervals, associated with [blacklistItem]. Result [Single] doesn't specify schedulers.
      */
+    @Deprecated("not need")
     fun getActivityIntervalsAssociatedWithBlacklistContactItem(blacklistItem: DbBlacklistContactItem): Single<List<DbActivityInterval>>
 
     /**
@@ -127,6 +128,12 @@ interface IDatabaseSource {
      * Result [Single] doesn't modify any schedulers, never calls onComplete().
      */
     fun getBlacklistContactPhonesAssociatedWithBlacklistContactItem(item: DbBlacklistContactItem): Single<List<DbBlacklistContactPhoneItem>>
+
+    /**
+     * Get all blacklistContactPhones and their intervals, associated with [item]
+     * Result [Single] doesn't modify any schedulers, never calls onComplete().
+     */
+    fun getBlacklistContactPhonesWithIntervalsAssociatedWithBlacklistContactItem(item: DbBlacklistContactItem): Single<List<DbBlacklistContactPhoneWithActivityIntervals>>
 
     /**
      * Get all blacklistContactPhoneItems, associated with [DbBlacklistContactItem] by its

@@ -38,17 +38,14 @@ constructor(){
                     withNonIgnoredNumbers)
 
     fun toBlacklistContactItemWithPhonesAndIntervals(blacklistContact: BlacklistContactItem,
-                                                     blacklistPhones: List<BlacklistContactPhoneNumberItem>,
-                                                     activityIntervalsLists: List<List<ActivityInterval>>,
-                                                     blacklistContactPhoneMapper: BlacklistContactPhoneMapper) : BlacklistContactItemWithPhonesAndIntervals {
-        val phonesWithIntervals = blacklistContactPhoneMapper.toBlacklistContactPhonesWithIntervals(blacklistPhones, activityIntervalsLists)
+                                                     blacklistPhonesWithIntervals: List<BlacklistContactPhoneWithActivityIntervals>) : BlacklistContactItemWithPhonesAndIntervals {
         return BlacklistContactItemWithPhonesAndIntervals(
                 blacklistContact.dbId,
                 blacklistContact.deviceDbId,
                 blacklistContact.deviceKey,
                 blacklistContact.name,
                 blacklistContact.photoUrl,
-                phonesWithIntervals)
+                blacklistPhonesWithIntervals)
     }
 
     fun toMemoryBlacklistContactItem(blacklistContact: BlacklistContactItem) : MemoryBlacklistContactItem =

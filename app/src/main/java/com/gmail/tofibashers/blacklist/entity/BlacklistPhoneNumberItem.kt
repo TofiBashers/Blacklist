@@ -5,9 +5,10 @@ import com.google.auto.factory.AutoFactory
 
 @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
 data class BlacklistPhoneNumberItem(var dbId: Long? = null,
-                                    var number: String,
-                                    var isCallsBlocked: Boolean,
-                                    var isSmsBlocked: Boolean){
+                                    override var number: String,
+                                    override var isCallsBlocked: Boolean,
+                                    override var isSmsBlocked: Boolean)
+    : BaseBlacklistPhone(number, isCallsBlocked, isSmsBlocked){
 
     constructor() : this(null, "", false, false)
 }

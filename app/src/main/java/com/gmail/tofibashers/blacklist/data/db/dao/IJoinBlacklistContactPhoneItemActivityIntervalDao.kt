@@ -28,6 +28,12 @@ abstract class IJoinBlacklistContactPhoneItemActivityIntervalDao {
     abstract fun getAllBlacklistContactItemsWithPhonesAndActivityIntervalIdsWithChanges() :
             Flowable<List<DbBlacklistContactWithPhonesWithJoinBlacklistContactPhoneItemActivityInterval>>
 
+    @Query("SELECT * FROM ${BlacklistContactPhoneItemTable.TABLE_NAME}"
+            + " WHERE ${BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID} = :blacklistContactId")
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    abstract fun getBlacklistContactPhonesAndActivityIntervalIdsByBlacklistContactId(blacklistContactId: Long?) :
+            Single<List<DbBlacklistContactPhoneWithJoinBlacklistContactPhoneItemActivityInterval>>
+
     @Query("SELECT ${ActivityIntervalTable._ID_WITH_TABLE_PREFIX} AS ${ActivityIntervalTable._ID},"
             + " ${ActivityIntervalTable.WEEKDAY_ID_WITH_TABLE_PREFIX} AS ${ActivityIntervalTable.WEEKDAY_ID},"
             + " ${ActivityIntervalTable.BEGIN_TIME_WITH_TABLE_PREFIX} AS ${ActivityIntervalTable.BEGIN_TIME},"

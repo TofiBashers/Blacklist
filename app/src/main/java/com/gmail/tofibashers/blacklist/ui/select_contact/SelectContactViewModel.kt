@@ -2,7 +2,7 @@ package com.gmail.tofibashers.blacklist.ui.select_contact
 
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.domain.IGetAllNonIgnoredContactsWithChangesUseCase
-import com.gmail.tofibashers.blacklist.domain.ISelectContactItemUseCase
+import com.gmail.tofibashers.blacklist.domain.ISelectWhitelistContactItemWithPhonesUseCase
 import com.gmail.tofibashers.blacklist.entity.WhitelistContactItemWithHasPhones
 import com.gmail.tofibashers.blacklist.ui.common.DisposableViewModel
 import com.gmail.tofibashers.blacklist.ui.common.SavingResult
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class SelectContactViewModel
 @Inject
 constructor(
-        private val selectContactItemUseCase: ISelectContactItemUseCase,
+        private val selectWhitelistContactItemWithPhonesUseCase: ISelectWhitelistContactItemWithPhonesUseCase,
         private val getAllNonIgnoredContactsUseCase: IGetAllNonIgnoredContactsWithChangesUseCase,
         private val parentRouteFactory: SelectContactNavData_ParentRouteFactory,
         private val editContactRouteFactory: SelectContactNavData_EditContactRouteFactory,
@@ -41,7 +41,7 @@ constructor(
 
     fun onInitSelectContact(position: Int){
         viewStateData.value = loadingViewStateFactory.create()
-        selectContactItemUseCase.build(list!![position])
+        selectWhitelistContactItemWithPhonesUseCase.build(list!![position])
                 .subscribe(SelectItemObserver())
     }
 

@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
  * This UseCase selects [InteractionMode.EDIT], blacklist contact and all it's phone numbers [ActivityInterval].
  * Created by TofiBashers on 10.04.2018.
  */
-interface ISelectEditModeAndContactItemUseCase {
+interface ISelectEditModeAndBlacklistContactItemWithPhonesAndIntervalsUseCase {
 
     /**
      * Result [Completable] subscribes and executes in [Schedulers.IO], provides result to Android UI-thread

@@ -27,13 +27,13 @@ class BlacklistContactOptionsViewModelTest {
     lateinit var mockGetInteractionModeWithItemAndValidUseCase: IGetInteractionModeWithSelectedBlacklistContactItemUseCase
 
     @Mock
-    lateinit var mockSaveContactWithDeleteSelectionsUseCase: ISaveBlacklistContactItemWithDeleteSelectionsUseCase
+    lateinit var mockSaveContactWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase: ISaveBlacklistContactItemWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase
 
     @Mock
     lateinit var mockSelectForEditActivityIntervalsUseCase: ISelectForEditActivityIntervalsOfBlacklistContactPhoneUseCase
 
     @Mock
-    lateinit var mockSaveSelectedIntervalUseCase: ISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase
+    lateinit var mockSaveSelectedIntervalUseCase: ISaveSelectedForEditActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase
 
     @Mock
     lateinit var mockValidatePhoneNumbersForSaveSyncUseCase: IValidateBlacklistContactPhoneNumbersForSaveSyncUseCase
@@ -67,7 +67,7 @@ class BlacklistContactOptionsViewModelTest {
     @Before
     fun setUp() {
         testViewModel = BlacklistContactOptionsViewModel(mockGetInteractionModeWithItemAndValidUseCase,
-                mockSaveContactWithDeleteSelectionsUseCase,
+                mockSaveContactWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase,
                 mockSelectForEditActivityIntervalsUseCase,
                 mockSaveSelectedIntervalUseCase,
                 mockValidatePhoneNumbersForSaveSyncUseCase,
@@ -124,7 +124,7 @@ class BlacklistContactOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemAndValidUseCase.build())
                 .thenReturn(Single.just(testModeWithItemAndState))
-        whenever(mockSaveContactWithDeleteSelectionsUseCase.build(testContactItem, testPhoneNumbers))
+        whenever(mockSaveContactWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase.build(testContactItem, testPhoneNumbers))
                 .thenReturn(Completable.complete()
                         .observeOn(testSaveScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
@@ -162,7 +162,7 @@ class BlacklistContactOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemAndValidUseCase.build())
                 .thenReturn(Single.just(testModeWithItemAndState))
-        whenever(mockSaveContactWithDeleteSelectionsUseCase.build(testContactItem, testPhoneNumbers))
+        whenever(mockSaveContactWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase.build(testContactItem, testPhoneNumbers))
                 .thenReturn(Completable.error(OutdatedDataException())
                         .observeOn(testSaveScheduler))
         whenever(mockLoadingViewStateFactory.create())
@@ -229,7 +229,7 @@ class BlacklistContactOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemAndValidUseCase.build())
                 .thenReturn(Single.just(testModeWithItemAndState))
-        whenever(mockSelectForEditActivityIntervalsUseCase.build(testPosition, testModeWithItemAndState.size))
+        whenever(mockSelectForEditActivityIntervalsUseCase.build(testPosition))
                 .thenReturn(Completable.complete()
                         .observeOn(testSelectForEditScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
@@ -265,7 +265,7 @@ class BlacklistContactOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemAndValidUseCase.build())
                 .thenReturn(Single.just(testModeWithItemAndState))
-        whenever(mockSelectForEditActivityIntervalsUseCase.build(testPosition, testModeWithItemAndState.size))
+        whenever(mockSelectForEditActivityIntervalsUseCase.build(testPosition))
                 .thenReturn(Completable.complete())
         whenever(mockSaveSelectedIntervalUseCase.build(testPosition))
                 .thenReturn(Completable.complete()
@@ -306,7 +306,7 @@ class BlacklistContactOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemAndValidUseCase.build())
                 .thenReturn(Single.just(testModeWithItemAndState))
-        whenever(mockSelectForEditActivityIntervalsUseCase.build(testPosition, testModeWithItemAndState.size))
+        whenever(mockSelectForEditActivityIntervalsUseCase.build(testPosition))
                 .thenReturn(Completable.complete())
         whenever(mockSaveSelectedIntervalUseCase.build(testPosition))
                 .thenReturn(Completable.error(OutdatedDataException())

@@ -1,7 +1,6 @@
 package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
-import com.gmail.tofibashers.blacklist.data.repo.BlacklistContactItemWithPhonesAndActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemWithActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IPreferencesData
@@ -73,7 +72,7 @@ constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklist
                 .toFlowable()
     }
 
-    private fun toPairNumberWithMapTimeByWeekday(item: BaseBlacklistElementWithActivityIntervals)
+    private fun toPairNumberWithMapTimeByWeekday(item: BaseBlacklistPhoneWithActivityIntervals)
             : Flowable<Pair<String, TimeAndIgnoreSettingsByWeekdayId>> {
         return Flowable.fromIterable(item.activityIntervals)
                 .toMap( { interval: ActivityInterval -> interval.weekDayId },

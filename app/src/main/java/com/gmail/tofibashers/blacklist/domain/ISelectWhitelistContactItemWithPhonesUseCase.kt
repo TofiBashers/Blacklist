@@ -8,7 +8,7 @@ import io.reactivex.Completable
  * This UseCase selects contact.
  * Created by TofiBashers on 14.04.2018.
  */
-interface ISelectContactItemUseCase {
+interface ISelectWhitelistContactItemWithPhonesUseCase {
 
     /**
      * Result [Completable] subscribes and executes on [Schedulers.IO], provides result to Android UI-thread

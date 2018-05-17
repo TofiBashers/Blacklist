@@ -9,11 +9,11 @@ import io.reactivex.schedulers.Schedulers
 
 
 /**
- * This UseCase saves [BlacklistContactItem], list of [BlacklistContactPhoneNumberItem] and currently selected (or created) [ActivityInterval]'s.
- * Validate existence of [BlacklistContactItem] before saving.
+ * This UseCase saves [BlacklistContactItem], list of valid for save [BlacklistContactPhoneNumberItem] and currently selected (or created) [ActivityInterval]'s.
+ * Performs validation of existence [BlacklistContactItem] before saving.
  * Created by TofiBashers on 20.04.2018.
  */
-interface ISaveBlacklistContactItemWithDeleteSelectionsUseCase {
+interface ISaveBlacklistContactItemWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase {
 
     /**
      * Validate existence of [BlacklistContactItem] before saving.

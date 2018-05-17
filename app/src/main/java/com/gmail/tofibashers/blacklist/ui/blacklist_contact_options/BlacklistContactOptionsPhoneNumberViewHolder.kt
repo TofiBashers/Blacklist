@@ -41,7 +41,7 @@ class BlacklistContactOptionsPhoneNumberViewHolder(
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.button_change_schedule -> {
+            changeScheduleButton.id -> {
                 stateChangeListener.onChangeScheduleClick(adapterPosition)
             }
         }
@@ -49,8 +49,8 @@ class BlacklistContactOptionsPhoneNumberViewHolder(
 
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         when (buttonView.id) {
-            R.id.checkbox_ignore_calls -> stateChangeListener.onIgnoreCallsCheckedChanged(adapterPosition, isChecked)
-            R.id.checkbox_ignore_sms -> stateChangeListener.onIgnoreSmsCheckedChanged(adapterPosition, isChecked)
+            ignoreCallsCheckBox.id -> stateChangeListener.onIgnoreCallsCheckedChanged(adapterPosition, isChecked)
+            ignoreSMSCheckBox.id -> stateChangeListener.onIgnoreSmsCheckedChanged(adapterPosition, isChecked)
         }
     }
 

@@ -1,9 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.datasource
 
-import com.gmail.tofibashers.blacklist.data.memory.MemoryActivityInterval
-import com.gmail.tofibashers.blacklist.data.memory.MemoryBlacklistContactItem
-import com.gmail.tofibashers.blacklist.data.memory.MemoryBlacklistItem
-import com.gmail.tofibashers.blacklist.data.memory.MemoryWhitelistContactItem
+import com.gmail.tofibashers.blacklist.data.memory.*
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -30,10 +27,16 @@ constructor() : IMemoryDatasource {
     private var selectedWhitelistContactItem: MemoryWhitelistContactItem? = null
 
     @Volatile
+    private var selectedWhitelistContactPhones: List<MemoryWhitelistContactPhone>? = null
+
+    @Volatile
     private var selectedActivityIntervals: List<MemoryActivityInterval>? = null
 
     @Volatile
     private var selectedMultipleActivityIntervalsLists: List<List<MemoryActivityInterval>>? = null
+
+    @Volatile
+    private var selectedBlacklistContactPhonesWithActivityIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>? = null
 
     @Volatile
     private var selectedInteractionMode: InteractionMode? = null
@@ -65,6 +68,20 @@ constructor() : IMemoryDatasource {
     override fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<MemoryActivityInterval>>): Completable =
             Completable.fromAction { synchronized(this, {
                 selectedMultipleActivityIntervalsLists = activityIntervalsLists
+            }) }
+
+    override fun removeSelectedBlacklistContactPhonesWithActivityIntervals(): Completable =
+            Completable.fromAction { synchronized(this, { selectedBlacklistContactPhonesWithActivityIntervals = null }) }
+
+    override fun getSelectedBlacklistContactPhonesWithActivityIntervals(): Maybe<List<MemoryBlacklistContactPhoneWithActivityIntervals>> =
+            Maybe.defer { synchronized(this, {
+                return@synchronized if (selectedBlacklistContactPhonesWithActivityIntervals == null) Maybe.empty<List<MemoryBlacklistContactPhoneWithActivityIntervals>>()
+                else Maybe.just(selectedBlacklistContactPhonesWithActivityIntervals) })
+            }
+
+    override fun putSelectedBlacklistContactPhonesWithActivityIntervals(phonesWithActivityIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>): Completable =
+            Completable.fromAction { synchronized(this, {
+                selectedBlacklistContactPhonesWithActivityIntervals = phonesWithActivityIntervals
             }) }
 
     override fun removeSelectedBlackListItem(): Completable =
@@ -102,6 +119,24 @@ constructor() : IMemoryDatasource {
     override fun putSelectedContactItem(whitelistContactItem: MemoryWhitelistContactItem): Completable =
             Completable.fromAction { synchronized(this, {
                 selectedWhitelistContactItem = whitelistContactItem
+            }) }
+
+    override fun removeSelectedWhitelistContactPhones(): Completable =
+            Completable.fromAction {
+                synchronized(this, {
+                    selectedWhitelistContactPhones = null
+                })
+            }
+
+    override fun getSelectedWhitelistContactPhones(): Maybe<List<MemoryWhitelistContactPhone>> =
+            Maybe.defer { synchronized(this, {
+                if (selectedWhitelistContactPhones == null) return@synchronized Maybe.empty<List<MemoryWhitelistContactPhone>>()
+                else{ return@synchronized Maybe.just(selectedWhitelistContactPhones) }
+            }) }
+
+    override fun putSelectedWhitelistContactPhones(whitelistContactPhones: List<MemoryWhitelistContactPhone>): Completable =
+            Completable.fromAction { synchronized(this, {
+                selectedWhitelistContactPhones = whitelistContactPhones
             }) }
 
     override fun removeSelectedBlacklistContactItem(): Completable =

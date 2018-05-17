@@ -108,14 +108,14 @@ constructor(
 
     override fun deleteBlacklistContactItem(blacklistContactItem: DbBlacklistContactItem): Completable {
         return deleteBlacklistContactPhoneItemsByContactIdsWithAssociationsAndClearOrphans(blacklistContactItem.id)
-                .andThen { blacklistContactItemDao.deleteByIdsAsCompletable(blacklistContactItem) }
+                .andThen(blacklistContactItemDao.deleteByIdsAsCompletable(blacklistContactItem))
                 .compose(inTransactionCompletable())
     }
 
     override fun deleteBlacklistContactItems(items: List<DbBlacklistContactItem>): Completable {
         return Single.fromCallable { items.map { it.id } }
                 .flatMapCompletable { deleteBlacklistContactPhoneItemsByContactIdsWithAssociationsAndClearOrphans(*it.toTypedArray()) }
-                .andThen { blacklistContactItemDao.deleteByIdsAsCompletable(*items.toTypedArray()) }
+                .andThen(blacklistContactItemDao.deleteByIdsAsCompletable(*items.toTypedArray()))
                 .compose(inTransactionCompletable())
     }
 
@@ -145,8 +145,15 @@ constructor(
         return getBlacklistContactPhonesAssociatedWithBlacklistContactItemId(item.id)
     }
 
+    override fun getBlacklistContactPhonesWithIntervalsAssociatedWithBlacklistContactItem(item: DbBlacklistContactItem): Single<List<DbBlacklistContactPhoneWithActivityIntervals>> {
+        return joinBlacklistContactPhoneItemActivityIntervalDao.getBlacklistContactPhonesAndActivityIntervalIdsByBlacklistContactId(item.id)
+                .flattenAsObservable { it }
+                .flatMapSingle { getBlacklistContactPhoneWithIntervalsForBlacklistPhoneWithJoin(it) }
+                .toList()
+    }
+
     override fun getBlacklistContactPhonesByBlacklistContactItemByDeviceDbIdAndLookupKey(item: DbBlacklistContactItem): Single<List<DbBlacklistContactPhoneItem>> =
-            blacklistContactPhoneItemDao.getByBlacklistContactDeviceDbIdAndLookupKey(item.deviceDbId, item.deviceLookupKey)
+        blacklistContactPhoneItemDao.getByBlacklistContactDeviceDbIdAndLookupKey(item.deviceDbId, item.deviceLookupKey)
 
     override fun deleteBlacklistContactPhoneItems(items: List<DbBlacklistContactPhoneItem>): Completable =
             deleteBlacklistContactPhoneItemsWithAssociationsAndClearOrphans(*items.toTypedArray())
@@ -277,7 +284,7 @@ constructor(
         return blacklistContactItemDao.updateByIdsWithGetUpdatedCountAsSingle(dbBlacklistContactItem)
                 .flatMap {
                     if(it == 1) {
-                        blackListItemDao.getByIdOrException(dbBlacklistContactItem.id)
+                        blacklistContactItemDao.getByIdOrException(dbBlacklistContactItem.id)
                                 .map { it.id }
                     }
                     else blacklistContactItemDao.insertWithGetInsertedIdAsSingle(dbBlacklistContactItem)
@@ -323,6 +330,16 @@ constructor(
             return@defer if(contactId != null) blacklistContactPhoneItemDao.getByBlacklistContactId(contactId)
             else Single.just(emptyList())
         }
+    }
+
+    private fun getBlacklistContactPhoneWithIntervalsForBlacklistPhoneWithJoin(
+            item: DbBlacklistContactPhoneWithJoinBlacklistContactPhoneItemActivityInterval): Single<DbBlacklistContactPhoneWithActivityIntervals> {
+        return Observable.fromIterable(item.listOfJoins)
+                .flatMapSingle { join: DbJoinBlacklistContactPhoneItemActivityInterval ->
+                    activityIntervalDao.getActivityIntervalByIdOrException(join.activityIntervalId)
+                }
+                .toList()
+                .map { dbBlacklistContactPhoneWithActivityIntervalsFactory.create(item.blacklistContactPhoneItem, it) }
     }
 
     private fun deleteBlacklistContactPhoneItemsByContactIdsWithAssociationsAndClearOrphans(vararg ids: Long?): Completable {

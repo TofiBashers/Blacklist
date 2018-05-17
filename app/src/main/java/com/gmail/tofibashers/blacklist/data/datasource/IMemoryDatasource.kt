@@ -1,9 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.datasource
 
-import com.gmail.tofibashers.blacklist.data.memory.MemoryActivityInterval
-import com.gmail.tofibashers.blacklist.data.memory.MemoryBlacklistContactItem
-import com.gmail.tofibashers.blacklist.data.memory.MemoryBlacklistItem
-import com.gmail.tofibashers.blacklist.data.memory.MemoryWhitelistContactItem
+import com.gmail.tofibashers.blacklist.data.memory.*
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -21,12 +18,18 @@ interface IMemoryDatasource {
     fun removeSelectedMultipleActivityIntervalsLists(): Completable
     fun getSelectedMultipleActivityIntervalsLists(): Maybe<List<List<MemoryActivityInterval>>>
     fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<MemoryActivityInterval>>): Completable
+    fun removeSelectedBlacklistContactPhonesWithActivityIntervals(): Completable
+    fun getSelectedBlacklistContactPhonesWithActivityIntervals(): Maybe<List<MemoryBlacklistContactPhoneWithActivityIntervals>>
+    fun putSelectedBlacklistContactPhonesWithActivityIntervals(phonesWithIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>): Completable
     fun removeSelectedBlackListItem(): Completable
     fun getSelectedBlackListItem(): Maybe<MemoryBlacklistItem>
     fun putSelectedBlackListItem(blacklistItem: MemoryBlacklistItem): Completable
     fun removeSelectedContactItem(): Completable
     fun getSelectedContactItem(): Maybe<MemoryWhitelistContactItem>
     fun putSelectedContactItem(whitelistContactItem: MemoryWhitelistContactItem): Completable
+    fun removeSelectedWhitelistContactPhones(): Completable
+    fun getSelectedWhitelistContactPhones(): Maybe<List<MemoryWhitelistContactPhone>>
+    fun putSelectedWhitelistContactPhones(whitelistContactPhones: List<MemoryWhitelistContactPhone>): Completable
     fun removeSelectedBlacklistContactItem(): Completable
     fun getSelectedBlacklistContactItem(): Maybe<MemoryBlacklistContactItem>
     fun putSelectedBlacklistContactItem(contactItem: MemoryBlacklistContactItem): Completable

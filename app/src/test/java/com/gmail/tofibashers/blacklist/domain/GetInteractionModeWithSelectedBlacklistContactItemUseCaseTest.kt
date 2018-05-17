@@ -3,14 +3,14 @@ package com.gmail.tofibashers.blacklist.domain
 import com.gmail.tofibashers.blacklist.RxSchedulersOverrideRule
 import com.gmail.tofibashers.blacklist.data.repo.*
 import com.gmail.tofibashers.blacklist.entity.*
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactItemMapper
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactPhoneWithActivityIntervalsMapper
 import com.gmail.tofibashers.blacklist.entity.mapper.WhitelistContactItemMapper
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.anyOrNull
 import com.nhaarman.mockito_kotlin.doAnswer
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
 import io.reactivex.Single
+import org.joda.time.LocalTime
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,8 +22,12 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by TofiBashers on 24.04.2018.
  */
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.StrictStubs::class)
 class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
+
+    @Mock
+    lateinit var mockSelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase:
+            SelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase
 
     @Mock
     lateinit var mockInteractionModeRepository: IInteractionModeRepository
@@ -32,22 +36,13 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
     lateinit var mockBlacklistContactItemRepository: IBlacklistContactItemRepository
 
     @Mock
-    lateinit var mockBlacklistContactPhoneRepository: IBlacklistContactPhoneRepository
-
-    @Mock
     lateinit var mockWhitelistContactItemRepository: IWhitelistContactItemRepository
 
     @Mock
-    lateinit var mockWhitelistContactPhoneRepository: IWhitelistContactPhoneRepository
-
-    @Mock
-    lateinit var mockBlacklistContactItemMapper: BlacklistContactItemMapper
+    lateinit var mockBlacklistContactPhoneWithActivityIntervalsMapper: BlacklistContactPhoneWithActivityIntervalsMapper
 
     @Mock
     lateinit var mockWhitelistContactItemMapper: WhitelistContactItemMapper
-
-    @Mock
-    lateinit var mockBlacklistContactPhoneItemFactory: BlacklistContactPhoneNumberItemFactory
 
     @Mock
     lateinit var mockInteractionModeWithBlacklistContactItemAndNumbersAndValidStateFactory: InteractionModeWithBlacklistContactItemAndNumbersAndValidStateFactory
@@ -73,31 +68,26 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
     }
 
     @Test
-    fun testOnInteractionModeCreateWithSelected_resultModeWithNumbersInvalidToSave(){
+    fun testOnInteractionModeCreateWithSelected_resultModeWithContactsInvalidToSave(){
 
         val testData = generateCreateWithSelectedContactAndResWithNumbersInvalidToSave()
 
         whenever(mockInteractionModeRepository.getSelectedMode())
-                .thenReturn(Maybe.just(InteractionMode.CREATE))
+                .thenReturn(Maybe.just(testData.testInteractionMode))
         whenever(mockWhitelistContactItemRepository.getSelected())
                 .thenReturn(Maybe.just(testData.testSelectedWhitelistContact))
+        whenever(mockSelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase.build(testData.testInteractionMode))
+                .thenReturn(Single.just(testData.testMergedAndSortedByNumberBlacklistPhonesWithIntervals))
         whenever(mockWhitelistContactItemMapper.toBlacklistContact(testData.testSelectedWhitelistContact))
                 .thenReturn(testData.testMappedBlacklistContact)
-        whenever(mockWhitelistContactPhoneRepository.getAllAssociatedWithContactSortedByNumberAsc(testData.testSelectedWhitelistContact))
-                .thenReturn(testData.testAssociatedContactNumbersSingle)
+        whenever(mockBlacklistContactPhoneWithActivityIntervalsMapper.toBlacklistContactPhoneList(testData.testMergedAndSortedByNumberBlacklistPhonesWithIntervals))
+                .thenReturn(testData.testMappedBlacklistPhones)
         doAnswer { invocationOnMock -> InteractionModeWithBlacklistContactItemAndNumbersAndValidState(
                 invocationOnMock.arguments[0] as InteractionMode,
                 invocationOnMock.arguments[1] as BlacklistContactItem,
                 invocationOnMock.arguments[2] as List<BlacklistContactPhoneNumberItem>,
                 invocationOnMock.arguments[3] as Boolean) }
                 .whenever(mockInteractionModeWithBlacklistContactItemAndNumbersAndValidStateFactory).create(any(), any(), any(), any())
-        doAnswer { invocationOnMock -> BlacklistContactPhoneNumberItem(
-                invocationOnMock.arguments[0] as Long?,
-                invocationOnMock.arguments[1] as Long?,
-                invocationOnMock.arguments[2] as String,
-                invocationOnMock.arguments[3] as Boolean,
-                invocationOnMock.arguments[4] as Boolean) }
-                .whenever(mockBlacklistContactPhoneItemFactory).create(anyOrNull(), anyOrNull(), any(), any(), any())
 
         val testObserver = testUseCase.build().test()
 
@@ -123,28 +113,19 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
         val testAndRes = generateEditWithSelectedContactWithBlacklistsAndWhitelistContactsAndResWithNumbersValidToSave()
 
         whenever(mockInteractionModeRepository.getSelectedMode())
-                .thenReturn(Maybe.just(InteractionMode.EDIT))
+                .thenReturn(Maybe.just(testAndRes.testInteractionMode))
         whenever(mockBlacklistContactItemRepository.getSelected())
                 .thenReturn(Maybe.just(testAndRes.testSelectedBlacklistContact))
-        whenever(mockBlacklistContactPhoneRepository.getAllAssociatedWithBlacklistContact(testAndRes.testSelectedBlacklistContact))
-                .thenReturn(testAndRes.testAssociatedBlacklistContactNumbersSingle)
-        whenever(mockBlacklistContactItemMapper.toWhitelistContactItem(testAndRes.testSelectedBlacklistContact))
-                .thenReturn(testAndRes.testMappedWhitelistContact)
-        whenever(mockWhitelistContactPhoneRepository.getAllAssociatedWithContact(testAndRes.testMappedWhitelistContact))
-                .thenReturn(testAndRes.testAssociatedContactNumbersSingle)
+        whenever(mockSelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase.build(testAndRes.testInteractionMode))
+                .thenReturn(Single.just(testAndRes.testMergedAndSortedByNumberBlacklistPhonesWithIntervals))
+        whenever(mockBlacklistContactPhoneWithActivityIntervalsMapper.toBlacklistContactPhoneList(testAndRes.testMergedAndSortedByNumberBlacklistPhonesWithIntervals))
+                .thenReturn(testAndRes.testMappedBlacklistPhones)
         doAnswer { invocationOnMock -> InteractionModeWithBlacklistContactItemAndNumbersAndValidState(
                 invocationOnMock.arguments[0] as InteractionMode,
                 invocationOnMock.arguments[1] as BlacklistContactItem,
                 invocationOnMock.arguments[2] as List<BlacklistContactPhoneNumberItem>,
                 invocationOnMock.arguments[3] as Boolean) }
                 .whenever(mockInteractionModeWithBlacklistContactItemAndNumbersAndValidStateFactory).create(any(), any(), any(), any())
-        doAnswer { invocationOnMock -> BlacklistContactPhoneNumberItem(
-                invocationOnMock.arguments[0] as Long?,
-                invocationOnMock.arguments[1] as Long?,
-                invocationOnMock.arguments[2] as String,
-                invocationOnMock.arguments[3] as Boolean,
-                invocationOnMock.arguments[4] as Boolean) }
-                .whenever(mockBlacklistContactPhoneItemFactory).create(anyOrNull(), anyOrNull(), any(), any(), any())
 
         val testObserver = testUseCase.build().test()
 
@@ -157,29 +138,49 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
         val testDeviceKey = "dsd"
         val testName = "name"
         val testPhotoUrl = "http://"
+
+        val testPhoneDbId = null
+        val testPhoneDeviceDbId = 0L
+        val testPhoneNumber = "1234"
+        val testIsCallsBlocked = false
+        val testIsSmsBlocked = false
+
         val testSelectedContact = WhitelistContactItem(testDeviceDbId,
                 testDeviceKey,
                 testName,
                 testPhotoUrl)
+
         val testMappedBlacklistContact = BlacklistContactItem(testBlacklistContactDbId,
                 testDeviceDbId,
                 testDeviceKey,
                 testName,
                 testPhotoUrl)
-        val testAssociatedPhones = listOf(WhitelistContactPhone(deviceDbId = 0,
-                number = "1234"))
-        val resBlacklistPhones = listOf(BlacklistContactPhoneNumberItem(dbId = null,
-                deviceDbId = 0,
-                number = "1234",
-                isSmsBlocked = false,
-                isCallsBlocked = false))
+
+        val testPhonesWithIntervals = listOf(BlacklistContactPhoneWithActivityIntervals(dbId = testPhoneDbId,
+                deviceDbId = testPhoneDeviceDbId,
+                number = testPhoneNumber,
+                isCallsBlocked = testIsCallsBlocked,
+                isSmsBlocked = testIsSmsBlocked,
+                activityIntervals = listOf(
+                        ActivityInterval(weekDayId = 1,
+                        beginTime = LocalTime.MIDNIGHT,
+                        endTime = LocalTime.MIDNIGHT))
+                ))
+
+        val resBlacklistPhones = listOf(BlacklistContactPhoneNumberItem(dbId = testPhoneDbId,
+                deviceDbId = testPhoneDeviceDbId,
+                number = testPhoneNumber,
+                isSmsBlocked = testIsSmsBlocked,
+                isCallsBlocked = testIsCallsBlocked))
         val resModeWithContactAndState = InteractionModeWithBlacklistContactItemAndNumbersAndValidState(InteractionMode.CREATE,
                 testMappedBlacklistContact,
                 resBlacklistPhones,
                 false)
-        return TestDataWithExpectedResCreateMode(testSelectedContact,
+        return TestDataWithExpectedResCreateMode(InteractionMode.CREATE,
+                testSelectedContact,
                 testMappedBlacklistContact,
-                Single.just(testAssociatedPhones),
+                testPhonesWithIntervals,
+                resBlacklistPhones,
                 resModeWithContactAndState)
     }
 
@@ -195,30 +196,28 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
                         testDeviceKey,
                         testName,
                         testPhotoUrl)
-        val testMappedWhitelistContact =
-                WhitelistContactItem(testDeviceDbId,
-                        testDeviceKey,
-                        testName,
-                        testPhotoUrl)
-        val testAssociatedContactPhones = listOf(WhitelistContactPhone(deviceDbId = 0,
-                number = "12"))
-        val testAssociatedBlacklistContactPhones = listOf(
-                BlacklistContactPhoneNumberItem(dbId = 2,
-                        deviceDbId = 2,
-                        number = "34",
-                        isSmsBlocked = true,
-                        isCallsBlocked = true),
-                BlacklistContactPhoneNumberItem(dbId = 1,
+
+        val testMergedPhonesSortedByNumber = listOf(
+                BlacklistContactPhoneWithActivityIntervals(dbId = 1,
                         deviceDbId = 1,
                         number = "23",
                         isSmsBlocked = true,
-                        isCallsBlocked = true))
+                        isCallsBlocked = true,
+                        activityIntervals = listOf(
+                                ActivityInterval(weekDayId = 1,
+                                        beginTime = LocalTime.MIDNIGHT,
+                                        endTime = LocalTime.MIDNIGHT))),
+                BlacklistContactPhoneWithActivityIntervals(dbId = 2,
+                        deviceDbId = 2,
+                        number = "34",
+                        isSmsBlocked = true,
+                        isCallsBlocked = true,
+                        activityIntervals = listOf(
+                                ActivityInterval(weekDayId = 1,
+                                        beginTime = LocalTime.MIDNIGHT,
+                                        endTime = LocalTime.MIDNIGHT))))
+
         val resBlacklistPhones = listOf(
-                BlacklistContactPhoneNumberItem(dbId = null,
-                        deviceDbId = 0,
-                        number = "12",
-                        isSmsBlocked = false,
-                        isCallsBlocked = false),
                 BlacklistContactPhoneNumberItem(dbId = 1,
                         deviceDbId = 1,
                         number = "23",
@@ -233,21 +232,23 @@ class GetInteractionModeWithSelectedBlacklistContactItemUseCaseTest {
                 testSelectedBlacklistContact,
                 resBlacklistPhones,
                 true)
-        return TestDataWithExpectedResEditMode(testSelectedBlacklistContact,
-                testMappedWhitelistContact,
-                Single.just(testAssociatedContactPhones),
-                Single.just(testAssociatedBlacklistContactPhones),
+        return TestDataWithExpectedResEditMode(InteractionMode.EDIT,
+                testSelectedBlacklistContact,
+                testMergedPhonesSortedByNumber,
+                resBlacklistPhones,
                 resModeWithContactAndState)
     }
 
-    private data class TestDataWithExpectedResCreateMode(val testSelectedWhitelistContact: WhitelistContactItem,
+    private data class TestDataWithExpectedResCreateMode(val testInteractionMode: InteractionMode,
+                                                         val testSelectedWhitelistContact: WhitelistContactItem,
                                                          val testMappedBlacklistContact: BlacklistContactItem,
-                                                         val testAssociatedContactNumbersSingle: Single<List<WhitelistContactPhone>>,
+                                                         val testMergedAndSortedByNumberBlacklistPhonesWithIntervals: List<BlacklistContactPhoneWithActivityIntervals>,
+                                                         val testMappedBlacklistPhones: List<BlacklistContactPhoneNumberItem>,
                                                          val expectedResult: InteractionModeWithBlacklistContactItemAndNumbersAndValidState)
 
-    private data class TestDataWithExpectedResEditMode(val testSelectedBlacklistContact: BlacklistContactItem,
-                                                       val testMappedWhitelistContact: WhitelistContactItem,
-                                                       val testAssociatedContactNumbersSingle: Single<List<WhitelistContactPhone>>,
-                                                       val testAssociatedBlacklistContactNumbersSingle: Single<List<BlacklistContactPhoneNumberItem>>,
+    private data class TestDataWithExpectedResEditMode(val testInteractionMode: InteractionMode,
+                                                       val testSelectedBlacklistContact: BlacklistContactItem,
+                                                       val testMergedAndSortedByNumberBlacklistPhonesWithIntervals: List<BlacklistContactPhoneWithActivityIntervals>,
+                                                       val testMappedBlacklistPhones: List<BlacklistContactPhoneNumberItem>,
                                                        val expectedResult: InteractionModeWithBlacklistContactItemAndNumbersAndValidState)
 }

@@ -2,7 +2,9 @@ package com.gmail.tofibashers.blacklist.data.db.dao
 
 import android.arch.persistence.room.*
 import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistContactItem
+import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactItemTable
+import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTable
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -37,6 +39,10 @@ abstract class IBlacklistContactItemDao {
     @Query("SELECT * FROM ${BlacklistContactItemTable.TABLE_NAME}"
             + " WHERE ${BlacklistContactItemTable._ID} = :id")
     abstract fun getById(id: Long?): Maybe<DbBlacklistContactItem>
+
+    @Query("SELECT * FROM ${BlacklistContactItemTable.TABLE_NAME}" +
+            " WHERE ${BlacklistContactItemTable._ID} = :id")
+    abstract fun getByIdOrException(id: Long?): Single<DbBlacklistContactItem>
 
     @Delete
     protected abstract fun deleteByIds(vararg items: DbBlacklistContactItem)

@@ -14,7 +14,7 @@ data class BlacklistContactPhoneWithActivityIntervals(var dbId: Long? = null,
                                                       override var isCallsBlocked: Boolean,
                                                       override var isSmsBlocked: Boolean,
                                                       override var activityIntervals: List<ActivityInterval>)
-    : BaseBlacklistElementWithActivityIntervals(number,
+    : BaseBlacklistPhoneWithActivityIntervals(number,
         isCallsBlocked,
         isSmsBlocked,
         activityIntervals), List<ActivityInterval> by activityIntervals

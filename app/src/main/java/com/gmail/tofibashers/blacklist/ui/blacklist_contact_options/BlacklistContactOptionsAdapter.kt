@@ -1,6 +1,7 @@
 package com.gmail.tofibashers.blacklist.ui.blacklist_contact_options
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem

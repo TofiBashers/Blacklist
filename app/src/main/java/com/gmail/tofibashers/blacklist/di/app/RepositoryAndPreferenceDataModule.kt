@@ -61,6 +61,11 @@ abstract class RepositoryAndPreferenceDataModule {
 
     @Binds
     @Singleton
+    abstract fun provideIBlacklistContactPhoneWithActivityIntervalsRepository(repository: BlacklistContactPhoneWithActivityIntervalsRepository)
+            : IBlacklistContactPhoneWithActivityIntervalsRepository
+
+    @Binds
+    @Singleton
     abstract fun provideIPreferencesData(preferencesData: PreferencesData) : IPreferencesData
 
     @Binds

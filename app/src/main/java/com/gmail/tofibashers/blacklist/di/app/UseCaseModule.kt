@@ -105,13 +105,18 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideISelectContactItemUseCase(useCase: SelectContactItemUseCase)
-            : ISelectContactItemUseCase
+    abstract fun provideISelectContactItemUseCase(useCase: SelectWhitelistContactItemWithPhonesUseCase)
+            : ISelectWhitelistContactItemWithPhonesUseCase
 
     @Binds
     @Singleton
     abstract fun provideIValidateBlacklistContactPhoneNumbersForSaveSyncUseCase(useCase: ValidateBlacklistContactPhoneNumbersForSaveSyncUseCase)
             : IValidateBlacklistContactPhoneNumbersForSaveSyncUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideIValidateBlacklistContactPhoneNumberForSaveSyncUseCase(useCase: ValidateBaseBlacklistPhoneForSaveSyncUseCase)
+            : IValidateBaseBlacklistPhoneForSaveSyncUseCase
 
     @Binds
     @Singleton
@@ -125,18 +130,23 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervals(useCase: SaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervals)
-            : ISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase
+    abstract fun provideISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervals(useCase: SaveSelectedForEditActivityIntervalsToAllBlacklistContactPhonesIntervals)
+            : ISaveSelectedForEditActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase
 
     @Binds
     @Singleton
-    abstract fun provideISaveBlacklistContactItemWithDeleteSelectionsUseCase(useCase: SaveBlacklistContactItemWithDeleteSelectionsUseCase)
-            : ISaveBlacklistContactItemWithDeleteSelectionsUseCase
+    abstract fun provideISaveBlacklistContactItemWithDeleteSelectionsUseCase(useCase: SaveBlacklistContactItemWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase)
+            : ISaveBlacklistContactItemWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase
 
     @Binds
     @Singleton
-    abstract fun provideISelectEditModeAndContactItemUseCase(useCase: SelectEditModeAndContactItemUseCase)
-            : ISelectEditModeAndContactItemUseCase
+    abstract fun provideISelectEditModeAndContactItemUseCase(useCase: SelectEditModeAndBlacklistContactItemWithPhonesAndIntervalsUseCase)
+            : ISelectEditModeAndBlacklistContactItemWithPhonesAndIntervalsUseCase
+
+    @Binds
+    @Singleton
+    abstract fun provideISelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase(useCase: SelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase)
+            : ISelectMergedBlacklistAndWhitelistPhonesWithDefaultIntervalsSortedByNumberUseCase
 
     @Binds
     @Singleton

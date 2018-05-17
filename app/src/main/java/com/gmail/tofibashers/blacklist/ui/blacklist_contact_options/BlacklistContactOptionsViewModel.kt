@@ -17,9 +17,9 @@ class BlacklistContactOptionsViewModel
 @Inject
 constructor(
         private val getInteractionModeWithItemAndValidUseCase: IGetInteractionModeWithSelectedBlacklistContactItemUseCase,
-        private val saveContactWithDeleteSelectionsUseCase: ISaveBlacklistContactItemWithDeleteSelectionsUseCase,
+        private val saveContactWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase: ISaveBlacklistContactItemWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase,
         private val selectForEditActivityIntervalsUseCase: ISelectForEditActivityIntervalsOfBlacklistContactPhoneUseCase,
-        private val saveSelectedIntervalsUseCase: ISaveSelectedActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase,
+        private val saveSelectedIntervalsUseCase: ISaveSelectedForEditActivityIntervalsToAllBlacklistContactPhonesIntervalsUseCase,
         private val validatePhoneNumbersForSaveSyncUseCase: IValidateBlacklistContactPhoneNumbersForSaveSyncUseCase,
         private val deleteAllSelectionsUseCase: IDeleteAllSelectionsUseCase,
         private val dataViewStateFactory: BlacklistContactOptionsViewState_DataViewStateFactory,
@@ -42,7 +42,7 @@ constructor(
 
     fun onInitSave(){
         viewStateData.value = loadingViewStateFactory.create()
-        saveContactWithDeleteSelectionsUseCase.build(state!!.contactItem, state!!.phoneNumbers)
+        saveContactWithOnlyBlacklistPhonesWithDeleteSelectionsUseCase.build(state!!.contactItem, state!!.phoneNumbers)
                 .subscribe(SaveItemObserver())
     }
 
@@ -56,7 +56,7 @@ constructor(
     fun onInitChangeSchedule(numPosition: Int){
         selectedForChangeSchedulePosition = numPosition
         viewStateData.value = loadingViewStateFactory.create()
-        selectForEditActivityIntervalsUseCase.build(numPosition, state!!.size)
+        selectForEditActivityIntervalsUseCase.build(numPosition)
                 .subscribe(SelectForEditActivityIntervalsObserver())
     }
 
