@@ -21,7 +21,7 @@ import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 import kotterknife.bindView
 import javax.inject.Inject
 
-class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(), BlacklistContactOptionsPhoneNumberViewHolder.StateChangeListener, View.OnClickListener {
+class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(), BlacklistContactOptionsAdapter.IEventsListener, View.OnClickListener {
 
     override val loadingView: Group by bindView(R.id.group_progress)
     override val dataView: Group by bindView(R.id.group_contact_with_options_with_controls)
@@ -94,13 +94,15 @@ class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(
         return true
     }
 
-    override fun onIgnoreSmsCheckedChanged(position: Int, isChecked: Boolean) =
-            viewModel.onSetIsSmsBlocked(position-1, isChecked)
+    override fun onPhoneIgnoreSmsCheckedChanged(modelPosition: Int, isChecked: Boolean) =
+            viewModel.onSetIsSmsBlocked(modelPosition, isChecked)
 
-    override fun onIgnoreCallsCheckedChanged(position: Int, isChecked: Boolean) =
-            viewModel.onSetIsCallsBlocked(position-1, isChecked)
+    override fun onPhoneIgnoreCallsCheckedChanged(modelPosition: Int, isChecked: Boolean) =
+        viewModel.onSetIsCallsBlocked(modelPosition, isChecked)
 
-    override fun onChangeScheduleClick(position: Int) = viewModel.onInitChangeSchedule(position-1)
+    override fun onPhoneChangeScheduleClick(modelPosition: Int) {
+        viewModel.onInitChangeSchedule(modelPosition)
+    }
 
     private fun showNavigationToListWithChangedOrDeletedError() {
         Toast.makeText(applicationContext,

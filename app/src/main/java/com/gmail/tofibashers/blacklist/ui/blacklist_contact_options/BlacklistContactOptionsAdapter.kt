@@ -13,7 +13,7 @@ import com.gmail.tofibashers.blacklist.ui.common.CircleImageTranformation
  * Created by TofiBashers on 15.04.2018.
  */
 class BlacklistContactOptionsAdapter(
-        private val phoneNumberStateChangeListener: BlacklistContactOptionsPhoneNumberViewHolder.StateChangeListener
+        private val eventsListener: IEventsListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var blacklistContactItem: BlacklistContactItem? = null
@@ -36,7 +36,7 @@ class BlacklistContactOptionsAdapter(
         return when(viewType) {
             ITEM_CONTACT_INFO_TYPE -> BlacklistContactOptionsContactInfoViewHolder(parent)
             ITEM_PHONE_NUMBERS_MIDDLE_TYPE ->
-                BlacklistContactOptionsPhoneNumberViewHolder(phoneNumberStateChangeListener, parent)
+                BlacklistContactOptionsPhoneNumberViewHolder(stateChangeListener, parent)
             else -> throw RuntimeException("Unknown viewType: " + viewType)
         }
     }
@@ -59,6 +59,23 @@ class BlacklistContactOptionsAdapter(
     private fun isContactInfoPosition(position: Int) = position == 0
 
     private fun phoneNumbersPositionFromViewPosition(viewPosition: Int) = viewPosition - 1
+
+    private val stateChangeListener = object : BlacklistContactOptionsPhoneNumberViewHolder.StateChangeListener {
+        override fun onIgnoreSmsCheckedChanged(position: Int, isChecked: Boolean) =
+            eventsListener.onPhoneIgnoreSmsCheckedChanged(position-1, isChecked)
+
+        override fun onIgnoreCallsCheckedChanged(position: Int, isChecked: Boolean) =
+            eventsListener.onPhoneIgnoreCallsCheckedChanged(position-1, isChecked)
+
+        override fun onChangeScheduleClick(position: Int) =
+            eventsListener.onPhoneChangeScheduleClick(position-1)
+    }
+
+    interface IEventsListener {
+        fun onPhoneIgnoreSmsCheckedChanged(modelPosition: Int, isChecked: Boolean)
+        fun onPhoneIgnoreCallsCheckedChanged(modelPosition: Int, isChecked: Boolean)
+        fun onPhoneChangeScheduleClick(modelPosition: Int)
+    }
 
     companion object {
         const val ITEM_CONTACT_INFO_TYPE = 1
