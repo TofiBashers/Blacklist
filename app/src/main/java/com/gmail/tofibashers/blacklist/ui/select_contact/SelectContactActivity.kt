@@ -2,6 +2,7 @@ package com.gmail.tofibashers.blacklist.ui.select_contact
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.Toast
 import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
@@ -79,9 +81,15 @@ class SelectContactActivity : BaseStateableViewActivity<View, RecyclerView>() {
     private fun startEditContactView(editRoute: SelectContactNavData.EditContactRoute){
         val editIntent = Intent(Intent.ACTION_EDIT)
         val uri = ContactsContract.Contacts.getLookupUri(editRoute.contactId, editRoute.contactKey)
-        intent.setDataAndType(uri, ContactsContract.Contacts.CONTENT_ITEM_TYPE)
+        editIntent.setDataAndType(uri, ContactsContract.Contacts.CONTENT_ITEM_TYPE)
         editIntent.putExtra(FINISH_ACTIVITY_ON_SAVE_COMPLETED_FLAG, true)
-        startActivity(editIntent)
+        if(editIntent.resolveActivity(packageManager) != null){
+            startActivity(editIntent)
+        }
+        else{
+            Toast.makeText(this, R.string.select_contact_contact_app_not_found_title, Toast.LENGTH_LONG)
+                    .show()
+        }
     }
 
     private fun finishWithResult(parentRoute: SelectContactNavData.ParentRoute) {

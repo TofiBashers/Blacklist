@@ -42,5 +42,6 @@
     <string name="blacklist_contact_options_toolbar_create_title">Добавить контакт</string>
     <string name="select_contact_without_phone_numbers_title">Нет номеров телефонов</string>
     <string name="select_contact_toolbar_title">Выберите контакт</string>
+    <string name="select_contact_contact_app_not_found_title">Не найдено приложение для работы с контактами. Откройте его вручную!</string>
     <string name="blacklist_add_contact_action">Добавить контакт</string>
 </resources>
