@@ -25,12 +25,11 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(appContext: Context) : BlacklistDatabase {
-        /**return if(BuildConfig.DEBUG) Room.inMemoryDatabaseBuilder(appContext,
+        return if(BuildConfig.DEBUG) Room.inMemoryDatabaseBuilder(appContext,
                 BlacklistDatabase::class.java)
                 .addMigrations(Migrations.MIGRATION_1_2)
                 .build()
-        else */
-        return Room.databaseBuilder(appContext,
+        else Room.databaseBuilder(appContext,
                 BlacklistDatabase::class.java, BlacklistDatabase.DB_NAME)
                 .addMigrations(Migrations.MIGRATION_1_2)
                 .build()

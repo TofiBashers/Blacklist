@@ -16,7 +16,7 @@ import com.google.auto.factory.AutoFactory
                         parentColumns = arrayOf(BlacklistContactItemTable._ID),
                         childColumns = arrayOf(BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID))
         ),
-        indices = arrayOf(Index(value = BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID, unique = true)))
+        indices = arrayOf(Index(value = BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID)))
 data class DbBlacklistContactPhoneItem(
 
         @PrimaryKey(autoGenerate = true)

@@ -32,7 +32,7 @@ object Migrations {
                     "${BlacklistContactPhoneItemTable.IGNORE_SMS} INTEGER NOT NULL, " +
                     "FOREIGN KEY(${BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID}) REFERENCES ${BlacklistContactItemTable.TABLE_NAME}(${BlacklistContactItemTable._ID}) ON UPDATE NO ACTION ON DELETE NO ACTION )")
 
-            database.execSQL("CREATE UNIQUE INDEX ${BlacklistContactPhoneItemTable.INDEX_BLACKLIST_CONTACT_PHONE_ITEM_BLACKLIST_CONTACT_ID} " +
+            database.execSQL("CREATE INDEX ${BlacklistContactPhoneItemTable.INDEX_BLACKLIST_CONTACT_PHONE_ITEM_BLACKLIST_CONTACT_ID} " +
                     "ON ${BlacklistContactPhoneItemTable.TABLE_NAME} (${BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID})")
 
             database.execSQL("CREATE TABLE ${JoinBlacklistContactPhoneItemActivityIntervalTable.TABLE_NAME} (" +

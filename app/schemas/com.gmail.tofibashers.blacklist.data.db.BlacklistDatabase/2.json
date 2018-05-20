@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "a5d4ec31a039a4ab352ace4fa295c94d",
+    "identityHash": "bb1bf8975d2153b952b13a51cc691b13",
     "entities": [
       {
         "tableName": "blacklist_item",
@@ -183,11 +183,11 @@
         "indices": [
           {
             "name": "index_blacklist_contact_phone_item_blacklist_contact_id",
-            "unique": true,
+            "unique": false,
             "columnNames": [
               "blacklist_contact_id"
             ],
-            "createSql": "CREATE UNIQUE INDEX `index_blacklist_contact_phone_item_blacklist_contact_id` ON `${TABLE_NAME}` (`blacklist_contact_id`)"
+            "createSql": "CREATE  INDEX `index_blacklist_contact_phone_item_blacklist_contact_id` ON `${TABLE_NAME}` (`blacklist_contact_id`)"
           }
         ],
         "foreignKeys": [
@@ -307,7 +307,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a5d4ec31a039a4ab352ace4fa295c94d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bb1bf8975d2153b952b13a51cc691b13\")"
     ]
   }
 }
