@@ -2,4 +2,5 @@
 <resources>
     <item name="timesettings_elem_order_pos_key" type="id"/>
     <item name="timesettings_elem_is_begin_key" type="id"/>
+    <item name="blacklist_contact_options_divider_key" type="id"/>
 </resources>

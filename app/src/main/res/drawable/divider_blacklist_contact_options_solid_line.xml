@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <solid android:color="@color/divider_blacklist_contact_options"/>
+            <size
+                android:height="@dimen/divider_default_height" />
+        </shape>
+    </item>
+</selector>

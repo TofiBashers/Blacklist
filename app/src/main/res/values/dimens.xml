@@ -48,19 +48,23 @@
 
     <dimen name="item_blacklist_header_height">40dp</dimen>
     <dimen name="item_blacklist_header_text_header_size">30sp</dimen>
-    <item name="item_blacklist_header_guideline_vertical_left_text_margin" type="dimen" format="float">0.3</item>
+    <item name="item_blacklist_header_guideline_vertical_left_text_margin" type="dimen" format="float">0.1</item>
 
     <dimen name="item_blacklist_contact_height">100dp</dimen>
+    <dimen name="item_blacklist_contact_padding">10dp</dimen>
+    <dimen name="item_blacklist_contact_text_contact_name_left_padding">10dp</dimen>
     <dimen name="item_blacklist_contact_text_contact_name_size">30sp</dimen>
+    <dimen name="item_blacklist_contact_text_not_all_ignored_info_size">13sp</dimen>
+    <dimen name="item_blacklist_contact_image_not_all_ignored_info_padding">5dp</dimen>
     <item name="item_blacklist_contact_guideline_horizontal_for_top_margin_percent" type="dimen" format="float">0.1</item>
     <item name="item_blacklist_contact_guideline_horizontal_bottom_options_button_percent" type="dimen" format="float">0.3</item>
     <item name="item_blacklist_contact_guideline_horizontal_beteen_contact_name_and_with_non_ignored_percent" type="dimen" format="float">0.7</item>
     <item name="item_blacklist_contact_guideline_horizontal_for_bottom_margin_percent" type="dimen" format="float">0.9</item>
     <item name="item_blacklist_contact_guideline_vertical_for_left_margin_percent" type="dimen" format="float">0.1</item>
-    <item name="item_blacklist_contact_guideline_vertical_between_contact_image_and_text_percent" type="dimen" format="float">0.3</item>
-    <item name="item_blacklist_contact_guideline_vertical_between_contact_img_and_non_ignored_img_percent" type="dimen" format="float">0.5</item>
+    <item name="item_blacklist_contact_guideline_vertical_between_contact_image_and_text_percent" type="dimen" format="float">0.2</item>
+    <item name="item_blacklist_contact_guideline_vertical_between_contact_img_and_non_ignored_img_percent" type="dimen" format="float">0.3</item>
     <item name="item_blacklist_contact_guideline_vertical_between_non_ignored_img_and_non_ignored_text_percent" type="dimen" format="float">0.6</item>
-    <item name="item_blacklist_contact_guideline_vertical_between_contact_text_and_options_button_percent" type="dimen" format="float">0.87</item>
+    <item name="item_blacklist_contact_guideline_vertical_between_contact_text_and_options_button_percent" type="dimen" format="float">0.93</item>
     <item name="item_blacklist_contact_guideline_vertical_for_right_margin_percent" type="dimen" format="float">0.9</item>
 
     <dimen name="item_blacklist_contact_options_default_card_corner_radius">5dp</dimen>
@@ -72,6 +76,7 @@
 
     <dimen name="item_blacklist_contact_options_contact_info_height">150dp</dimen>
     <dimen name="item_blacklist_contact_options_contact_info_text_contact_name_size">30sp</dimen>
+    <dimen name="item_blacklist_contact_options_contact_info_text_contact_name_padding_left">10dp</dimen>
     <item name="item_blacklist_contact_options_contact_info_guideline_horizontal_space_bottom_of_contact_name_percent" type="dimen" format="float">0.7</item>
     <item name="item_blacklist_contact_options_contact_info_guideline_vertical_between_contact_image_and_text_percent" type="dimen" format="float">0.3</item>
 
@@ -85,6 +90,9 @@
     <item name="item_blacklist_contact_options_phone_guideline_vertical_between_checkboxes_and_change_schedule" type="dimen" format="float">0.55</item>
 
     <dimen name="item_select_contact_text_contact_name_size">30sp</dimen>
+    <dimen name="item_select_contact_text_contact_name_padding_left">10dp</dimen>
+    <dimen name="item_select_contact_image_disabled_to_select_info_padding">3dp</dimen>
+    <dimen name="item_select_contact_text_disabled_to_select_info_size">13sp</dimen>
     <item name="item_select_contact_guideline_horizontal_for_top_margin_percent" type="dimen" format="float">0.1</item>
     <item name="item_select_contact_guideline_horizontal_bottom_change_button_percent" type="dimen" format="float">0.3</item>
     <item name="item_select_contact_guideline_horizontal_beteen_contact_name_and_with_disabled_to_select_percent" type="dimen" format="float">0.7</item>

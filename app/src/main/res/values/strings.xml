@@ -18,7 +18,7 @@
     <string name="blacklist_item_numberlist_menu_delete_action">Delete</string>
     <string name="blacklist_item_numberlist_header_contacts_title">Contacts</string>
     <string name="blacklist_item_numberlist_header_phone_numbers_title">Phone numbers</string>
-    <string name="blacklist_item_contact_not_all_ignored_title">Not all phone numbers are blocked</string>
+    <string name="blacklist_item_contact_not_all_ignored_title">Not all phone numbers blocked</string>
     <string name="blacklist_contact_options_toolbar_edit_title">Edit contact numbers</string>
     <string name="blacklist_contact_options_toolbar_create_title">Add contact</string>
     <string name="blacklist_contact_options_changed_or_deleted_error_title">Error: contact was changed or deleted</string>

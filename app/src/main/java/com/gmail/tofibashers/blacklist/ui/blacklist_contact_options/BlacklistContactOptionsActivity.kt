@@ -47,11 +47,8 @@ class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(
         cancelButton.setOnClickListener(this)
 
         val layoutManager = LinearLayoutManager(this)
-        val dividerDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        @Suppress("DEPRECATION")
-        dividerDecoration.setDrawable(resources.getDrawable(R.drawable.divider_blacklist_contact_options))
         list.layoutManager = layoutManager
-        list.addItemDecoration(dividerDecoration)
+        list.addItemDecoration(BlacklistContactOptionsVerticalDividersByTagDecoration(this))
         list.adapter = blacklistContactOptionsAdapter
 
         if (savedInstanceState == null) viewModel.onInitGetContactAndPhones()

@@ -19,6 +19,8 @@
     <color name="divider_blacklist">#1E000000</color>
     <color name="time_picker_color">#388E3C</color>
     <color name="contact_default_photo_color">#89757575</color>
+    <color name="text_not_all_ignored_info_color">#316B36</color>
+    <color name="text_disabled_to_select_info">#7EFF5252</color>
 
     <color name="button_default_text_disabled">#42000000</color>
     <color name="button_default_color_pressed">#87757575</color>

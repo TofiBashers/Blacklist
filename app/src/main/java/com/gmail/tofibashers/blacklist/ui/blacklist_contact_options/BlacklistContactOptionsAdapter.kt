@@ -3,6 +3,7 @@ package com.gmail.tofibashers.blacklist.ui.blacklist_contact_options
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
@@ -23,6 +24,7 @@ class BlacklistContactOptionsAdapter(
             contactPhoneNumbers: List<BlacklistContactPhoneNumberItem>) { // with private setter because enabled only both simultaneously
         this.blacklistContactItem = blacklistContactItem
         this.contactPhoneNumbers = contactPhoneNumbers
+        notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -49,6 +51,9 @@ class BlacklistContactOptionsAdapter(
             val numberHolder = holder as BlacklistContactOptionsPhoneNumberViewHolder
             numberHolder.bind(contactPhoneNumbers[phoneNumbersPositionFromViewPosition(position)])
         }
+        holder.itemView.setTag(R.id.blacklist_contact_options_divider_key,
+                if(position == 0 && contactPhoneNumbers.count() > 1) DividerType.SOLID_LINE
+                else DividerType.GRADIENT)
     }
 
     override fun getItemCount(): Int {
