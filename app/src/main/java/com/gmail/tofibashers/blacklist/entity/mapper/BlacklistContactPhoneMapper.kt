@@ -1,5 +1,6 @@
 package com.gmail.tofibashers.blacklist.entity.mapper
 
+import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistContactPhoneItem
 import com.gmail.tofibashers.blacklist.data.device.DeviceContactPhoneItem
 import com.gmail.tofibashers.blacklist.entity.ActivityInterval
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem
@@ -42,4 +43,16 @@ constructor(){
 
     fun toDeviceContactPhoneList(blacklistPhones: List<BlacklistContactPhoneNumberItem>) : List<DeviceContactPhoneItem> =
             blacklistPhones.map { toDeviceContactPhone(it) }
+
+    fun toDbBlacklistContactPhone(phone: BlacklistContactPhoneNumberItem, blacklistContactId: Long? = null) : DbBlacklistContactPhoneItem =
+            DbBlacklistContactPhoneItem(phone.dbId,
+                    blacklistContactId,
+                    phone.deviceDbId,
+                    phone.number,
+                    phone.isCallsBlocked,
+                    phone.isSmsBlocked)
+
+    fun toDbBlacklistContactPhoneList(phones: List<BlacklistContactPhoneNumberItem>,
+                                      blacklistContactId: Long? = null) : List<DbBlacklistContactPhoneItem> =
+            phones.map { toDbBlacklistContactPhone(it, blacklistContactId) }
 }
