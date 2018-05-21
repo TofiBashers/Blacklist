@@ -23,6 +23,4 @@ constructor(){
     fun toActivityIntervalsList(intervals: List<MemoryActivityInterval>) : List<ActivityInterval> =
             intervals.map { toActivityInterval(it) }
 
-    fun toMultipleActivityIntervalsLists(intervals: List<List<MemoryActivityInterval>>) : List<List<ActivityInterval>> =
-            intervals.map { toActivityIntervalsList(it) }
 }

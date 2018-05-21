@@ -22,7 +22,7 @@ constructor(
 
     override fun build(phonePosition: Int) : Completable {
         return blacklistContactPhoneWithActivityIntervalsRepository.getSelectedList()
-                .switchIfEmpty(Single.error(RuntimeException("Multiple intervals not selected, when trying to edit")))
+                .switchIfEmpty(Single.error(RuntimeException("Multiple phones with intervals not selected, when trying to edit")))
                 .map { it[phonePosition]}
                 .flatMapCompletable { activityIntervalRepository.putSelectedActivityIntervals(it) }
                 .subscribeOn(Schedulers.io())

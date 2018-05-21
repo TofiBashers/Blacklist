@@ -51,12 +51,6 @@ interface IDatabaseSource {
     fun getActivityIntervalsAssociatedWithBlacklistItem(blacklistItem: DbBlacklistItem): Maybe<List<DbActivityInterval>>
 
     /**
-     * @return [Single] with list of activityIntervals, associated with [blacklistItem]. Result [Single] doesn't specify schedulers.
-     */
-    @Deprecated("not need")
-    fun getActivityIntervalsAssociatedWithBlacklistContactItem(blacklistItem: DbBlacklistContactItem): Single<List<DbActivityInterval>>
-
-    /**
      * Get all [DbBlacklistContactItem]'s
      * Result [Single] doesn't modify any schedulers.
      */

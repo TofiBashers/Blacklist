@@ -53,6 +53,7 @@ ext{
     timePickerVersion = "3.5.2"
     calligraphyVersion = "2.3.0"
     picassoVersion = "2.71828"
+    stickyHeadersVersion = "0.4.3@aar"
     stethoVersion = "1.5.0"
     crashlyticsVersion = "2.9.1@aar"
     mockitoKotlinVersion = "1.5.0"

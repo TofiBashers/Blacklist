@@ -15,9 +15,6 @@ interface IMemoryDatasource {
     fun removeSelectedActivityIntervals(): Completable
     fun getSelectedActivityIntervals(): Maybe<List<MemoryActivityInterval>>
     fun putSelectedActivityIntervals(activityIntervals: List<MemoryActivityInterval>): Completable
-    fun removeSelectedMultipleActivityIntervalsLists(): Completable
-    fun getSelectedMultipleActivityIntervalsLists(): Maybe<List<List<MemoryActivityInterval>>>
-    fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<MemoryActivityInterval>>): Completable
     fun removeSelectedBlacklistContactPhonesWithActivityIntervals(): Completable
     fun getSelectedBlacklistContactPhonesWithActivityIntervals(): Maybe<List<MemoryBlacklistContactPhoneWithActivityIntervals>>
     fun putSelectedBlacklistContactPhonesWithActivityIntervals(phonesWithIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>): Completable

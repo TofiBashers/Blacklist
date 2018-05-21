@@ -30,19 +30,12 @@ constructor(
         private val dbActivityIntervalMapper: DbActivityIntervalMapper,
         private val memoryActivityIntervalMapper: MemoryActivityIntervalMapper,
         private val activityIntervalMapper: ActivityIntervalMapper,
-        private val blacklistContactItemMappe: BlacklistContactItemMapper,
         private val blacklistPhoneItemMapper: BlacklistPhoneItemMapper
 ): IActivityIntervalRepository {
 
     override fun getActivityIntervalsAssociatedWithBlacklistItem(phoneNumberItem: BlacklistPhoneNumberItem): Maybe<List<ActivityInterval>> {
         return Maybe.fromCallable { blacklistPhoneItemMapper.toDbBlacklistItem(phoneNumberItem) }
                 .flatMap(databaseSource::getActivityIntervalsAssociatedWithBlacklistItem)
-                .map(dbActivityIntervalMapper::toActivityIntervalsList)
-    }
-
-    override fun getActivityIntervalsAssociatedWithBlacklistContactItem(contactItem: BlacklistContactItem): Single<List<ActivityInterval>> {
-        return Single.fromCallable { blacklistContactItemMappe.toDbBlacklistContactItem(contactItem) }
-                .flatMap(databaseSource::getActivityIntervalsAssociatedWithBlacklistContactItem)
                 .map(dbActivityIntervalMapper::toActivityIntervalsList)
     }
 
@@ -59,17 +52,4 @@ constructor(
 
     override fun removeSelectedActivityIntervals(): Completable =
             memoryDatasource.removeSelectedActivityIntervals()
-
-    override fun getSelectedMultipleActivityIntervalsLists(): Maybe<List<List<ActivityInterval>>> {
-        return memoryDatasource.getSelectedMultipleActivityIntervalsLists()
-                .map(memoryActivityIntervalMapper::toMultipleActivityIntervalsLists)
-    }
-
-    override fun removeSelectedMultipleActivityIntervalsLists(): Completable =
-            memoryDatasource.removeSelectedMultipleActivityIntervalsLists()
-
-    override fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<ActivityInterval>>): Completable {
-        return Single.fromCallable { activityIntervalMapper.toMultipleMemoryActivityIntervalsLists(activityIntervalsLists) }
-                .flatMapCompletable(memoryDatasource::putSelectedMultipleActivityIntervalsLists)
-    }
 }

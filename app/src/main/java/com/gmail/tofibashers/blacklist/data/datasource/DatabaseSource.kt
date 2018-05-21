@@ -173,9 +173,6 @@ constructor(
     override fun getActivityIntervalsAssociatedWithBlacklistItem(blacklistItem: DbBlacklistItem): Maybe<List<DbActivityInterval>> =
             joinBlacklistItemActivityIntervalDao.getActvitiyIntervalsForBlacklistItemIdAsMaybe(blacklistItem.id)
 
-    override fun getActivityIntervalsAssociatedWithBlacklistContactItem(blacklistItem: DbBlacklistContactItem): Single<List<DbActivityInterval>> =
-            joinBlacklistContactPhoneItemActivityIntervalDao.getActvitiyIntervalsForBlacklistContactItemIdAsSingle(blacklistItem.id)
-
     private fun putActivityIntervalsWithAddToBlacklistItem(blacklistItemId: Long,
                                                            dbActivityIntervals: List<DbActivityInterval>): Completable {
         return deleteAllBlacklistItemActivityIntervalsAndClearOrphans(blacklistItemId)

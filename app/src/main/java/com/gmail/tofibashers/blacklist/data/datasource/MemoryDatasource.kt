@@ -33,9 +33,6 @@ constructor() : IMemoryDatasource {
     private var selectedActivityIntervals: List<MemoryActivityInterval>? = null
 
     @Volatile
-    private var selectedMultipleActivityIntervalsLists: List<List<MemoryActivityInterval>>? = null
-
-    @Volatile
     private var selectedBlacklistContactPhonesWithActivityIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>? = null
 
     @Volatile
@@ -53,21 +50,6 @@ constructor() : IMemoryDatasource {
     override fun putSelectedActivityIntervals(activityIntervals: List<MemoryActivityInterval>): Completable =
             Completable.fromAction { synchronized(this, {
                 selectedActivityIntervals = activityIntervals
-            }) }
-
-
-    override fun removeSelectedMultipleActivityIntervalsLists(): Completable =
-            Completable.fromAction { synchronized(this, { selectedMultipleActivityIntervalsLists = null }) }
-
-    override fun getSelectedMultipleActivityIntervalsLists(): Maybe<List<List<MemoryActivityInterval>>> =
-            Maybe.defer { synchronized(this, {
-                return@synchronized if (selectedMultipleActivityIntervalsLists == null) Maybe.empty<List<List<MemoryActivityInterval>>>()
-                else Maybe.just(selectedMultipleActivityIntervalsLists) })
-            }
-
-    override fun putSelectedMultipleActivityIntervalsLists(activityIntervalsLists: List<List<MemoryActivityInterval>>): Completable =
-            Completable.fromAction { synchronized(this, {
-                selectedMultipleActivityIntervalsLists = activityIntervalsLists
             }) }
 
     override fun removeSelectedBlacklistContactPhonesWithActivityIntervals(): Completable =
