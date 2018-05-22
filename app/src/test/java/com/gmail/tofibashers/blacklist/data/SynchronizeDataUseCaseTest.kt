@@ -59,6 +59,8 @@ class SynchronizeDataUseCaseTest {
     fun setUp() {
         whenever(mockDatabaseSource.inTransactionCompletable())
                 .thenReturn(CompletableTransformer { it })
+        whenever(mockDatabaseSource.deleteBlacklistContactItemsThatNonAssociatedWithAnyPhones())
+                .thenReturn(Completable.complete())
         doAnswer { invocationOnMock: InvocationOnMock ->
                 val item = invocationOnMock.arguments[0] as DbBlacklistContactItem
                 return@doAnswer DeviceContactItem(item.deviceDbId,

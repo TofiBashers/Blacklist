@@ -119,6 +119,9 @@ constructor(
                 .compose(inTransactionCompletable())
     }
 
+    override fun deleteBlacklistContactItemsThatNonAssociatedWithAnyPhones(): Completable =
+            blacklistContactItemDao.deleteBlacklistContactItemsThatNonAssociatedWithAnyPhonesdAsCompletable()
+
     override fun putBlacklistContactItems(items: List<DbBlacklistContactItem>): Completable {
         return Observable.fromIterable(items)
                 .flatMapCompletable { item: DbBlacklistContactItem ->

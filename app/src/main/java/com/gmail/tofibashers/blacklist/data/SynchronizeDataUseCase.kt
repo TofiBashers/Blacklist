@@ -34,6 +34,7 @@ constructor(private val databaseSource: IDatabaseSource,
                 .flatMapCompletable {
                     return@flatMapCompletable syncDbBlacklistContactsWithDeviceContacts()
                             .andThen(syncDbBlacklistContactPhonesWithDeviceContactPhones())
+                            .andThen(databaseSource.deleteBlacklistContactItemsThatNonAssociatedWithAnyPhones())
                             .compose(databaseSource.inTransactionCompletable())
                 }
                 .subscribeOn(Schedulers.io())
@@ -47,10 +48,11 @@ constructor(private val databaseSource: IDatabaseSource,
                     getContactItemWithModifTypeAndDbIdIfDeletedOrUpdatedOnDevice(sourceItem)
                             .toObservable()
                 }
-                .groupBy { pair: Pair<ModifType, DbBlacklistContactItem> -> pair.first }
-                .flatMapCompletable { groupedObservable: GroupedObservable<ModifType, Pair<ModifType, DbBlacklistContactItem>> ->
+                .groupBy(
+                        { pair: Pair<ModifType, DbBlacklistContactItem> -> pair.first },
+                        { pair: Pair<ModifType, DbBlacklistContactItem> -> pair.second })
+                .flatMapCompletable { groupedObservable: GroupedObservable<ModifType, DbBlacklistContactItem> ->
                     return@flatMapCompletable groupedObservable
-                            .map { pair: Pair<ModifType, DbBlacklistContactItem> -> pair.second }
                             .toList()
                             .flatMapCompletable { when(groupedObservable.key) {
                                 ModifType.UPDATED -> databaseSource.putBlacklistContactItems(it)

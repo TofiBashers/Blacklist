@@ -2,9 +2,8 @@ package com.gmail.tofibashers.blacklist.data.db.dao
 
 import android.arch.persistence.room.*
 import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistContactItem
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactItemTable
-import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTable
+import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactPhoneItemTable
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -19,6 +18,9 @@ abstract class IBlacklistContactItemDao {
 
     fun deleteByIdsAsCompletable(vararg items: DbBlacklistContactItem) : Completable =
             Completable.fromAction { deleteByIds(*items) }
+
+    fun deleteBlacklistContactItemsThatNonAssociatedWithAnyPhonesdAsCompletable() : Completable =
+            Completable.fromAction { deleteBlacklistContactItemsThatNonAssociatedWithAnyPhones() }
 
     fun insertWithGetInsertedIdAsSingle(item: DbBlacklistContactItem) : Single<Long> =
             Single.fromCallable { insertWithGetInsertedId(item) }
@@ -46,6 +48,12 @@ abstract class IBlacklistContactItemDao {
 
     @Delete
     protected abstract fun deleteByIds(vararg items: DbBlacklistContactItem)
+
+    @Query("DELETE FROM ${BlacklistContactItemTable.TABLE_NAME} WHERE "
+            + "(SELECT COUNT(*) FROM ${BlacklistContactPhoneItemTable.TABLE_NAME}"
+            + " WHERE ${BlacklistContactPhoneItemTable.BLACKLIST_CONTACT_ID_WITH_TABLE_PREFIX} = ${BlacklistContactItemTable._ID_WITH_TABLE_PREFIX})"
+            + " = 0")
+    protected abstract fun deleteBlacklistContactItemsThatNonAssociatedWithAnyPhones()
 
     @Insert
     protected abstract fun insertWithGetInsertedId(dbBlacklistContactItem: DbBlacklistContactItem) : Long

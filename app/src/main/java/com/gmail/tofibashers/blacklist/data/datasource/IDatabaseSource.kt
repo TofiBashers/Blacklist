@@ -90,6 +90,14 @@ interface IDatabaseSource {
     fun deleteBlacklistContactItems(items: List<DbBlacklistContactItem>): Completable
 
     /**
+     * Delete [DbBlacklistContactItem]'s that not have at least one associated [DbBlacklistContactPhoneItem].
+     * Operations execute in transaction.
+     * @return [Completable] when operation completes, regardless of count of really deleted entities.
+     * Result [Completable] doesn't specify schedulers.
+     */
+    fun deleteBlacklistContactItemsThatNonAssociatedWithAnyPhones(): Completable
+
+    /**
      * Insert or update [DbBlacklistContactItem]'s, depends of their ids is exists. If exists
      * - updates entity, else - inserts.
      * Operations execute in transaction.

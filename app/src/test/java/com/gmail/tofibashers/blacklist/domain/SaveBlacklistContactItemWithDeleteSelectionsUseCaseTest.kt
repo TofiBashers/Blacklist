@@ -85,8 +85,6 @@ class SaveBlacklistContactItemWithDeleteSelectionsUseCaseTest {
 
         whenever(mockInteractionModeRepository.getSelectedMode())
                 .thenReturn(Maybe.empty())
-        whenever(mockBlacklistContactPhoneWithActivityIntervalsRepository.getSelectedList())
-                .thenReturn(Maybe.error(MustBeNotSubscribedException()))
         whenever(mockDeleteAllSelectionsSyncUseCase.build())
                 .thenReturn(Completable.error(MustBeNotSubscribedException()))
 
