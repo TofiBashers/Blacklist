@@ -9,9 +9,9 @@ import android.widget.TextView
 import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.WhitelistContactItemWithHasPhones
 import com.gmail.tofibashers.blacklist.ui.common.BaseViewHolder
-import com.gmail.tofibashers.blacklist.ui.common.CircleImageTranformation
 import com.gmail.tofibashers.blacklist.utils.loadContactImageByUrlOrDefault
-import com.squareup.picasso.Picasso
+import com.gmail.tofibashers.blacklist.utils.loadContactImageByUrlOrDisabledWithoutAlpha
+import com.gmail.tofibashers.blacklist.utils.setAlphaCompat
 import kotterknife.bindView
 
 
@@ -26,7 +26,6 @@ class SelectContactViewHolder(
     private val contactImageView: ImageView by bindView(R.id.image_contact)
     private val contactNameView: TextView by bindView(R.id.text_contact_name)
     private val contactOptionsButton: ImageButton by bindView(R.id.imagebutton_change)
-    private val contactInfoGroup: Group by bindView(R.id.group_contact_info)
     private val disabledToSelectInfoGroup: Group by bindView(R.id.group_disabled_to_select_info)
 
     init {
@@ -35,10 +34,18 @@ class SelectContactViewHolder(
     }
 
     override fun bind(item: WhitelistContactItemWithHasPhones){
-        contactInfoGroup.isEnabled = item.hasPhones
-        disabledToSelectInfoGroup.visibility = if(item.hasPhones) View.INVISIBLE else View.VISIBLE
         contactNameView.text = item.name
-        loadContactImageByUrlOrDefault(contactImageView, item.photoUrl)
+        val hasPhones = item.hasPhones
+        disabledToSelectInfoGroup.visibility = if(item.hasPhones) View.INVISIBLE else View.VISIBLE
+        contactNameView.isEnabled = hasPhones
+        contactImageView.setAlphaCompat(if(hasPhones) 1F else 0.12F)
+        itemView.isClickable = hasPhones
+        if(hasPhones){
+            loadContactImageByUrlOrDefault(contactImageView, item.photoUrl)
+        }
+        else{
+            loadContactImageByUrlOrDisabledWithoutAlpha(contactImageView, item.photoUrl)
+        }
     }
 
     override fun onClick(v: View) {

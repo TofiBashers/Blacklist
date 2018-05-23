@@ -3,6 +3,19 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/assets/fonts/Vollkorn-Bold.ttf" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/app/src/main/assets/fonts/Vollkorn-SemiBold.ttf" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_contact_disabled_photo_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_contact_disabled_photo_without_alpha_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_contact_disabled_photo_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_contact_disabled_photo_without_alpha_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_icons8_male_user_filled_100_black.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_contact_disabled_photo_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_contact_disabled_photo_without_alpha_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_contact_disabled_photo_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_contact_disabled_photo_without_alpha_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_contact_disabled_photo_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_contact_disabled_photo_without_alpha_48dp.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/res" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/res" charset="windows-1251" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
