@@ -71,6 +71,13 @@
         android:orientation="vertical"/>
 
     <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_between_change_schedule_and_right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_phone_guideline_vertical_between_change_schedule_and_right_margin"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
         android:id="@+id/guideline_vertical_for_right_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,27 +117,18 @@
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms"
         android:text="@string/options_ignore_sms_action" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardview_wrap_imagebutton_change_schedule"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="top"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingactionbutton_change_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
-        app:layout_constraintRight_toRightOf="@id/guideline_vertical_for_right_margin"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_change_schedule_and_right_margin"
         app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_space_between_change_schedule_and_bottom_margin"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls"
         app:layout_constraintDimensionRatio="H,1:1"
-        app:cardPreventCornerOverlap="false"
-        app:cardCornerRadius="@dimen/partial_time_set_time_button_card_corner_radius"
-        tools:cardElevation="@dimen/partial_time_set_time_button_enabled_elevation">
-
-        <ImageButton
-            android:id="@+id/imagebutton_change_schedule"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:background="@color/background"
-            android:src="@drawable/ic_change_ignoring_time_enabled_48dp"/>
-
-    </android.support.v7.widget.CardView>
+        android:scaleType="fitXY"
+        app:backgroundTint="@color/background"
+        android:src="@drawable/ic_change_ignoring_time_enabled_48dp"
+        app:fabSize="mini"
+        app:elevation="@dimen/partial_time_set_time_button_enabled_elevation"/>
 </android.support.constraint.ConstraintLayout>

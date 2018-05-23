@@ -88,6 +88,7 @@
     <item name="item_blacklist_contact_options_phone_guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms_percent" type="dimen" format="float">0.75</item>
     <item name="item_blacklist_contact_options_phone_guideline_horizontal_space_between_change_schedule_and_bottom_margin_percent" type="dimen" format="float">0.85</item>
     <item name="item_blacklist_contact_options_phone_guideline_vertical_between_checkboxes_and_change_schedule" type="dimen" format="float">0.55</item>
+    <item name="item_blacklist_contact_options_phone_guideline_vertical_between_change_schedule_and_right_margin" type="dimen" format="float">0.75</item>
 
     <dimen name="item_select_contact_text_contact_name_size">30sp</dimen>
     <dimen name="item_select_contact_text_contact_name_padding_left">10dp</dimen>
