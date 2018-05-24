@@ -61,9 +61,9 @@ constructor() : IMemoryDatasource {
                 else Maybe.just(selectedBlacklistContactPhonesWithActivityIntervals) })
             }
 
-    override fun putSelectedBlacklistContactPhonesWithActivityIntervals(phonesWithActivityIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>): Completable =
+    override fun putSelectedBlacklistContactPhonesWithActivityIntervals(phonesWithIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>): Completable =
             Completable.fromAction { synchronized(this, {
-                selectedBlacklistContactPhonesWithActivityIntervals = phonesWithActivityIntervals
+                selectedBlacklistContactPhonesWithActivityIntervals = phonesWithIntervals
             }) }
 
     override fun removeSelectedBlackListItem(): Completable =

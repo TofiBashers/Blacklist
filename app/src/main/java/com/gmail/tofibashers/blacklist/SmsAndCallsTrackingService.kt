@@ -84,6 +84,7 @@ class SmsAndCallsTrackingService : DaggerService() {
                     bundle?.let {
                         @Suppress("UNCHECKED_CAST")
                         val pdus = it.get(EXTRA_SMS_RECEIVED_PDUS) as Array<Any>
+                        @Suppress("DEPRECATION")
                         val mess = SmsMessage.createFromPdu(pdus[0] as ByteArray)
                         if(mess != null){
                             val senderNumber = mess.originatingAddress

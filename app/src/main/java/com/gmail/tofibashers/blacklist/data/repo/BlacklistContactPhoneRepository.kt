@@ -23,8 +23,8 @@ constructor(private val databaseSource: IDatabaseSource,
             private val blacklistContactPhoneMapper: BlacklistContactPhoneMapper,
             private val dbBlacklistContactPhoneItemMapper: DbBlacklistContactPhoneItemMapper) : IBlacklistContactPhoneRepository{
 
-    override fun getAllAssociatedWithBlacklistContact(item: BlacklistContactItem): Single<List<BlacklistContactPhoneNumberItem>> {
-        return Single.fromCallable { blacklistContactItemMapper.toDbBlacklistContactItem(item) }
+    override fun getAllAssociatedWithBlacklistContact(blacklistContactItem: BlacklistContactItem): Single<List<BlacklistContactPhoneNumberItem>> {
+        return Single.fromCallable { blacklistContactItemMapper.toDbBlacklistContactItem(blacklistContactItem) }
                 .flatMap { databaseSource.getBlacklistContactPhonesAssociatedWithBlacklistContactItem(it) }
                 .map { dbBlacklistContactPhoneItemMapper.toBlacklistContactPhoneNumberItemList(it) }
     }

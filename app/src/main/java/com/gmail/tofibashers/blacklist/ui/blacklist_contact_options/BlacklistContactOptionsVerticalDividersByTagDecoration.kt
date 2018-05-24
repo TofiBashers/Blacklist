@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -24,8 +26,10 @@ class BlacklistContactOptionsVerticalDividersByTagDecoration
  */
 (context: Context) : RecyclerView.ItemDecoration() {
 
-    private val gradientDivider: Drawable = context.resources.getDrawable(R.drawable.divider_blacklist_contact_options_gradient)
-    private val solidLineDivider: Drawable = context.resources.getDrawable(R.drawable.divider_blacklist_contact_options_solid_line)
+    private val gradientDivider: Drawable = ContextCompat.getDrawable(context,
+            R.drawable.divider_blacklist_contact_options_gradient)!!
+    private val solidLineDivider: Drawable = ContextCompat.getDrawable(context,
+            R.drawable.divider_blacklist_contact_options_solid_line)!!
 
     private val mBounds = Rect()
 

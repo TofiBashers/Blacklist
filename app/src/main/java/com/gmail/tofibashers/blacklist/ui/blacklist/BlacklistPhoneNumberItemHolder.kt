@@ -27,12 +27,12 @@ class BlacklistPhoneNumberItemHolder(
     }
 
     override fun bind(item: SectionBlacklistItem.PhoneNumber){
-        val item = item.phoneNumberItem
-        smsBlockView.setImageResource(if (item.isSmsBlocked) R.drawable.ic_sms_disabled_48dp
-        else R.drawable.ic_sms_enabled_48dp_exp)
-        callsBlockView.setImageResource(if (item.isCallsBlocked) R.drawable.ic_call_disabled_48dp
-        else R.drawable.ic_call_enabled_48dp_exp)
-        phoneNumberView.text = item.number
+        val phoneItem = item.phoneNumberItem
+        smsBlockView.setImageResource(if (phoneItem.isSmsBlocked) R.drawable.ic_sms_disabled_48dp
+        else R.drawable.ic_sms_enabled_48dp)
+        callsBlockView.setImageResource(if (phoneItem.isCallsBlocked) R.drawable.ic_call_disabled_48dp
+        else R.drawable.ic_call_enabled_48dp)
+        phoneNumberView.text = phoneItem.number
     }
 
     override fun onClick(v: View) {

@@ -130,10 +130,10 @@ constructor(
                 .compose(inTransactionCompletable())
     }
 
-    override fun putBlacklistContactItemWithPhonesAndActivityIntervals(item: DbBlacklistContactItemWithPhonesAndIntervals): Completable {
-        return putBlacklistContactItemWithGetId(item.contactItem)
+    override fun putBlacklistContactItemWithPhonesAndActivityIntervals(items: DbBlacklistContactItemWithPhonesAndIntervals): Completable {
+        return putBlacklistContactItemWithGetId(items.contactItem)
                 .flatMapCompletable { putId: Long ->
-                    Observable.fromIterable(item.phonesWithIntervals)
+                    Observable.fromIterable(items.phonesWithIntervals)
                             .flatMapCompletable {
                                 putBlacklistContactPhoneItemWithActivityIntervalsAndAddToBlacklistContact(putId, it)
                             }

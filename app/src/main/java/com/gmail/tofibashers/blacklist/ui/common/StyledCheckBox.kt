@@ -1,6 +1,8 @@
 package com.gmail.tofibashers.blacklist.ui.common
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.ContextThemeWrapper
@@ -27,6 +29,6 @@ class StyledCheckBox : AppCompatCheckBox {
 
     private fun setStyle() {
         isSaveEnabled = false
-        setBackgroundColor(resources.getColor(android.R.color.transparent))
+        setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
     }
 }

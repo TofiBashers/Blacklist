@@ -4,6 +4,7 @@ import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.constraint.Group
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
@@ -134,7 +135,7 @@ class TimeSettingsActivity : BaseStateableViewActivity<Group, Group>(),
                 timeInPickerFormat[0],
                 timeInPickerFormat[1],
                 timeFormatUtils.is24hourFormatForView())
-        dialog.accentColor = resources.getColor(R.color.time_picker_color)
+        dialog.accentColor = ContextCompat.getColor(this, R.color.time_picker_color)
         dialog.setSelectableTimes(timeFormatUtils.localTimesToViewTimepoints(*timeChangeInitData.selectableTimes.toTypedArray()))
         dialog.vibrate(false)
         dialog.show(fragmentManager, AndroidComponentKeys.TAG_TIMEPICKER_DIALOG)
