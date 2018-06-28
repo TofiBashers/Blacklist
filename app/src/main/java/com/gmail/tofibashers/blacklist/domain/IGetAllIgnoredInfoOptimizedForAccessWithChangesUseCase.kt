@@ -1,6 +1,7 @@
 package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
+import com.gmail.tofibashers.blacklist.entity.PhoneNumberTypeWithValue
 import io.reactivex.Observable
 
 
@@ -12,12 +13,14 @@ import io.reactivex.Observable
 interface IGetAllIgnoredInfoOptimizedForAccessWithChangesUseCase {
 
     /**
-     * Provides ignore hidden flag, and ignore personal number settings firstly, and after one of their
+     * Provides ignore hidden flag, current default iso-2 country code for input phones,
+     * and ignore personal number settings firstly, and after one of their
      * would be update.
      * Result [Observable] executes in [Schedulers.IO], provides result to Android UI thread.
      * Never calls onComplete.
-     * @return [Observable] with [Pair], where [Pair.first] is true when hidden numbers must be ignore,
-     * and [Pair.second] is a [HashMap] with numbers and it's time settings
+     * @return [Observable] with [Triple], where [Triple.first] is true when hidden numbers must be ignore,
+     * [Triple.second] current default iso-2 country for phones without country code and
+     * and [Triple.third] is a [HashMap] with numbers and it's time settings
      */
-    fun build() : Observable<Pair<Boolean, HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>>
+    fun build() : Observable<Triple<Boolean, String, HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>>>
 }

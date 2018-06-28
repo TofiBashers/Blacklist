@@ -1,6 +1,7 @@
 package com.gmail.tofibashers.blacklist.di.activity
 
 import android.arch.lifecycle.ViewModelProviders
+import com.gmail.tofibashers.blacklist.di.PerActivity
 import com.gmail.tofibashers.blacklist.ui.common.ViewModelFactory
 import com.gmail.tofibashers.blacklist.ui.options.OptionsActivity
 import com.gmail.tofibashers.blacklist.ui.options.OptionsViewModel

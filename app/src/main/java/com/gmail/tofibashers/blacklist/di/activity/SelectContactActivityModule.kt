@@ -1,9 +1,7 @@
 package com.gmail.tofibashers.blacklist.di.activity
 
 import android.arch.lifecycle.ViewModelProviders
-import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistActivity
-import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistAdapter
-import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistViewModel
+import com.gmail.tofibashers.blacklist.di.PerActivity
 import com.gmail.tofibashers.blacklist.ui.common.ViewModelFactory
 import com.gmail.tofibashers.blacklist.ui.select_contact.SelectContactActivity
 import com.gmail.tofibashers.blacklist.ui.select_contact.SelectContactAdaper

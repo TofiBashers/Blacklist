@@ -50,6 +50,7 @@ ext{
     rxAndroidVersion = "2.0.1"
     autoFactoryVersion = "1.0-beta5"
     jodaTimeVersion = "2.9.9.1"
+    libPhoneNumberVersion = "8.9.5"
     timePickerVersion = "3.5.2"
     calligraphyVersion = "2.3.0"
     picassoVersion = "2.71828"

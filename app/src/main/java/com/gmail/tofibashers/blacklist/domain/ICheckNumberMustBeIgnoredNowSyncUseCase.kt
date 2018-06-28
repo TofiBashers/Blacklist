@@ -1,6 +1,7 @@
 package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
+import com.gmail.tofibashers.blacklist.entity.PhoneNumberTypeWithValue
 import io.reactivex.Single
 
 
@@ -17,10 +18,12 @@ interface ICheckNumberMustBeIgnoredNowSyncUseCase {
      * @param isSms type of input event, associated with number (Sms or Call)
      * @param ignoredSettingsByNumbers [HashMap] with ignoring policies
      * @param ignoreHiddenNumbers policy for hidden numbers
+     * @param defaultPhoneCountry current default iso-2 country for phones without country code
      * @return [Single] with true, if number must be ignored now, else - with false.
      */
     fun build(number: String?,
               isSms: Boolean,
-              ignoredSettingsByNumbers: HashMap<String, TimeAndIgnoreSettingsByWeekdayId>,
+              ignoredSettingsByNumbers: HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>,
+              defaultPhoneCountry: String,
               ignoreHiddenNumbers: Boolean) : Single<Boolean>
 }

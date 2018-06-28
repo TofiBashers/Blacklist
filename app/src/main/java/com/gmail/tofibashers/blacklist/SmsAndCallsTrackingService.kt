@@ -10,8 +10,9 @@ import android.telephony.SmsMessage
 import android.telephony.TelephonyManager
 import android.util.Log
 import com.android.internal.telephony.ITelephony
-import com.gmail.tofibashers.blacklist.domain.IGetAllIgnoredInfoOptimizedForAccessWithChangesUseCase
 import com.gmail.tofibashers.blacklist.domain.ICheckNumberMustBeIgnoredNowSyncUseCase
+import com.gmail.tofibashers.blacklist.domain.IGetAllIgnoredInfoOptimizedForAccessWithChangesUseCase
+import com.gmail.tofibashers.blacklist.entity.PhoneNumberTypeWithValue
 import dagger.android.DaggerService
 import io.reactivex.Observer
 import io.reactivex.SingleObserver
@@ -24,7 +25,8 @@ class SmsAndCallsTrackingService : DaggerService() {
 
     private var compositeSubscription = CompositeDisposable()
     private var ignoreHiddenNumbers: Boolean? = null
-    private var ignoredNumbersWithTimeAndSettings: HashMap<String, TimeAndIgnoreSettingsByWeekdayId>? = null
+    private var defaultPhoneCountry: String? = null
+    private var ignoredNumbersWithTimeAndSettings: HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>? = null
 
     @Inject
     lateinit var syncCheckNumberMustBeIgnoredNowUseCase: ICheckNumberMustBeIgnoredNowSyncUseCase
@@ -77,8 +79,10 @@ class SmsAndCallsTrackingService : DaggerService() {
             Log.i(LOG_TAG, "Intent Received")
             val bundle = intent.extras
             val ignoreHiddenNumbers = this@SmsAndCallsTrackingService.ignoreHiddenNumbers
+            val defaultPhoneCountry = this@SmsAndCallsTrackingService.defaultPhoneCountry
             val ignoredNumbersWithTimeAndSettings = this@SmsAndCallsTrackingService.ignoredNumbersWithTimeAndSettings
-            if(ignoreHiddenNumbers != null && ignoredNumbersWithTimeAndSettings != null){
+            if(ignoreHiddenNumbers != null && ignoredNumbersWithTimeAndSettings != null
+                    && defaultPhoneCountry != null){
                 if (intent.action == ACTION_SMS_RECEIVED) {
                     Log.i(LOG_TAG, "Sms")
                     bundle?.let {
@@ -91,6 +95,7 @@ class SmsAndCallsTrackingService : DaggerService() {
                             syncCheckNumberMustBeIgnoredNowUseCase.build(senderNumber,
                                     true,
                                     ignoredNumbersWithTimeAndSettings,
+                                    defaultPhoneCountry,
                                     ignoreHiddenNumbers)
                                     .subscribe(CheckIsSmsMustBeIgnoredSingleObserver())
                         }
@@ -102,6 +107,7 @@ class SmsAndCallsTrackingService : DaggerService() {
                         syncCheckNumberMustBeIgnoredNowUseCase.build(incomingNumber,
                                 false,
                                 ignoredNumbersWithTimeAndSettings,
+                                defaultPhoneCountry,
                                 ignoreHiddenNumbers)
                                 .subscribe(CheckIsCallMustBeIgnoredSingleObserver())
                     }
@@ -136,13 +142,14 @@ class SmsAndCallsTrackingService : DaggerService() {
         override fun onSubscribe(d: Disposable) { compositeSubscription.add(d) }
     }
 
-    inner class GetIgnoredNumbersWithActivityTimeObserver : Observer<Pair<Boolean, HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>> {
+    inner class GetIgnoredNumbersWithActivityTimeObserver : Observer<Triple<Boolean, String, HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>>> {
 
         override fun onSubscribe(d: Disposable) { compositeSubscription.add(d) }
 
-        override fun onNext(hiddenAndNumberSettings: Pair<Boolean, HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>) {
+        override fun onNext(hiddenAndNumberSettings: Triple<Boolean, String, HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>>) {
             this@SmsAndCallsTrackingService.ignoreHiddenNumbers = hiddenAndNumberSettings.first
-            this@SmsAndCallsTrackingService.ignoredNumbersWithTimeAndSettings = hiddenAndNumberSettings.second
+            this@SmsAndCallsTrackingService.defaultPhoneCountry = hiddenAndNumberSettings.second
+            this@SmsAndCallsTrackingService.ignoredNumbersWithTimeAndSettings = hiddenAndNumberSettings.third
         }
 
         override fun onComplete() {}
