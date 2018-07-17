@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_text_padding">20dp</dimen>
+
     <item name="options_guideline_vertical_content_left_border_percent" type="dimen" format="float">0.1</item>
     <item name="options_guideline_vertical_content_right_border_percent" type="dimen" format="float">0.9</item>
-    <item name="options_guideline_horizontal_between_content_and_save_buttons_percent" type="dimen" format="float">0.85</item>
-    <item name="options_guideline_vertical_between_ok_cancel_percent" type="dimen" format="float">0.5</item>
-    <item name="options_guideline_vertical_left_change_schedule_percent" type="dimen" format="float">0.55</item>
+    <item name="blacklist_phonenumber_options_guideline_horizontal_between_content_and_save_buttons_percent" type="dimen" format="float">0.85</item>
+    <item name="blacklist_phonenumber_options_guideline_vertical_between_ok_cancel_percent" type="dimen" format="float">0.5</item>
+    <item name="blacklist_phonenumber_options_guideline_vertical_left_change_schedule_percent" type="dimen" format="float">0.55</item>
 </resources>

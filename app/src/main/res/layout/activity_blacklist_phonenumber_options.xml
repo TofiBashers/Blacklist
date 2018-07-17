@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraint_root">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_content_left_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/blacklist_phonenumber_options_guideline_vertical_content_left_border_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_change_button_right_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/blacklist_phonenumber_options_guideline_vertical_change_button_right_end_percent"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_content_right_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="@dimen/blacklist_phonenumber_options_guideline_vertical_content_right_border_percent"
+        android:orientation="vertical"/>
+
+    <com.gmail.tofibashers.blacklist.ui.common.CardWrapperWithBottomElevation
+        android:id="@+id/cardwrapper_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardViewLayout="@layout/partial_card_wrapper_toolbar"/>
+
+    <include
+        android:id="@+id/textinput_edit_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/blacklist_phonenumber_options_textinput_edit_number_margin_bottom"
+        android:layout_marginTop="@dimen/blacklist_phonenumber_options_control_spaces"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
+        app:layout_constraintBottom_toTopOf="@+id/checkbox_ignore_calls"
+        app:layout_constraintTop_toBottomOf="@+id/cardwrapper_toolbar"
+        layout="@layout/partial_textinput_edit_number"
+        />
+
+    <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
+        android:id="@+id/checkbox_ignore_calls"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
+        app:layout_constraintBottom_toTopOf="@+id/checkbox_ignore_sms"
+        app:layout_constraintTop_toBottomOf="@id/textinput_edit_number"
+        android:layout_marginBottom="@dimen/blacklist_phonenumber_options_checkbox_ignore_calls_margin_bottom"
+        android:text="@string/blacklist_phonenumber_options_ignore_calls_action" />
+
+    <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
+        android:id="@+id/checkbox_ignore_sms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
+        app:layout_constraintBottom_toTopOf="@+id/button_change_schedule"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_ignore_calls"
+        android:text="@string/blacklist_phonenumber_options_ignore_sms_action"/>
+
+    <Button
+        android:id="@+id/button_change_schedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_change_button_right_end"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_ignore_sms"
+        android:layout_marginTop="@dimen/blacklist_phonenumber_options_button_change_schedule_margin_bottom"
+        android:background="@drawable/btn_time_change_backgrounds"
+        android:text="@string/blacklist_phonenumber_options_change_ignoring_period_action"
+        android:textColor="@drawable/btn_outlined_text_colors"/>
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
+        app:layout_constraintRight_toLeftOf="@+id/button_save"
+        app:layout_constraintTop_toBottomOf="@id/button_change_schedule"
+        style="@style/AppTheme.OutlinedButton"
+        android:text="@string/options_cancel_action" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/button_cancel"
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
+        app:layout_constraintTop_toBottomOf="@id/button_change_schedule"
+        style="@style/AppTheme.DefaultButton"
+        android:text="@string/action_save" />
+
+    <include
+        android:id="@+id/progressbar_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardwrapper_toolbar"
+        layout="@layout/partial_progress"/>
+
+    <android.support.constraint.Group
+        android:id="@+id/group_options_with_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="textinput_edit_number,
+                checkbox_ignore_calls,
+                checkbox_ignore_sms,
+                button_change_schedule,
+                button_cancel,
+                button_save" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="progressbar_view"/>
+
+</android.support.constraint.ConstraintLayout >

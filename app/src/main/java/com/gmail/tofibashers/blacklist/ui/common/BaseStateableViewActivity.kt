@@ -18,7 +18,7 @@ abstract class BaseStateableViewActivity<out L : View, out D : View>: BaseAppCom
 
     protected fun showDefaultLoading() = setViewState(ViewState.LOADING)
 
-    protected fun setViewState(state: ViewState){
+    protected open fun setViewState(state: ViewState){
         when (state){
             ViewState.DATA -> {
                 loadingView.visibility = View.GONE

@@ -94,7 +94,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_vertical|left"
         android:textSize="@dimen/item_blacklist_contact_options_phone_text_phone_number_size"
-        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="start"
         tools:text="89600000001"/>
 
     <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
@@ -105,7 +106,7 @@
         app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
         app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_between_ignore_calls_and_space_ignore_calls_ignore_sms"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls"
-        android:text="@string/options_ignore_calls_action" />
+        android:text="@string/blacklist_phonenumber_options_ignore_calls_action" />
 
     <com.gmail.tofibashers.blacklist.ui.common.StyledCheckBox
         android:id="@+id/checkbox_ignore_sms"
@@ -115,20 +116,20 @@
         app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
         app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_for_bottom_margin"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms"
-        android:text="@string/options_ignore_sms_action" />
+        android:text="@string/blacklist_phonenumber_options_ignore_sms_action" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingactionbutton_change_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/imagebutton_change_schedule"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintLeft_toRightOf="@id/guideline_vertical_between_checkboxes_and_change_schedule"
         app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_change_schedule_and_right_margin"
         app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_space_between_change_schedule_and_bottom_margin"
         app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls"
-        app:layout_constraintDimensionRatio="H,1:1"
-        android:scaleType="fitXY"
-        app:backgroundTint="@color/background"
+        app:layout_constraintDimensionRatio="1:1"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_change_ignoring_time_enabled_48dp"
-        app:fabSize="mini"
-        app:elevation="@dimen/partial_time_set_time_button_enabled_elevation"/>
+        android:background="@drawable/btn_time_change_backgrounds"
+        android:textColor="@drawable/btn_outlined_text_colors"
+        style="@style/AppTheme.OutlinedButton"/>
 </android.support.constraint.ConstraintLayout>

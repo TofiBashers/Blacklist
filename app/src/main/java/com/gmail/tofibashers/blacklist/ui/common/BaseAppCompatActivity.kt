@@ -35,11 +35,7 @@ abstract class BaseAppCompatActivity : AppCompatActivity(), HasFragmentInjector,
         AndroidInjection.inject(this)
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return supportFragmentInjector
-    }
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
-    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> {
-        return frameworkFragmentInjector
-    }
+    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = frameworkFragmentInjector
 }

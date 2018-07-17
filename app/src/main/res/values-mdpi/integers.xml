@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="partial_card_wrapper_toolbar_with_ignore_hidden_block_gravity">21</integer> <!-- right|center_vertical, 5|16 -->
+</resources>

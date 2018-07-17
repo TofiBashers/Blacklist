@@ -19,7 +19,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.options.OptionsActivity" />
+        <activity android:name=".ui.blacklist_phonenumber_options.BlacklistPhonenumberOptionsActivity" />
         <activity
             android:name=".ui.blacklist.BlacklistActivity"
             android:label="@string/app_name">

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/primary_dark_text"
         android:inputType="phone"
-        android:hint="@string/options_edit_number_action"
+        android:hint="@string/blacklist_phonenumber_options_edit_number_action"
         android:maxLength="15"/>
 
 </android.support.design.widget.TextInputLayout>

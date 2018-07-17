@@ -8,9 +8,12 @@
     <item name="partial_time_guideline_vertical" type="dimen" format="float">0.72</item>
     <item name="partial_time_guideline_horizontal" type="dimen" format="float">0.48</item>
 
-    <dimen name="item_numberlist_text_phone_number_size">27sp</dimen>
-    <dimen name="item_numberlist_height">100dp</dimen>
 
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_text_padding">8dp</dimen>
+
+    <dimen name="item_blacklist_phonenumber_text_phone_number_size">27sp</dimen>
+
+    <dimen name="item_blacklist_height">100dp</dimen>
     <dimen name="item_blacklist_header_text_header_size">27sp</dimen>
 
     <dimen name="item_blacklist_contact_text_contact_name_size">27sp</dimen>

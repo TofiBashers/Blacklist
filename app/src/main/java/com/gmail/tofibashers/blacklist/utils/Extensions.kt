@@ -2,6 +2,7 @@ package com.gmail.tofibashers.blacklist.utils
 
 import android.os.Build
 import android.support.annotation.FloatRange
+import android.widget.CompoundButton
 import android.widget.ImageView
 
 
@@ -16,4 +17,11 @@ fun ImageView.setAlphaCompat(@FloatRange(from=0.0, to=1.0) imgAlpha: Float){
     else{
         alpha = imgAlpha
     }
+}
+
+fun CompoundButton.setCheckedWithoutInvokeListener(isChecked: Boolean,
+                                                   listener: CompoundButton.OnCheckedChangeListener?){
+    setOnCheckedChangeListener(null)
+    this.isChecked = isChecked
+    setOnCheckedChangeListener(listener)
 }

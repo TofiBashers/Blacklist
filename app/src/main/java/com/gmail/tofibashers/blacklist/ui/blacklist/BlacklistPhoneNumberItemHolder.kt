@@ -14,7 +14,7 @@ import kotterknife.bindView
 class BlacklistPhoneNumberItemHolder(
         private val clickListener: ClickListener,
         parent: ViewGroup
-) : BaseViewHolder<SectionBlacklistItem.PhoneNumber>(R.layout.item_numberlist, parent),
+) : BaseViewHolder<SectionBlacklistItem.PhoneNumber>(R.layout.item_blacklist_phonenumber, parent),
         View.OnClickListener {
 
     private val callsBlockView: ImageView by bindView(R.id.image_is_calls_block)
@@ -39,7 +39,7 @@ class BlacklistPhoneNumberItemHolder(
         when (v.id) {
             R.id.imagebutton_options -> {
                 val popupMenu = PopupMenu(itemView.context, v)
-                popupMenu.inflate(R.menu.listitem_options)
+                popupMenu.inflate(R.menu.blacklist_item_options)
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.change_item -> clickListener.onChangeClick(adapterPosition)

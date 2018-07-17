@@ -7,7 +7,7 @@ import com.gmail.tofibashers.blacklist.di.PerService
 import com.gmail.tofibashers.blacklist.di.activity.*
 import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistActivity
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
-import com.gmail.tofibashers.blacklist.ui.options.OptionsActivity
+import com.gmail.tofibashers.blacklist.ui.blacklist_phonenumber_options.BlacklistPhonenumberOptionsActivity
 import com.gmail.tofibashers.blacklist.ui.select_contact.SelectContactActivity
 import com.gmail.tofibashers.blacklist.ui.time_settings.TimeSettingsActivity
 import dagger.Module
@@ -21,9 +21,9 @@ import dagger.android.ContributesAndroidInjector
 @Module()
 abstract class AndroidBindingsModule {
 
-    @ContributesAndroidInjector(modules = arrayOf(OptionsActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(BlacklistPhonenumberOptionsActivityModule::class))
     @PerActivity
-    abstract fun provideOptionsActivityInjector() : OptionsActivity
+    abstract fun provideOptionsActivityInjector() : BlacklistPhonenumberOptionsActivity
 
     @ContributesAndroidInjector(modules = arrayOf(BlacklistActivityModule::class))
     @PerActivity

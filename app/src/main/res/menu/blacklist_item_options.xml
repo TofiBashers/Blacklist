@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/options_group">
+        <item android:id="@+id/change_item"
+            android:title="@string/item_blacklist_phonenumber_menu_change_action"/>
+        <item android:id="@+id/delete_item"
+            android:title="@string/item_blacklist_phonenumber_menu_delete_action"/>
+    </group>
+</menu>

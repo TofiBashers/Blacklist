@@ -1,6 +1,5 @@
 package com.gmail.tofibashers.blacklist.ui.blacklist_contact_options
 
-import android.support.design.widget.FloatingActionButton
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -22,7 +21,7 @@ class BlacklistContactOptionsPhoneNumberViewHolder(
     private val phoneNumberView: TextView by bindView(R.id.text_phone_number)
     private val ignoreCallsCheckBox: CheckBox by bindView(R.id.checkbox_ignore_calls)
     private val ignoreSMSCheckBox: CheckBox by bindView(R.id.checkbox_ignore_sms)
-    private val changeScheduleButton: FloatingActionButton by bindView(R.id.floatingactionbutton_change_schedule)
+    private val changeScheduleButton: ImageButton by bindView(R.id.imagebutton_change_schedule)
 
     init {
         changeScheduleButton.setOnClickListener(this)

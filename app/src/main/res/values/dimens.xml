@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="blacklist_add_num_with_settings_card_elevation">2dp</dimen>
+    <dimen name="blacklist_cardwrapper_toolbar_min_height">65dp</dimen>
     <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.5</item>
     <item name="blacklist_guideline_vertical_button_add_contact_left_margin_percent" type="dimen" format="float">0.05</item>
     <item name="blacklist_guideline_vertical_button_add_contact_right_percent" type="dimen" format="float">0.49</item>
     <item name="blacklist_guideline_vertical_button_add_left_percent" type="dimen" format="float">0.51</item>
     <item name="blacklist_guideline_vertical_button_add_right_margin_percent" type="dimen" format="float">0.95</item>
     <item name="blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent" type="dimen" format="float">0.9</item>
-    <dimen name="options_control_spaces">20dp</dimen>
+    <dimen name="blacklist_phonenumber_options_control_spaces">20dp</dimen>
     <dimen name="options_spaces_between_textinput_and_checkbox">20dp</dimen>
     <dimen name="options_space_between_ignore_sms_and_save_cancel_buttons">20dp</dimen>
-    <item name="options_guideline_vertical_content_left_border_percent" type="dimen" format="float">0.03</item>
-    <item name="options_guideline_vertical_change_button_right_end_percent" type="dimen" format="float">0.45</item>
-    <item name="options_guideline_vertical_content_right_border_percent" type="dimen" format="float">0.97</item>
+    <dimen name="blacklist_phonenumber_options_textinput_edit_number_margin_bottom">10dp</dimen>
+    <dimen name="blacklist_phonenumber_options_checkbox_ignore_calls_margin_bottom">15dp</dimen>
+    <dimen name="blacklist_phonenumber_options_button_change_schedule_margin_bottom">15dp</dimen>
+    <item name="blacklist_phonenumber_options_guideline_vertical_content_left_border_percent" type="dimen" format="float">0.03</item>
+    <item name="blacklist_phonenumber_options_guideline_vertical_change_button_right_end_percent" type="dimen" format="float">0.45</item>
+    <item name="blacklist_phonenumber_options_guideline_vertical_content_right_border_percent" type="dimen" format="float">0.97</item>
     <item name="blacklist_contact_options_guideline_vertical_content_left_border_percent" type="dimen" format="float">0.03</item>
     <item name="blacklist_contact_options_guideline_vertical_content_right_border_percent" type="dimen" format="float">0.97</item>
     <item name="blacklist_contact_options_guideline_vertical_between_ok_and_cancel_percent" type="dimen" format="float">0.5</item>
@@ -21,8 +25,8 @@
     <item name="time_settings_guideline_right_save_margin_percent" type="dimen" format="float">0.95</item>
     <dimen name="time_settings_weekview_paddings">16dp</dimen>
 
-    <dimen name="divider_item_numberlist_width">10dp</dimen>
-    <dimen name="divider_item_numberlist_gradient_radius">100dp</dimen>
+    <dimen name="item_blacklist_divider_width">10dp</dimen>
+    <dimen name="item_blacklist_divider_gradient_radius">100dp</dimen>
     <dimen name="partial_item_time_and_weekday_settings_hyphen_size">25sp</dimen>
     <dimen name="partial_time_set_time_button_enabled_elevation">2dp</dimen>
     <dimen name="partial_time_set_time_button_disabled_elevation">0dp</dimen>
@@ -31,27 +35,41 @@
     <item name="partial_time_guideline_vertical" type="dimen" format="float">0.8</item>
     <item name="partial_time_guideline_horizontal" type="dimen" format="float">0.4</item>
     <dimen name="partial_toolbar_card_elevation">4dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_height">50dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_text_padding">0dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_margin_left">170dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_margin_right">30dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_margin_top_and_bottom">6dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_card_wrapper_margin_right_and_left">12dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_card_wrapper_content_padding">5dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_card_wrapper_elevation">1dp</dimen>
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_card_wrapper_corner_radius">4dp</dimen>
+
     <dimen name="animations_progress_default_inner_radius">15dp</dimen>
     <dimen name="animations_progress_default_thickness">4dp</dimen>
     <dimen name="divider_default_height">1dp</dimen>
 
     <dimen name="default_button_elevation">2dp</dimen>
     <dimen name="default_card_corner_radius">0dp</dimen>
-    <dimen name="item_numberlist_height">100dp</dimen>
-    <dimen name="item_numberlist_text_phone_number_size">30sp</dimen>
-    <item name="item_numberlist_guideline_horizontal_for_button_options_percent" type="dimen" format="float">0.3</item>
-    <item name="item_numberlist_guideline_horizontal_between_text_and_space_percent" type="dimen" format="float">0.5</item>
-    <item name="item_numberlist_guideline_horizontal_between_space_and_images_percent" type="dimen" format="float">0.6</item>
-    <item name="item_numberlist_guideline_vertical_between_call_and_sms_img_percent" type="dimen" format="float">0.1</item>
-    <item name="item_numberlist_guideline_vertical_between_sms_and_space_img_percent" type="dimen" format="float">0.2</item>
-    <item name="item_numberlist_guideline_vertical_between_text_and_options_button_percent" type="dimen" format="float">0.93</item>
+    <dimen name="item_blacklist_padding">10dp</dimen>
+    <dimen name="item_blacklist_phonenumber_text_phone_number_size">30sp</dimen>
+    <item name="item_blacklist_phonenumber_guideline_horizontal_for_button_options_percent" type="dimen" format="float">0.3</item>
+    <item name="item_blacklist_phonenumber_guideline_horizontal_between_text_and_space_percent" type="dimen" format="float">0.5</item>
+    <item name="item_blacklist_phonenumber_guideline_horizontal_between_space_and_images_percent" type="dimen" format="float">0.6</item>
+    <item name="item_blacklist_phonenumber_guideline_vertical_between_call_and_sms_img_percent" type="dimen" format="float">0.1</item>
+    <item name="item_blacklist_phonenumber_guideline_vertical_between_sms_and_space_img_percent" type="dimen" format="float">0.2</item>
+    <item name="item_blacklist_phonenumber_guideline_vertical_between_text_and_options_button_percent" type="dimen" format="float">0.93</item>
 
-    <dimen name="item_blacklist_header_height">40dp</dimen>
+    <dimen name="item_blacklist_height">100dp</dimen>
+    <dimen name="item_blacklist_header_height">55dp</dimen>
     <dimen name="item_blacklist_header_text_header_size">30sp</dimen>
     <item name="item_blacklist_header_guideline_vertical_left_text_margin" type="dimen" format="float">0.1</item>
+    <dimen name="item_blacklist_header_guideline_vertical_left_and_right_text_margin">5dp</dimen>
+    <dimen name="item_blacklist_header_guideline_vertical_left_and_right_between_text_and_image">50dp</dimen>
+    <dimen name="item_blacklist_header_images_header_top_and_bottom_padding">6dp</dimen>
 
-    <dimen name="item_blacklist_contact_height">100dp</dimen>
     <dimen name="item_blacklist_contact_padding">10dp</dimen>
+    <dimen name="item_blacklist_contact_padding_left">40dp</dimen>
     <dimen name="item_blacklist_contact_text_contact_name_left_padding">10dp</dimen>
     <dimen name="item_blacklist_contact_text_contact_name_size">30sp</dimen>
     <dimen name="item_blacklist_contact_text_not_all_ignored_info_size">13sp</dimen>
@@ -77,6 +95,8 @@
     <dimen name="item_blacklist_contact_options_contact_info_height">150dp</dimen>
     <dimen name="item_blacklist_contact_options_contact_info_text_contact_name_size">30sp</dimen>
     <dimen name="item_blacklist_contact_options_contact_info_text_contact_name_padding_left">10dp</dimen>
+    <item name="item_blacklist_contact_options_contact_info_guideline_horizontal_for_top_margin" type="dimen" format="float">0.15</item>
+    <item name="item_blacklist_contact_options_contact_info_guideline_horizontal_for_bottom_margin" type="dimen" format="float">0.85</item>
     <item name="item_blacklist_contact_options_contact_info_guideline_horizontal_space_bottom_of_contact_name_percent" type="dimen" format="float">0.7</item>
     <item name="item_blacklist_contact_options_contact_info_guideline_vertical_between_contact_image_and_text_percent" type="dimen" format="float">0.3</item>
 
@@ -86,23 +106,24 @@
     <item name="item_blacklist_contact_options_phone_guideline_horizontal_between_space_number_ignore_calls_and_ignore_calls_percent" type="dimen" format="float">0.5</item>
     <item name="item_blacklist_contact_options_phone_guideline_horizontal_between_ignore_calls_and_space_ignore_calls_ignore_sms_percent" type="dimen" format="float">0.7</item>
     <item name="item_blacklist_contact_options_phone_guideline_horizontal_between_space_ignore_calls_ignore_sms_and_ignore_sms_percent" type="dimen" format="float">0.75</item>
-    <item name="item_blacklist_contact_options_phone_guideline_horizontal_space_between_change_schedule_and_bottom_margin_percent" type="dimen" format="float">0.85</item>
-    <item name="item_blacklist_contact_options_phone_guideline_vertical_between_checkboxes_and_change_schedule" type="dimen" format="float">0.55</item>
-    <item name="item_blacklist_contact_options_phone_guideline_vertical_between_change_schedule_and_right_margin" type="dimen" format="float">0.75</item>
+    <item name="item_blacklist_contact_options_phone_guideline_horizontal_space_between_change_schedule_and_bottom_margin_percent" type="dimen" format="float">0.9</item>
+    <item name="item_blacklist_contact_options_phone_guideline_vertical_between_checkboxes_and_change_schedule" type="dimen" format="float">0.65</item>
+    <item name="item_blacklist_contact_options_phone_guideline_vertical_between_change_schedule_and_right_margin" type="dimen" format="float">0.85</item>
 
+    <dimen name="item_select_contact_height">100dp</dimen>
     <dimen name="item_select_contact_text_contact_name_size">30sp</dimen>
     <dimen name="item_select_contact_text_contact_name_padding_left">10dp</dimen>
     <dimen name="item_select_contact_image_disabled_to_select_info_padding">3dp</dimen>
-    <dimen name="item_select_contact_text_disabled_to_select_info_size">13sp</dimen>
+    <dimen name="item_select_contact_text_disabled_to_select_info_size">14sp</dimen>
     <item name="item_select_contact_guideline_horizontal_for_top_margin_percent" type="dimen" format="float">0.1</item>
-    <item name="item_select_contact_guideline_horizontal_bottom_change_button_percent" type="dimen" format="float">0.3</item>
-    <item name="item_select_contact_guideline_horizontal_beteen_contact_name_and_with_disabled_to_select_percent" type="dimen" format="float">0.7</item>
+    <item name="item_select_contact_guideline_horizontal_bottom_change_button_percent" type="dimen" format="float">0.33</item>
+    <item name="item_select_contact_guideline_horizontal_beteen_contact_name_and_with_disabled_to_select_percent" type="dimen" format="float">0.67</item>
     <item name="item_select_contact_guideline_horizontal_for_bottom_margin_percent" type="dimen" format="float">0.9</item>
     <item name="item_select_contact_guideline_vertical_for_left_margin_percent" type="dimen" format="float">0.1</item>
     <item name="item_select_contact_guideline_vertical_between_contact_image_and_text_percent" type="dimen" format="float">0.3</item>
     <item name="item_select_contact_guideline_vertical_between_contact_img_and_disabled_to_select_img_percent" type="dimen" format="float">0.5</item>
     <item name="item_select_contact_guideline_vertical_between_disabled_to_select_img_and_disabled_to_select_text_percent" type="dimen" format="float">0.6</item>
-    <item name="item_select_contact_guideline_vertical_between_contact_text_and_options_button_percent" type="dimen" format="float">0.8</item>
+    <item name="item_select_contact_guideline_vertical_between_contact_text_and_options_button_percent" type="dimen" format="float">0.83</item>
     <item name="item_select_contact_guideline_vertical_for_right_margin_percent" type="dimen" format="float">0.9</item>
 
     <dimen name="item_time_and_weekday_settings_height">120dp</dimen>
@@ -114,4 +135,7 @@
     <item name="item_time_and_weekday_settings_guideline_left_vertical_percent" type="dimen" format="float">0.45</item>
     <item name="item_time_and_weekday_settings_guideline_right_vertical_percent" type="dimen" format="float">0.55</item>
     <item name="item_time_and_weekday_settings_guideline_right_time_margin_percent" type="dimen" format="float">0.87</item>
+
+    <dimen name="btn_outlined_stroke_width">2dp</dimen>
+    <dimen name="btn_time_change_corner_radius">4dp</dimen>
 </resources>

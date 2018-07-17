@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.*
 import com.gmail.tofibashers.blacklist.R
+import com.gmail.tofibashers.blacklist.utils.setCheckedWithoutInvokeListener
 import java.util.*
 
 
@@ -125,9 +126,7 @@ class WeekLinearLayout : LinearLayoutCompat {
                      beginTime: String,
                      endTime: String) {
             weekdayCheckbox.text = weekdayName
-            weekdayCheckbox.setOnCheckedChangeListener(null)
-            weekdayCheckbox.isChecked = isChecked
-            weekdayCheckbox.setOnCheckedChangeListener(checkedChangeListener)
+            weekdayCheckbox.setCheckedWithoutInvokeListener(isChecked, checkedChangeListener)
             beginTimeTextView.text = beginTime
             endTimeTextView.text = endTime
             val settingsImageId =

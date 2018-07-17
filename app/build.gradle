@@ -107,7 +107,6 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${lifecycleVersion}"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     kapt "android.arch.lifecycle:compiler:${lifecycleVersion}"
 
     // Room
@@ -140,6 +139,9 @@ dependencies {
 
     // Picasso
     implementation "com.squareup.picasso:picasso:${picassoVersion}"
+
+    // Floating action menu
+    implementation "com.leinardi.android:speed-dial:${floatingActionMenuVersion}"
 
     // Joda Time
     implementation "net.danlew:android.joda:${jodaTimeVersion}"

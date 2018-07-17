@@ -10,10 +10,7 @@ import android.widget.TextView
 import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.SectionBlacklistItem
 import com.gmail.tofibashers.blacklist.ui.common.BaseViewHolder
-import com.gmail.tofibashers.blacklist.ui.common.CircleImageTranformation
 import com.gmail.tofibashers.blacklist.utils.loadContactImageByUrlOrDefault
-import com.squareup.picasso.Picasso
-import io.reactivex.schedulers.Schedulers
 import kotterknife.bindView
 
 class BlacklistContactItemWithIgnoredInfoHolder(
@@ -43,7 +40,7 @@ class BlacklistContactItemWithIgnoredInfoHolder(
         when (v.id) {
             R.id.imagebutton_options -> {
                 val popupMenu = PopupMenu(itemView.context, v)
-                popupMenu.inflate(R.menu.listitem_options)
+                popupMenu.inflate(R.menu.blacklist_item_options)
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.change_item -> clickListener.onChangeClick(adapterPosition)

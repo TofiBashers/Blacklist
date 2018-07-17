@@ -28,13 +28,14 @@
         app:layout_constraintGuide_percent="@dimen/blacklist_contact_options_guideline_vertical_content_right_border_percent"
         android:orientation="vertical"/>
 
-    <com.gmail.tofibashers.blacklist.ui.common.ToolbarWrapperWithBottomElevation
-        android:id="@+id/toolbar_with_elevation"
+    <com.gmail.tofibashers.blacklist.ui.common.CardWrapperWithBottomElevation
+        android:id="@+id/cardwrapper_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardViewLayout="@layout/partial_card_wrapper_toolbar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contact_with_options_list"
@@ -42,10 +43,10 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_content_left_border"
         app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_with_elevation"
+        app:layout_constraintTop_toBottomOf="@id/cardwrapper_toolbar"
         app:layout_constraintBottom_toTopOf="@+id/button_cancel"
         app:layout_constraintVertical_weight="18"
-        tools:listitem="@layout/item_numberlist"/>
+        tools:listitem="@layout/item_blacklist_phonenumber"/>
 
     <Button
         android:id="@+id/button_cancel"
@@ -57,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/contact_with_options_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="13"
+        style="@style/AppTheme.OutlinedButton"
         android:text="@string/options_cancel_action" />
 
     <Button
@@ -68,6 +70,7 @@
         app:layout_constraintRight_toRightOf="@id/guideline_vertical_content_right_border"
         app:layout_constraintTop_toBottomOf="@id/contact_with_options_list"
         app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/AppTheme.DefaultButton"
         android:text="@string/action_save" />
 
     <include
@@ -75,7 +78,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_with_elevation"
+        app:layout_constraintTop_toBottomOf="@id/cardwrapper_toolbar"
         layout="@layout/partial_progress"/>
 
     <android.support.constraint.Group

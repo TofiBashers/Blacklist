@@ -23,9 +23,17 @@
     <color name="contact_disabled_photo_color_aithout_alpha">#000000</color>
     <color name="text_not_all_ignored_info_color">#316B36</color>
     <color name="text_disabled_to_select_info">#7EFF5252</color>
+    <color name="text_blacklist_header_color">#89000000</color>
 
     <color name="button_default_text_disabled">#42000000</color>
     <color name="button_default_color_pressed">#87757575</color>
     <color name="button_default_color_normal">#60757575</color>
     <color name="button_default_color_disabled">#1E000000</color>
+    <color name="button_outlined_text_disabled">#42000000</color>
+    <color name="button_outlined_color_border">#60757575</color>
+    <color name="button_outlined_color_pressed">#1E000000</color>
+    <color name="button_outlined_color_normal">#00000000</color>
+    <color name="button_outlined_color_disabled">#00000000</color>
+    <color name="action_item_color">#E0E0E0</color>
+    <color name="action_item_text_color">#89000000</color>
 </resources>

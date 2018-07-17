@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint_root_item_contact"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_blacklist_contact_options_contact_info_height"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:animateLayoutChanges="true">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_horizontal_for_top_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_default_guideline_horizontal_for_top_margin"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_contact_info_guideline_horizontal_for_top_margin"
         android:orientation="horizontal"/>
 
     <android.support.constraint.Guideline
@@ -24,7 +26,7 @@
         android:id="@+id/guideline_horizontal_for_bottom_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_default_guideline_horizontal_for_bottom_margin"
+        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_options_contact_info_guideline_horizontal_for_bottom_margin"
         android:orientation="horizontal"/>
 
     <android.support.constraint.Guideline
@@ -52,27 +54,26 @@
         android:id="@+id/image_contact"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_for_left_margin"
-        app:layout_constraintRight_toRightOf="@id/guideline_vertical_between_contact_image_and_text"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_for_bottom_margin"
-        app:layout_constraintTop_toTopOf="@id/guideline_horizontal_for_top_margin"
-        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_for_left_margin"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_for_bottom_margin"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_for_top_margin"
+        app:layout_constraintDimensionRatio="1:1"
         android:background="@color/background"
         android:scaleType="fitXY"
         tools:src="@drawable/ic_contact_default_photo_48dp"/>
 
     <TextView
-        android:id="@+id/text_contact_name"
+        android:id="@id/text_contact_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_between_contact_image_and_text"
-        app:layout_constraintRight_toRightOf="@id/guideline_vertical_for_right_margin"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_space_bottom_of_contact_name"
-        app:layout_constraintTop_toTopOf="@id/guideline_horizontal_for_top_margin"
+        app:layout_constraintLeft_toRightOf="@id/image_contact"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_for_right_margin"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal_space_bottom_of_contact_name"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_for_top_margin"
         android:paddingLeft="@dimen/item_blacklist_contact_options_contact_info_text_contact_name_padding_left"
         android:gravity="center_vertical|left"
         android:textSize="@dimen/item_blacklist_contact_options_contact_info_text_contact_name_size"
-        android:maxLines="1"
+        android:singleLine="true"
         android:ellipsize="end"
         tools:text="Ivan Ivanov"/>
 

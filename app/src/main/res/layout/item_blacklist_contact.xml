@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint_root_item_contact"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_blacklist_contact_height"
-    android:padding="@dimen/item_blacklist_contact_padding"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="@dimen/item_blacklist_height"
+    android:paddingTop="@dimen/item_blacklist_contact_padding"
+    android:paddingRight="@dimen/item_blacklist_contact_padding"
+    android:paddingBottom="@dimen/item_blacklist_contact_padding"
+    android:paddingLeft="@dimen/item_blacklist_contact_padding_left"
+    android:animateLayoutChanges="true">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_horizontal_for_top_margin"
@@ -22,7 +27,7 @@
         android:orientation="horizontal"/>
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_horizontal_beteen_contact_name_and_with_non_ignored"
+        android:id="@+id/guideline_horizontal_between_contact_name_and_with_non_ignored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_guideline_horizontal_beteen_contact_name_and_with_non_ignored_percent"
@@ -39,7 +44,7 @@
         android:id="@+id/guideline_vertical_for_left_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="@dimen/item_blacklist_contact_guideline_vertical_for_left_margin_percent"
+        app:layout_constraintGuide_percent="0.0"
         android:orientation="vertical"/>
 
     <android.support.constraint.Guideline
@@ -84,7 +89,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintDimensionRatio="1:1"
         android:background="@color/background"
         android:scaleType="fitXY"
         tools:src="@drawable/ic_contact_default_photo_48dp"/>
@@ -95,12 +100,12 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toRightOf="@id/image_contact"
         app:layout_constraintRight_toLeftOf="@id/guideline_vertical_between_contact_text_and_options_button"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_beteen_contact_name_and_with_non_ignored"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_between_contact_name_and_with_non_ignored"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingLeft="@dimen/item_blacklist_contact_text_contact_name_left_padding"
         android:gravity="center_vertical|left"
         android:textSize="@dimen/item_blacklist_contact_text_contact_name_size"
-        android:maxLines="1"
+        android:singleLine="true"
         android:ellipsize="end"
         tools:text="Ivan Ivanov"/>
 
@@ -113,7 +118,7 @@
         app:layout_constraintTop_toTopOf="@+id/text_not_all_ignored_info"
         app:layout_constraintDimensionRatio="W,1:1"
         android:padding="@dimen/item_blacklist_contact_image_not_all_ignored_info_padding"
-        android:background="@color/background"
+        android:background="@android:color/transparent"
         android:scaleType="fitXY"
         android:src="@drawable/ic_not_all_ignored_info_enabled_48dp"/>
 
@@ -123,7 +128,7 @@
         android:layout_height="0dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_beteen_contact_name_and_with_non_ignored"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal_between_contact_name_and_with_non_ignored"
         android:gravity="center_vertical|left"
         android:singleLine="true"
         android:textSize="@dimen/item_blacklist_contact_text_not_all_ignored_info_size"

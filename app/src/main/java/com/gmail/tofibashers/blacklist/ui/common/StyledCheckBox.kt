@@ -15,15 +15,15 @@ import com.gmail.tofibashers.blacklist.R
  * Created by TofiBashers on 29.03.2018.
  */
 class StyledCheckBox : AppCompatCheckBox {
-    constructor(context: Context) : super(ContextThemeWrapper(context, R.style.AppTheme_CheckBox)) {
+    constructor(context: Context) : super(ContextThemeWrapper(context, R.style.AppTheme_CompoundButton)) {
         setStyle()
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(ContextThemeWrapper(context, R.style.AppTheme_CheckBox), attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(ContextThemeWrapper(context, R.style.AppTheme_CompoundButton), attrs) {
         setStyle()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(ContextThemeWrapper(context, R.style.AppTheme_CheckBox), attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(ContextThemeWrapper(context, R.style.AppTheme_CompoundButton), attrs, defStyleAttr) {
         setStyle()
     }
 
