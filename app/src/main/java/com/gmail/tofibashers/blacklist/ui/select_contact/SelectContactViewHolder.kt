@@ -26,7 +26,8 @@ class SelectContactViewHolder(
     private val contactImageView: ImageView by bindView(R.id.image_contact)
     private val contactNameView: TextView by bindView(R.id.text_contact_name)
     private val contactOptionsButton: ImageButton by bindView(R.id.imagebutton_change)
-    private val disabledToSelectInfoGroup: Group by bindView(R.id.group_disabled_to_select_info)
+    private val disabledToSelectInfoImageView: ImageView by bindView(R.id.image_disabled_to_select_info)
+    private val disabledToSelectInfoNameView: TextView by bindView(R.id.text_disabled_to_select_info)
 
     init {
         contactOptionsButton.setOnClickListener(this)
@@ -36,7 +37,8 @@ class SelectContactViewHolder(
     override fun bind(item: WhitelistContactItemWithHasPhones){
         contactNameView.text = item.name
         val hasPhones = item.hasPhones
-        disabledToSelectInfoGroup.visibility = if(item.hasPhones) View.INVISIBLE else View.VISIBLE
+        disabledToSelectInfoImageView.visibility = if(hasPhones) View.INVISIBLE else View.VISIBLE
+        disabledToSelectInfoNameView.visibility = if(hasPhones) View.INVISIBLE else View.VISIBLE
         contactNameView.isEnabled = hasPhones
         contactImageView.setAlphaCompat(if(hasPhones) 1F else 0.12F)
         itemView.isClickable = hasPhones

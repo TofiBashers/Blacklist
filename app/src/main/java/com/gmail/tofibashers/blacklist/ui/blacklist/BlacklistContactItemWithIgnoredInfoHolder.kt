@@ -1,7 +1,7 @@
 package com.gmail.tofibashers.blacklist.ui.blacklist
 
 import android.support.constraint.Group
-import android.support.v7.widget.PopupMenu
+import android.widget.PopupMenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -22,7 +22,8 @@ class BlacklistContactItemWithIgnoredInfoHolder(
     private val contactImageView: ImageView by bindView(R.id.image_contact)
     private val contactNameView: TextView by bindView(R.id.text_contact_name)
     private val contactOptionsButton: ImageButton by bindView(R.id.imagebutton_options)
-    private val notAllIgnoredInfoGroup: Group by bindView(R.id.group_not_all_ignored_info)
+    private val notAllIgnoredInfoImageView: ImageView by bindView(R.id.image_not_all_ignored_info)
+    private val notAllIgnoredInfoTextView: TextView by bindView(R.id.text_not_all_ignored_info)
 
     init {
         contactOptionsButton.setOnClickListener(this)
@@ -31,7 +32,9 @@ class BlacklistContactItemWithIgnoredInfoHolder(
 
     override fun bind(item: SectionBlacklistItem.Contact){
         val contactItem = item.contactItem
-        notAllIgnoredInfoGroup.visibility = if(contactItem.withNonIgnoredNumbers) View.VISIBLE else View.INVISIBLE
+        val withNonIgnoredNumbers = contactItem.withNonIgnoredNumbers
+        notAllIgnoredInfoImageView.visibility = if(withNonIgnoredNumbers) View.VISIBLE else View.INVISIBLE
+        notAllIgnoredInfoTextView.visibility = if(withNonIgnoredNumbers) View.VISIBLE else View.INVISIBLE
         contactNameView.text = contactItem.name
         loadContactImageByUrlOrDefault(contactImageView, contactItem.photoUrl)
     }

@@ -149,10 +149,4 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="image_contact,text_contact_name"/>
 
-    <android.support.constraint.Group
-        android:id="@+id/group_disabled_to_select_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="image_disabled_to_select_info,text_disabled_to_select_info"/>
-
 </android.support.constraint.ConstraintLayout>

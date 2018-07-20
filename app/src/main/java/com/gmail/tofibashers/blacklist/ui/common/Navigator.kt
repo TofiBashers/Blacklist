@@ -52,8 +52,6 @@ constructor(){
         activity.startActivityForResult(optIntent, requestCode)
     }
 
-    fun toParent(activity: Activity) = activity.finish()
-
     fun toParentWithResult(activity: Activity, resultCode: Int) {
         activity.setResult(resultCode)
         activity.finish()

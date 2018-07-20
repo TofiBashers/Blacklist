@@ -16,6 +16,8 @@
     <string name="item_blacklist_menu_change_action">Изменить</string>
     <string name="item_blacklist_menu_delete_action">Удалить</string>
     <string name="item_blacklist_phonenumber_menu_call_action">Вызвать</string>
+    <string name="item_blacklist_phonenumber_menu_send_sms_action">Отправить SMS</string>
+    <string name="item_blacklist_contact_menu_open_in_contacts_app_action">Открыть в приложении контактов</string>
     <string name="blacklist_header_contacts_title">Контакты</string>
     <string name="blacklist_header_phone_numbers_title">Номера</string>
     <string name="blacklist_item_contact_not_all_ignored_title">Не все номера заблокированы</string>

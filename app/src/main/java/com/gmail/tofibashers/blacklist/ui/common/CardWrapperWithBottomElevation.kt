@@ -1,9 +1,14 @@
 package com.gmail.tofibashers.blacklist.ui.common
 
 import android.content.Context
+import android.support.constraint.ConstraintLayout
+import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.CardView
+import android.support.v7.widget.LinearLayoutCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.gmail.tofibashers.blacklist.R
 
@@ -42,9 +47,15 @@ class CardWrapperWithBottomElevation : RelativeLayout {
             defaultCardParams.addRule(ALIGN_PARENT_TOP)
             defaultCardParams.addRule(ALIGN_PARENT_RIGHT)
             cardWrapperToolbar.layoutParams = defaultCardParams
-            cardWrapperToolbar.post {
-                var postDrawCardLayoutParams = cardWrapperToolbar.layoutParams as RelativeLayout.LayoutParams
-                postDrawCardLayoutParams.topMargin -= cardWrapperToolbar.paddingTop - cardWrapperToolbar.contentPaddingTop
+            post {
+                val postDrawCardLayoutParams = cardWrapperToolbar.layoutParams as RelativeLayout.LayoutParams
+                if(parent is AppBarLayout && (parent as AppBarLayout).getChildAt(0).id == id) {
+                    val currentWrapperLayoutParams = layoutParams as MarginLayoutParams
+                    currentWrapperLayoutParams.topMargin -= cardWrapperToolbar.paddingTop - cardWrapperToolbar.contentPaddingTop
+                }
+                else {
+                    postDrawCardLayoutParams.topMargin -= cardWrapperToolbar.paddingTop - cardWrapperToolbar.contentPaddingTop
+                }
                 postDrawCardLayoutParams.leftMargin -= cardWrapperToolbar.paddingLeft - cardWrapperToolbar.contentPaddingLeft
                 postDrawCardLayoutParams.rightMargin -= cardWrapperToolbar.paddingRight - cardWrapperToolbar.contentPaddingRight
                 cardWrapperToolbar.requestLayout()

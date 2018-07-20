@@ -1,6 +1,6 @@
 package com.gmail.tofibashers.blacklist.ui.blacklist
 
-import android.support.v7.widget.PopupMenu
+import android.widget.PopupMenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
