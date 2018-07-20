@@ -67,7 +67,7 @@ constructor(
                     blacklistContactPhoneWithActivityIntervalsRepository.getSelectedList()
                             .switchIfEmpty(
                                     Single.error<List<BlacklistContactPhoneWithActivityIntervals>>(
-                                            RuntimeException("Multiple phones with intervals not selected for saving contact"))
+                                            RuntimeException("Multiple phones with intervals not selected for saving phoneNumber"))
                             )
                             .flattenAsObservable { it },
                     BiFunction { srcPhone: BlacklistContactPhoneNumberItem,

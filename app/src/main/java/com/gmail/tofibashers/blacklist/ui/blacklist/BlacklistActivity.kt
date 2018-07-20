@@ -3,7 +3,9 @@ package com.gmail.tofibashers.blacklist.ui.blacklist
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.content.ContextCompat
@@ -15,10 +17,8 @@ import android.widget.*
 import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.GetBlacklistResult
 import com.gmail.tofibashers.blacklist.entity.SystemVerWarningType
-import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
+import com.gmail.tofibashers.blacklist.ui.common.ThirdPartyAppForNavigationNotFoundException
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
-import com.gmail.tofibashers.blacklist.ui.blacklist_phonenumber_options.BlacklistPhonenumberOptionsActivity
-import com.gmail.tofibashers.blacklist.ui.select_contact.SelectContactActivity
 import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 import com.gmail.tofibashers.blacklist.utils.setCheckedWithoutInvokeListener
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -81,10 +81,13 @@ class BlacklistActivity : BaseStateableViewActivity<RelativeLayout, CoordinatorL
             }
         })
         viewModel.navigateSingleData.observe(this, Observer {
-            when(it){
-                BlacklistNavRoute.OPTIONS -> navigateToPhoneOptions()
-                BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS -> navigateToContactOptions()
-                BlacklistNavRoute.SELECT_CONTACT -> navigateToSelectContact()
+            when(it) {
+                is BlacklistNavRoute.PhonenumberCallRoute -> navigateToDialingAppPhonenumberViewOrNotFound(it)
+                is BlacklistNavRoute.PhonenumberSmsRoute -> navigateToSmsAppPhonenumberOrNotFound(it)
+                is BlacklistNavRoute.ContactOpenInContactsAppRoute -> navigateToContactsAppWithContactViewOrNotFound(it)
+                is BlacklistNavRoute.SelectContactRoute -> navigateToSelectContact()
+                is BlacklistNavRoute.BlacklistContactOptionsRoute -> navigateToContactOptions()
+                is BlacklistNavRoute.BlacklistPhonenumberOptionsRoute -> navigateToPhoneOptions()
             }
         })
         viewModel.warningMessageData.observe(this, Observer { showWarningDialog(it!!) })
@@ -134,19 +137,49 @@ class BlacklistActivity : BaseStateableViewActivity<RelativeLayout, CoordinatorL
                 .show()
     }
 
-    private fun navigateToPhoneOptions() {
-        val optIntent = Intent(this, BlacklistPhonenumberOptionsActivity::class.java)
-        startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_OPTIONS_VIEW)
+    private fun navigateToPhoneOptions() =
+            navigator.toBlacklistPhoneOptionsWithResult(this,
+                    AndroidComponentKeys.REQUEST_CODE_PHONENUMBER_OPTIONS_VIEW)
+
+    private fun navigateToContactOptions() =
+            navigator.toBlacklistContactOptionsWithResult(this,
+                    AndroidComponentKeys.REQUEST_CODE_BLACKLIST_CONTACT_OPTIONS_VIEW)
+
+    private fun navigateToSelectContact() =
+            navigator.toSelectContactWithResult(this,
+                    AndroidComponentKeys.REQUEST_CODE_SELECT_CONTACT_VIEW)
+
+    private fun navigateToDialingAppPhonenumberViewOrNotFound(contactOpenInContactsAppRoute: BlacklistNavRoute.PhonenumberCallRoute){
+        val srcNumber = contactOpenInContactsAppRoute.phoneNumber
+        try {
+            navigator.toDialingWithNumber(this, Uri.encode(srcNumber))
+        }
+        catch (e: ActivityNotFoundException){
+            Toast.makeText(this, R.string.msg_calls_app_not_found_title, Toast.LENGTH_LONG)
+                    .show()
+        }
     }
 
-    private fun navigateToContactOptions() {
-        val optIntent = Intent(this, BlacklistContactOptionsActivity::class.java)
-        startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_BLACKLIST_CONTACT_OPTIONS_VIEW)
+    private fun navigateToSmsAppPhonenumberOrNotFound(contactOpenInContactsAppRoute: BlacklistNavRoute.PhonenumberSmsRoute){
+        try {
+            navigator.toCreateSmsWithNumber(this, contactOpenInContactsAppRoute.phoneNumber)
+        }
+        catch (e: ThirdPartyAppForNavigationNotFoundException){
+            Toast.makeText(this, R.string.msg_sms_app_not_found_title, Toast.LENGTH_LONG)
+                    .show()
+        }
     }
 
-    private fun navigateToSelectContact() {
-        val optIntent = Intent(this, SelectContactActivity::class.java)
-        startActivityForResult(optIntent, AndroidComponentKeys.REQUEST_CODE_SELECT_CONTACT_VIEW)
+    private fun navigateToContactsAppWithContactViewOrNotFound(contactOpenInContactsAppRoute: BlacklistNavRoute.ContactOpenInContactsAppRoute){
+        try {
+            navigator.toEditContact(this,
+                    contactOpenInContactsAppRoute.contactId,
+                    contactOpenInContactsAppRoute.contactKey)
+        }
+        catch (e: ThirdPartyAppForNavigationNotFoundException){
+            Toast.makeText(this, R.string.msg_contact_app_not_found_title, Toast.LENGTH_LONG)
+                    .show()
+        }
     }
 
     private fun warningTypeToResId(warningType: SystemVerWarningType): Int = when(warningType){
@@ -159,6 +192,8 @@ class BlacklistActivity : BaseStateableViewActivity<RelativeLayout, CoordinatorL
         override fun onChangeClick(position: Int) = viewModel.onInitContactItemChange(position)
 
         override fun onDeleteClick(position: Int) = viewModel.onInitContactItemDelete(position)
+
+        override fun onOpenInContactsClick(position: Int) = viewModel.onInitContactOpenInContactsApp(position)
     }
 
     val phoneNumberClickListener = object : BlacklistPhoneNumberItemHolder.ClickListener{
@@ -166,6 +201,10 @@ class BlacklistActivity : BaseStateableViewActivity<RelativeLayout, CoordinatorL
         override fun onDeleteClick(position: Int) = viewModel.onInitPhoneNumberItemDelete(position)
 
         override fun onChangeClick(position: Int) = viewModel.onInitPhoneNumberItemChange(position)
+
+        override fun onCallClick(position: Int) = viewModel.onInitPhoneNumberItemCall(position)
+
+        override fun onSMSClick(position: Int) = viewModel.onInitPhoneNumberItemSms(position)
     }
 
     private val speedDialActionSelectedListener = SpeedDialView.OnActionSelectedListener {

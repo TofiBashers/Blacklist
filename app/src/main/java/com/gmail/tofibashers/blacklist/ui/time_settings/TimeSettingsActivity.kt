@@ -157,11 +157,10 @@ class TimeSettingsActivity : BaseStateableViewActivity<Group, Group>(),
     }
 
     private fun finishWithResult(savingResult: SavingResult) {
-        setResult(when(savingResult){
+        navigator.toParentWithResult(this, when(savingResult){
             SavingResult.SAVED -> Activity.RESULT_OK
             SavingResult.CANCELED -> Activity.RESULT_CANCELED
         })
-        finish()
     }
 
     companion object {

@@ -2,8 +2,8 @@ package com.gmail.tofibashers.blacklist.di.app
 
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.entity.GetBlacklistResult
-import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistViewState
 import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistNavRoute
+import com.gmail.tofibashers.blacklist.ui.blacklist.BlacklistViewState
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsNavData
 import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsViewState
 import com.gmail.tofibashers.blacklist.ui.common.SingleLiveEvent
@@ -28,11 +28,6 @@ class LiveDataModule {
     @Provides
     @Singleton
     fun provideBlackListViewStateData() : MutableLiveData<BlacklistViewState> = MutableLiveData()
-
-    @Provides
-    @Singleton
-    fun provideSingleLiveEventBlacklistViewModelNavigation() : SingleLiveEvent<BlacklistNavRoute>
-            = SingleLiveEvent()
 
     @Provides
     @Singleton
@@ -75,5 +70,10 @@ class LiveDataModule {
     @Provides
     @Singleton
     fun provideSingleLiveEventBlacklistContactOptionsNavData() : SingleLiveEvent<BlacklistContactOptionsNavData>
+            = SingleLiveEvent()
+
+    @Provides
+    @Singleton
+    fun provideSingleLiveEventBlacklistContactNavData() : SingleLiveEvent<BlacklistNavRoute>
             = SingleLiveEvent()
 }

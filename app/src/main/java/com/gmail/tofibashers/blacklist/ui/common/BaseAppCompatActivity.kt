@@ -19,6 +19,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
  */
 abstract class BaseAppCompatActivity : AppCompatActivity(), HasFragmentInjector, HasSupportFragmentInjector {
 
+    @Inject
+    lateinit var navigator: Navigator
 
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>

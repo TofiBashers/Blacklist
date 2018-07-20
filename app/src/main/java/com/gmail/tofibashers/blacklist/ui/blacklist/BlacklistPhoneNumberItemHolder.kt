@@ -39,11 +39,13 @@ class BlacklistPhoneNumberItemHolder(
         when (v.id) {
             R.id.imagebutton_options -> {
                 val popupMenu = PopupMenu(itemView.context, v)
-                popupMenu.inflate(R.menu.blacklist_item_options)
+                popupMenu.inflate(R.menu.blacklist_phonenumber_item_options)
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.change_item -> clickListener.onChangeClick(adapterPosition)
                         R.id.delete_item -> clickListener.onDeleteClick(adapterPosition)
+                        R.id.call_item -> clickListener.onCallClick(adapterPosition)
+                        R.id.sms_item -> clickListener.onSMSClick(adapterPosition)
                     }
                     true
                 }
@@ -55,5 +57,7 @@ class BlacklistPhoneNumberItemHolder(
     interface ClickListener {
         fun onDeleteClick(position: Int)
         fun onChangeClick(position: Int)
+        fun onCallClick(position: Int)
+        fun onSMSClick(position: Int)
     }
 }

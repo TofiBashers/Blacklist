@@ -5,7 +5,7 @@ import io.reactivex.Completable
 
 
 /**
- * This UseCase selects contact.
+ * This UseCase selects phoneNumber.
  * Created by TofiBashers on 14.04.2018.
  */
 interface ISelectWhitelistContactItemWithPhonesUseCase {

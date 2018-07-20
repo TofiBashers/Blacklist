@@ -25,7 +25,7 @@ constructor(
 
     override fun build(phonePosition: Int) : Completable {
         return blacklistContactPhonesWithActivityIntervalsRepository.getSelectedList()
-                .switchIfEmpty(Single.error(RuntimeException("ActivityIntervals was not pre-selected for contact phone:" + phonePosition)))
+                .switchIfEmpty(Single.error(RuntimeException("ActivityIntervals was not pre-selected for phoneNumber phone:" + phonePosition)))
                 .map { it.toMutableList() }
                 .flatMapCompletable { allPhonesWithIntervals: MutableList<BlacklistContactPhoneWithActivityIntervals> ->
                     activityIntervalRepository.getSelectedActivityIntervals()

@@ -2,7 +2,6 @@ package com.gmail.tofibashers.blacklist.ui.blacklist_phonenumber_options
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.Group
 import android.support.design.widget.TextInputEditText
@@ -18,8 +17,6 @@ import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
 import com.gmail.tofibashers.blacklist.ui.common.SavingResult
-import com.gmail.tofibashers.blacklist.ui.time_settings.TimeSettingsActivity
-import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 import com.gmail.tofibashers.blacklist.utils.setCheckedWithoutInvokeListener
 
 import kotterknife.bindView
@@ -66,16 +63,15 @@ class BlacklistPhonenumberOptionsActivity : BaseStateableViewActivity<Group, Gro
         })
         viewModel.navigateSingleData.observe(this, Observer {
             when (it){
-                is BlacklistPhonenumberOptionsNavData.ListRoute -> showNavigationToList(it)
-                is BlacklistPhonenumberOptionsNavData.ActivityIntervalDetailsRoute -> {
-                    val intent = Intent(this, TimeSettingsActivity::class.java)
-                    startActivity(intent)
-                }
-                is BlacklistPhonenumberOptionsNavData.SavedNumberAlreadyExistsRoute -> {
-                    supportFragmentManager.beginTransaction()
-                            .add(SavedNumberAlreadyExistsDialogFragment(), AndroidComponentKeys.TAG_SAVED_NUMBER_ALREADY_EXISTS_DIALOGFRAGMENT)
-                            .commit()
-                }
+                is BlacklistPhonenumberOptionsNavData.ListRoute ->
+                    navigator.toParentWithResult(this, when(it.savingResult){
+                        SavingResult.SAVED -> Activity.RESULT_OK
+                        SavingResult.CANCELED -> Activity.RESULT_CANCELED
+                    })
+                is BlacklistPhonenumberOptionsNavData.ActivityIntervalDetailsRoute ->
+                    navigator.toTimeSettings(this)
+                is BlacklistPhonenumberOptionsNavData.SavedNumberAlreadyExistsRoute ->
+                    navigator.toSavedNumberAlreadyExists(this)
             }
         })
     }
@@ -95,14 +91,6 @@ class BlacklistPhonenumberOptionsActivity : BaseStateableViewActivity<Group, Gro
     override fun onSupportNavigateUp() : Boolean{
         onBackPressed()
         return true
-    }
-
-    private fun showNavigationToList(listRoute: BlacklistPhonenumberOptionsNavData.ListRoute){
-        setResult(when(listRoute.savingResult){
-            SavingResult.SAVED -> Activity.RESULT_OK
-            SavingResult.CANCELED -> Activity.RESULT_CANCELED
-        })
-        finish()
     }
 
     private fun showDataStateWithParamsState(dataViewState: BlacklistPhonenumberOptionsViewState.DataViewState){

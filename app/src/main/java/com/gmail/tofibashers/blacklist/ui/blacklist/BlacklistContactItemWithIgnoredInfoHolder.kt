@@ -40,11 +40,12 @@ class BlacklistContactItemWithIgnoredInfoHolder(
         when (v.id) {
             R.id.imagebutton_options -> {
                 val popupMenu = PopupMenu(itemView.context, v)
-                popupMenu.inflate(R.menu.blacklist_item_options)
+                popupMenu.inflate(R.menu.blacklist_contact_options)
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.change_item -> clickListener.onChangeClick(adapterPosition)
                         R.id.delete_item -> clickListener.onDeleteClick(adapterPosition)
+                        R.id.open_in_contacts_item -> clickListener.onOpenInContactsClick(adapterPosition)
                     }
                     true
                 }
@@ -57,5 +58,6 @@ class BlacklistContactItemWithIgnoredInfoHolder(
     interface ClickListener {
         fun onDeleteClick(position: Int)
         fun onChangeClick(position: Int)
+        fun onOpenInContactsClick(position: Int)
     }
 }

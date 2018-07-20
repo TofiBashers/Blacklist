@@ -24,6 +24,12 @@ constructor(
         private val deleteContactItemUseCase: IDeleteBlacklistContactItemUseCase,
         private val listViewStateFactory: BlacklistViewState_ListViewStateFactory,
         private val loadingViewStateFactory: BlacklistViewState_LoadingViewStateFactory,
+        private val blacklistContactOptionsRouteFactory: BlacklistNavRoute_BlacklistContactOptionsRouteFactory,
+        private val blacklistPhonenumberOptionsRouteFactory: BlacklistNavRoute_BlacklistPhonenumberOptionsRouteFactory,
+        private val selectContactRouteFactory: BlacklistNavRoute_SelectContactRouteFactory,
+        private val contactInOptionsRouteFactory: BlacklistNavRoute_ContactOpenInContactsAppRouteFactory,
+        private val phonenumberCallRouteFactory: BlacklistNavRoute_PhonenumberCallRouteFactory,
+        private val phonenumberSmsRouteFactory: BlacklistNavRoute_PhonenumberSmsRouteFactory,
         val viewStateData: MutableLiveData<BlacklistViewState>,
         val navigateSingleData: SingleLiveEvent<BlacklistNavRoute>,
         val warningMessageData: SingleLiveEvent<GetBlacklistResult.SystemVerWarning>
@@ -38,8 +44,17 @@ constructor(
                 .subscribe(GetListObserver())
     }
 
+    fun onInitContactOpenInContactsApp(position: Int){
+        val contactSection = itemsWithIgnoreHidden!![position] as SectionBlacklistItem.Contact
+        val deviceDbId = contactSection.contactItem.deviceDbId
+        val deviceKey = contactSection.contactItem.deviceKey
+        if(deviceDbId != null && deviceKey != null){
+            navigateSingleData.value = contactInOptionsRouteFactory.create(deviceDbId, deviceKey)
+        }
+    }
+
     fun onInitContactItemChange(position: Int){
-        this.navRouteAfterSelect = BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS
+        this.navRouteAfterSelect = blacklistContactOptionsRouteFactory.create()
         viewStateData.value = loadingViewStateFactory.create()
         val contactSection = itemsWithIgnoreHidden!![position] as SectionBlacklistItem.Contact
         selectContactItemUseCase.build(contactSection.contactItem)
@@ -53,8 +68,18 @@ constructor(
                 .subscribe(DeleteObserver())
     }
 
+    fun onInitPhoneNumberItemCall(position: Int){
+        val phonenumberSection = itemsWithIgnoreHidden!![position] as SectionBlacklistItem.PhoneNumber
+        navigateSingleData.value = phonenumberCallRouteFactory.create(phonenumberSection.phoneNumberItem.number)
+    }
+
+    fun onInitPhoneNumberItemSms(position: Int){
+        val phonenumberSection = itemsWithIgnoreHidden!![position] as SectionBlacklistItem.PhoneNumber
+        navigateSingleData.value = phonenumberSmsRouteFactory.create(phonenumberSection.phoneNumberItem.number)
+    }
+
     fun onInitPhoneNumberItemChange(position: Int){
-        this.navRouteAfterSelect = BlacklistNavRoute.OPTIONS
+        this.navRouteAfterSelect = blacklistPhonenumberOptionsRouteFactory.create()
         viewStateData.value = loadingViewStateFactory.create()
         val phoneNumberSection = itemsWithIgnoreHidden!![position] as SectionBlacklistItem.PhoneNumber
         selectPhoneNumberElementUseCase.build(phoneNumberSection.phoneNumberItem)
@@ -69,14 +94,14 @@ constructor(
     }
 
     fun onInitCreateItem(){
-        this.navRouteAfterSelect = BlacklistNavRoute.OPTIONS
+        this.navRouteAfterSelect = blacklistPhonenumberOptionsRouteFactory.create()
         viewStateData.value = loadingViewStateFactory.create()
         selectCreateModeUseCase.build()
                 .subscribe(SelectObserver())
     }
 
     fun onInitAddContactItem(){
-        this.navRouteAfterSelect = BlacklistNavRoute.SELECT_CONTACT
+        this.navRouteAfterSelect = selectContactRouteFactory.create()
         viewStateData.value = loadingViewStateFactory.create()
         selectCreateModeUseCase.build()
                 .subscribe(SelectObserver())

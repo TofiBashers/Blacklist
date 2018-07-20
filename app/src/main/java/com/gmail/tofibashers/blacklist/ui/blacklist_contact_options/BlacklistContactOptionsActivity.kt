@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.Group
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -16,7 +15,6 @@ import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
 import com.gmail.tofibashers.blacklist.ui.common.SavingResult
-import com.gmail.tofibashers.blacklist.ui.time_settings.TimeSettingsActivity
 import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 import kotterknife.bindView
 import javax.inject.Inject
@@ -61,9 +59,21 @@ class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(
         })
         viewModel.navigateSingleData.observe(this, Observer {
             when (it){
-                is BlacklistContactOptionsNavData.ListRoute -> showNavigationToList(it)
-                is BlacklistContactOptionsNavData.ListRouteWithCancelAndChangedOrDeletedError -> showNavigationToListWithChangedOrDeletedError()
-                is BlacklistContactOptionsNavData.ActivityIntervalDetailsRoute -> showActivityIntervalDetails()
+                is BlacklistContactOptionsNavData.ListRoute -> {
+                    navigator.toParentWithResult(this, when(it.result){
+                        SavingResult.SAVED -> Activity.RESULT_OK
+                        SavingResult.CANCELED -> Activity.RESULT_CANCELED
+                    })
+                }
+                is BlacklistContactOptionsNavData.ListRouteWithCancelAndChangedOrDeletedError -> {
+                    Toast.makeText(applicationContext,
+                            R.string.blacklist_contact_options_changed_or_deleted_error_title,
+                            Toast.LENGTH_LONG)
+                            .show()
+                    navigator.toParentWithResult(this, Activity.RESULT_CANCELED)
+                }
+                is BlacklistContactOptionsNavData.ActivityIntervalDetailsRoute ->
+                    navigator.toTimeSettingsWithResult(this, AndroidComponentKeys.REQUEST_CODE_TIME_SETTINGS_VIEW)
             }
         })
     }
@@ -97,31 +107,8 @@ class BlacklistContactOptionsActivity : BaseStateableViewActivity<Group, Group>(
     override fun onPhoneIgnoreCallsCheckedChanged(modelPosition: Int, isChecked: Boolean) =
         viewModel.onSetIsCallsBlocked(modelPosition, isChecked)
 
-    override fun onPhoneChangeScheduleClick(modelPosition: Int) {
-        viewModel.onInitChangeSchedule(modelPosition)
-    }
-
-    private fun showNavigationToListWithChangedOrDeletedError() {
-        Toast.makeText(applicationContext,
-                R.string.blacklist_contact_options_changed_or_deleted_error_title,
-                Toast.LENGTH_LONG)
-                .show()
-        setResult(Activity.RESULT_CANCELED)
-        finish()
-    }
-
-    private fun showNavigationToList(listRoute: BlacklistContactOptionsNavData.ListRoute) {
-        setResult(when(listRoute.result){
-            SavingResult.SAVED -> Activity.RESULT_OK
-            SavingResult.CANCELED -> Activity.RESULT_CANCELED
-        })
-        finish()
-    }
-
-    private fun showActivityIntervalDetails() {
-        val intent = Intent(this, TimeSettingsActivity::class.java)
-        startActivityForResult(intent, AndroidComponentKeys.REQUEST_CODE_TIME_SETTINGS_VIEW)
-    }
+    override fun onPhoneChangeScheduleClick(modelPosition: Int) =
+            viewModel.onInitChangeSchedule(modelPosition)
 
     private fun showDataStateWithParamsState(dataViewState: BlacklistContactOptionsViewState.DataViewState) {
         setViewState(ViewState.DATA)

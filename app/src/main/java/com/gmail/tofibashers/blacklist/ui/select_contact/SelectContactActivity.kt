@@ -2,10 +2,7 @@ package com.gmail.tofibashers.blacklist.ui.select_contact
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,9 +10,9 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import com.gmail.tofibashers.blacklist.R
-import com.gmail.tofibashers.blacklist.ui.blacklist_contact_options.BlacklistContactOptionsActivity
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
 import com.gmail.tofibashers.blacklist.ui.common.SavingResult
+import com.gmail.tofibashers.blacklist.ui.common.ThirdPartyAppForNavigationNotFoundException
 import kotterknife.bindView
 import javax.inject.Inject
 
@@ -79,25 +76,20 @@ class SelectContactActivity : BaseStateableViewActivity<View, RecyclerView>() {
     }
 
     private fun startEditContactView(editRoute: SelectContactNavData.EditContactRoute){
-        val editIntent = Intent(Intent.ACTION_EDIT)
-        val uri = ContactsContract.Contacts.getLookupUri(editRoute.contactId, editRoute.contactKey)
-        editIntent.setDataAndType(uri, ContactsContract.Contacts.CONTENT_ITEM_TYPE)
-        editIntent.putExtra(FINISH_ACTIVITY_ON_SAVE_COMPLETED_FLAG, true)
-        if(editIntent.resolveActivity(packageManager) != null){
-            startActivity(editIntent)
+        try {
+            navigator.toEditContact(this, editRoute.contactId, editRoute.contactKey)
         }
-        else{
-            Toast.makeText(this, R.string.select_contact_contact_app_not_found_title, Toast.LENGTH_LONG)
+        catch (e: ThirdPartyAppForNavigationNotFoundException){
+            Toast.makeText(this, R.string.msg_contact_app_not_found_title, Toast.LENGTH_LONG)
                     .show()
         }
     }
 
     private fun finishWithResult(parentRoute: SelectContactNavData.ParentRoute) {
-        setResult(when(parentRoute.result){
+        navigator.toParentWithResult(this, when(parentRoute.result){
             SavingResult.SAVED -> Activity.RESULT_OK
             SavingResult.CANCELED -> Activity.RESULT_CANCELED
         })
-        finish()
     }
 
     val contactClickListener = object : SelectContactViewHolder.ClickListener{

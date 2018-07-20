@@ -7,7 +7,7 @@ import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 
 /**
- * This UseCase selects [InteractionMode.EDIT], blacklist contact and all it's phone numbers [ActivityInterval].
+ * This UseCase selects [InteractionMode.EDIT], blacklist phoneNumber and all it's phone numbers [ActivityInterval].
  * Created by TofiBashers on 10.04.2018.
  */
 interface ISelectEditModeAndBlacklistContactItemWithPhonesAndIntervalsUseCase {

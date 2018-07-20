@@ -54,6 +54,24 @@ class BlacklistViewModelTest {
     lateinit var mockLoadingViewStateFactory: BlacklistViewState_LoadingViewStateFactory
 
     @Mock
+    lateinit var mockBlacklistContactOptionsRouteFactory: BlacklistNavRoute_BlacklistContactOptionsRouteFactory
+
+    @Mock
+    lateinit var mockBlacklistPhonenumberOptionsRouteFactory: BlacklistNavRoute_BlacklistPhonenumberOptionsRouteFactory
+
+    @Mock
+    lateinit var mockSelectContactRouteFactory: BlacklistNavRoute_SelectContactRouteFactory
+
+    @Mock
+    lateinit var mockContactInOptionsRouteFactory: BlacklistNavRoute_ContactOpenInContactsAppRouteFactory
+
+    @Mock
+    lateinit var mockPhonenumberCallRouteFactory: BlacklistNavRoute_PhonenumberCallRouteFactory
+
+    @Mock
+    lateinit var mockPhonenumberSmsRouteFactory: BlacklistNavRoute_PhonenumberSmsRouteFactory
+
+    @Mock
     lateinit var mockViewStateData: MutableLiveData<BlacklistViewState>
 
     @Mock
@@ -79,6 +97,12 @@ class BlacklistViewModelTest {
                 mockDeleteBlacklistContactItemUseCase,
                 mockListViewStateFactory,
                 mockLoadingViewStateFactory,
+                mockBlacklistContactOptionsRouteFactory,
+                mockBlacklistPhonenumberOptionsRouteFactory,
+                mockSelectContactRouteFactory,
+                mockContactInOptionsRouteFactory,
+                mockPhonenumberCallRouteFactory,
+                mockPhonenumberSmsRouteFactory,
                 mockViewStateData,
                 mockNavigateSingleData,
                 mockWarningMessageData)
@@ -162,6 +186,7 @@ class BlacklistViewModelTest {
         val testPosition = 0
         val testBlacklistPhoneItem = BlacklistPhoneNumberItem(10, "12", true, true)
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val mockBlacklistPhonenumberOptionsRoute : BlacklistNavRoute.BlacklistPhonenumberOptionsRoute = mock()
         val testScheduler = TestScheduler()
         val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
                 listOf(SectionBlacklistItem.PhoneNumber(testBlacklistPhoneItem)),
@@ -173,16 +198,17 @@ class BlacklistViewModelTest {
         whenever(mockSelectPhoneNumberItemUseCase.build(testBlacklistPhoneItem))
                 .thenReturn(Completable.complete().observeOn(testScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+        whenever(mockBlacklistPhonenumberOptionsRouteFactory.create()).thenReturn(mockBlacklistPhonenumberOptionsRoute)
 
         testViewModel.onInitGetList()
         testViewModel.onInitPhoneNumberItemChange(testPosition)
 
         verify(mockViewStateData, times(2)).value  = mockLoadingViewState
-        verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.OPTIONS
+        verify(mockNavigateSingleData, times(0)).value = mockBlacklistPhonenumberOptionsRoute
 
         testScheduler.triggerActions()
 
-        verify(mockNavigateSingleData, times(1)).value = BlacklistNavRoute.OPTIONS
+        verify(mockNavigateSingleData, times(1)).value = mockBlacklistPhonenumberOptionsRoute
     }
 
     @Test
@@ -218,6 +244,7 @@ class BlacklistViewModelTest {
                 photoUrl = "url",
                 withNonIgnoredNumbers = true)
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val mockBlacklistContactOptionsRoute : BlacklistNavRoute.BlacklistContactOptionsRoute = mock()
         val testScheduler = TestScheduler()
         val testGetResult = GetBlacklistResult.ListWithIgnoreResult(
                 listOf(SectionBlacklistItem.Contact(testBlacklistContactItem)),
@@ -229,16 +256,17 @@ class BlacklistViewModelTest {
         whenever(mockSelectContactItemUseCase.build(testBlacklistContactItem))
                 .thenReturn(Completable.complete().observeOn(testScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+        whenever(mockBlacklistContactOptionsRouteFactory.create()).thenReturn(mockBlacklistContactOptionsRoute)
 
         testViewModel.onInitGetList()
         testViewModel.onInitContactItemChange(testPosition)
 
         verify(mockViewStateData, times(2)).value  = mockLoadingViewState
-        verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS
+        verify(mockNavigateSingleData, times(0)).value = mockBlacklistContactOptionsRoute
 
         testScheduler.triggerActions()
 
-        verify(mockNavigateSingleData, times(1)).value = BlacklistNavRoute.BLACKLIST_CONTACT_OPTIONS
+        verify(mockNavigateSingleData, times(1)).value = mockBlacklistContactOptionsRoute
     }
 
     @Test
@@ -272,21 +300,23 @@ class BlacklistViewModelTest {
     fun testOnInitCreateItemSuccess_navToOptions(){
 
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val mockBlacklistPhonenumberOptionsRoute : BlacklistNavRoute.BlacklistPhonenumberOptionsRoute = mock()
         val testScheduler = TestScheduler()
 
         whenever(mockSelectCreateModeUseCase.build())
                 .thenReturn(Completable.complete()
                         .observeOn(testScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+        whenever(mockBlacklistPhonenumberOptionsRouteFactory.create()).thenReturn(mockBlacklistPhonenumberOptionsRoute)
 
         testViewModel.onInitCreateItem()
 
         verify(mockViewStateData, times(1)).value  = mockLoadingViewState
-        verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.OPTIONS
+        verify(mockNavigateSingleData, times(0)).value = mockBlacklistPhonenumberOptionsRoute
 
         testScheduler.triggerActions()
 
-        verify(mockNavigateSingleData, times(1)).value = BlacklistNavRoute.OPTIONS
+        verify(mockNavigateSingleData, times(1)).value = mockBlacklistPhonenumberOptionsRoute
     }
 
     @Test
@@ -305,21 +335,23 @@ class BlacklistViewModelTest {
     fun testOnInitAddContactItemSuccess_navToSelectContact(){
 
         val mockLoadingViewState : BlacklistViewState.LoadingViewState = mock()
+        val mockSelectContactRoute : BlacklistNavRoute.SelectContactRoute = mock()
         val testScheduler = TestScheduler()
 
         whenever(mockSelectCreateModeUseCase.build())
                 .thenReturn(Completable.complete()
                         .observeOn(testScheduler))
         whenever(mockLoadingViewStateFactory.create()).thenReturn(mockLoadingViewState)
+        whenever(mockSelectContactRouteFactory.create()).thenReturn(mockSelectContactRoute)
 
         testViewModel.onInitAddContactItem()
 
         verify(mockViewStateData, times(1)).value  = mockLoadingViewState
-        verify(mockNavigateSingleData, times(0)).value = BlacklistNavRoute.SELECT_CONTACT
+        verify(mockNavigateSingleData, times(0)).value = mockSelectContactRoute
 
         testScheduler.triggerActions()
 
-        verify(mockNavigateSingleData, times(1)).value = BlacklistNavRoute.SELECT_CONTACT
+        verify(mockNavigateSingleData, times(1)).value = mockSelectContactRoute
     }
 
     @Test
