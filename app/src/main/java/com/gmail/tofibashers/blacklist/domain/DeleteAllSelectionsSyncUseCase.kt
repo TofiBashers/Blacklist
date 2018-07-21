@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class DeleteAllSelectionsSyncUseCase
 @Inject
 constructor(
-        private val blacklistElementRepository: IBlacklistItemRepository,
+        private val blacklistPhoneNumberItemRepository: IBlacklistPhoneNumberItemRepository,
         private val activityIntervalRepository: IActivityIntervalRepository,
         private val interactionModeRepository: IInteractionModeRepository,
         private val blacklistContactItemRepository: IBlacklistContactItemRepository,
@@ -23,7 +23,7 @@ constructor(
 ): IDeleteAllSelectionsSyncUseCase {
 
     override fun build(): Completable {
-        return blacklistElementRepository.removeSelectedBlacklistPhoneNumberItem()
+        return blacklistPhoneNumberItemRepository.removeSelectedBlacklistPhoneNumberItem()
                 .andThen(activityIntervalRepository.removeSelectedActivityIntervals())
                 .andThen(interactionModeRepository.removeSelectedMode())
                 .andThen(whitelistContactItemRepository.removeSelected())

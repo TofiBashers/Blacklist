@@ -2,9 +2,9 @@ package com.gmail.tofibashers.blacklist.ui
 
 import android.arch.lifecycle.MutableLiveData
 import com.gmail.tofibashers.blacklist.domain.IDeleteAllSelectionsUseCase
-import com.gmail.tofibashers.blacklist.domain.IGetInteractionModeWithSelectedBlackListItemUseCase
+import com.gmail.tofibashers.blacklist.domain.IGetInteractionModeWithSelectedBlacklistItemUseCase
 import com.gmail.tofibashers.blacklist.domain.ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase
-import com.gmail.tofibashers.blacklist.domain.IValidateBlacklistItemForSaveSyncUseCase
+import com.gmail.tofibashers.blacklist.domain.IValidateBlacklistPhoneNumberItemForSaveSyncUseCase
 import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import com.gmail.tofibashers.blacklist.entity.InteractionModeWithBlacklistPhoneNumberItemAndValidState
@@ -32,7 +32,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class BlacklistPhonenumberOptionsViewModelTest {
 
     @Mock
-    lateinit var mockGetInteractionModeWithItemUseCase: IGetInteractionModeWithSelectedBlackListItemUseCase
+    lateinit var mockGetInteractionModeWithItemUseCase: IGetInteractionModeWithSelectedBlacklistItemUseCase
 
     @Mock
     lateinit var mockSaveBlacklistPhoneItemWithDeleteSelectionsUseCase: ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase
@@ -41,7 +41,7 @@ class BlacklistPhonenumberOptionsViewModelTest {
     lateinit var mockDeleteAllSelectionsUseCase: IDeleteAllSelectionsUseCase
 
     @Mock
-    lateinit var mockSyncValidateBlacklistItemForSaveUseCase: IValidateBlacklistItemForSaveSyncUseCase
+    lateinit var mockSyncValidateBlacklistPhoneNumberItemForSaveUseCase: IValidateBlacklistPhoneNumberItemForSaveSyncUseCase
 
     @Mock
     lateinit var mockDataViewStateFactory: BlacklistPhonenumberOptionsViewState_DataViewStateFactory
@@ -76,7 +76,7 @@ class BlacklistPhonenumberOptionsViewModelTest {
         testViewModel = BlacklistPhonenumberOptionsViewModel(mockGetInteractionModeWithItemUseCase,
                 mockSaveBlacklistPhoneItemWithDeleteSelectionsUseCase,
                 mockDeleteAllSelectionsUseCase,
-                mockSyncValidateBlacklistItemForSaveUseCase,
+                mockSyncValidateBlacklistPhoneNumberItemForSaveUseCase,
                 mockDataViewStateFactory,
                 mockLoadingViewStateFactory,
                 mockListRouteFactory,
@@ -292,7 +292,7 @@ class BlacklistPhonenumberOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemUseCase.build())
                 .thenReturn(Single.just(deepCopy(testInteractionMode)))
-        whenever(mockSyncValidateBlacklistItemForSaveUseCase.build(testInitBlacklistItemWithModifNumber))
+        whenever(mockSyncValidateBlacklistPhoneNumberItemForSaveUseCase.build(testInitBlacklistItemWithModifNumber))
                 .thenReturn(Single.just(testModifValidToSave)
                         .observeOn(testSyncScheduler))
 
@@ -342,7 +342,7 @@ class BlacklistPhonenumberOptionsViewModelTest {
 
         whenever(mockGetInteractionModeWithItemUseCase.build())
                 .thenReturn(Single.just(deepCopy(testInteractionMode)))
-        whenever(mockSyncValidateBlacklistItemForSaveUseCase.build(testBlacklistItemWithModifIsCallsBlocked))
+        whenever(mockSyncValidateBlacklistPhoneNumberItemForSaveUseCase.build(testBlacklistItemWithModifIsCallsBlocked))
                 .thenReturn(Single.just(testModifValidToSave)
                         .observeOn(testSyncScheduler))
 

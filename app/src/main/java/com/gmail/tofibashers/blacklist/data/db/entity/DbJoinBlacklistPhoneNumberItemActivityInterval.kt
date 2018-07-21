@@ -23,11 +23,11 @@ import com.google.auto.factory.AutoFactory
                     ForeignKey(entity = DbActivityInterval::class,
                             parentColumns = arrayOf(ActivityIntervalTable._ID),
                             childColumns = arrayOf(JoinBlacklistItemActivityIntervalTable.ACTIVITY_INTERVAL_ID)),
-                    ForeignKey(entity = DbBlacklistItem::class,
+                    ForeignKey(entity = DbBlacklistPhoneNumberItem::class,
                             parentColumns = arrayOf(BlacklistItemTable._ID),
                             childColumns = arrayOf(JoinBlacklistItemActivityIntervalTable.BLACKLIST_ITEM_ID))
             ))
-data class DbJoinBlacklistItemActivityInterval(
+data class DbJoinBlacklistPhoneNumberItemActivityInterval(
 
         @ColumnInfo(name = JoinBlacklistItemActivityIntervalTable.BLACKLIST_ITEM_ID)
         var blacklistItemId: Long,

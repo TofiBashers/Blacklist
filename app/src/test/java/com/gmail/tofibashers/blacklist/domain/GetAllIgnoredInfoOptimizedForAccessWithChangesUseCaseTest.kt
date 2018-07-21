@@ -3,7 +3,7 @@ package com.gmail.tofibashers.blacklist.domain
 import com.gmail.tofibashers.blacklist.RxSchedulersOverrideRule
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
 import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
-import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemWithActivityIntervalsRepository
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistPhoneNumberItemWithActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IDeviceData
 import com.gmail.tofibashers.blacklist.data.repo.IPreferencesData
 import com.gmail.tofibashers.blacklist.entity.*
@@ -30,7 +30,7 @@ import java.util.*
 class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
 
     @Mock
-    lateinit var mockBlacklistItemWithActivityIntervalsRepository: IBlacklistItemWithActivityIntervalsRepository
+    lateinit var mockBlacklistPhoneNumberItemWithActivityIntervalsRepository: IBlacklistPhoneNumberItemWithActivityIntervalsRepository
 
     @Mock
     lateinit var mockBlacklistContactItemWithPhonesAndActivityIntervalsRepository: IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
@@ -59,7 +59,7 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
 
         val testAndResData = generateEmptyIntervalsWithNotIgnoreHidden()
 
-        whenever(mockBlacklistItemWithActivityIntervalsRepository.getAllWithChanges())
+        whenever(mockBlacklistPhoneNumberItemWithActivityIntervalsRepository.getAllWithChanges())
                 .thenReturn(Flowable.fromIterable(testAndResData.testBlacklistItemsWithIntervalsWithChanges)
                         .compose { asNeverComplete(it) } )
         whenever(mockBlacklistContactItemWithPhonesAndActivityIntervalsRepository.getAllWithChanges())
@@ -84,7 +84,7 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
     fun testOnNonEmptyIntervalsAndIgnoreHiddenTrue_ValidPair(){
 
         val testAndResData = generateNonEmptyIntervalsWithIgnoreHidden()
-        whenever(mockBlacklistItemWithActivityIntervalsRepository.getAllWithChanges())
+        whenever(mockBlacklistPhoneNumberItemWithActivityIntervalsRepository.getAllWithChanges())
                 .thenReturn(Flowable.fromIterable(testAndResData.testBlacklistItemsWithIntervalsWithChanges)
                         .compose { asNeverComplete(it) } )
         whenever(mockBlacklistContactItemWithPhonesAndActivityIntervalsRepository.getAllWithChanges())
@@ -196,14 +196,14 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
         }
 
         val testPhoneItemsWithIntervals = testIntervalsForItem.mapIndexed { index, list ->
-            BlacklistItemWithActivityIntervals(number = resPhoneNumbers[index],
+            BlacklistPhoneNumberItemWithActivityIntervals(number = resPhoneNumbers[index],
                     isCallsBlocked = resIsCallsBlocked,
                     isSmsBlocked = resIsSmsBlocked,
                     activityIntervals = list)
         }
 
         val testPhoneNumbersWithValues = testIntervalsForItem.mapIndexed { index, list ->
-            BlacklistItemWithActivityIntervals(number = resPhoneNumbers[index],
+            BlacklistPhoneNumberItemWithActivityIntervals(number = resPhoneNumbers[index],
                     isCallsBlocked = resIsCallsBlocked,
                     isSmsBlocked = resIsSmsBlocked,
                     activityIntervals = list)
@@ -230,7 +230,7 @@ class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCaseTest {
     private fun <T> asNeverComplete(source: Flowable<T>) : Flowable<T> = Flowable.concat(source, Flowable.never())
 
     private data class TestDataWithExpectedRes(val testIgnoreHiddenWithChanges: List<Boolean>,
-                                               val testBlacklistItemsWithIntervalsWithChanges: List<List<BlacklistItemWithActivityIntervals>>,
+                                               val testBlacklistItemsWithIntervalsWithChanges: List<List<BlacklistPhoneNumberItemWithActivityIntervals>>,
                                                val testContactsWithPhonesAndIntervals: List<List<BlacklistContactItemWithPhonesAndIntervals>>,
                                                val testPhoneNumberTypeWithValues: List<Pair<String, PhoneNumberTypeWithValue>>,
                                                val testFlowableCelluarNetworkOrCountryCodes: Flowable<String>,

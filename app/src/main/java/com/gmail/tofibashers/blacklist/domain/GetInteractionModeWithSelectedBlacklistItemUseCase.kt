@@ -1,6 +1,6 @@
 package com.gmail.tofibashers.blacklist.domain
 
-import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemRepository
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistPhoneNumberItemRepository
 import com.gmail.tofibashers.blacklist.data.repo.IInteractionModeRepository
 import com.gmail.tofibashers.blacklist.entity.*
 import io.reactivex.Single
@@ -14,14 +14,14 @@ import javax.inject.Singleton
  * Created by TofiBashers on 20.01.2018.
  */
 @Singleton
-class GetInteractionModeWithSelectedBlackListItemUseCase
+class GetInteractionModeWithSelectedBlacklistItemUseCase
 @Inject
 constructor(
-        private val blacklistElementRepository: IBlacklistItemRepository,
+        private val blacklistPhoneNumberItemRepository: IBlacklistPhoneNumberItemRepository,
         private val interactionModeRepository: IInteractionModeRepository,
         private val blacklistPhoneNumberItemFactory: BlacklistPhoneNumberItemFactory,
         private val interactionModeWithBlacklistItemAndValidStateFactory: InteractionModeWithBlacklistPhoneNumberItemAndValidStateFactory
-) : IGetInteractionModeWithSelectedBlackListItemUseCase {
+) : IGetInteractionModeWithSelectedBlacklistItemUseCase {
 
     override fun build(): Single<InteractionModeWithBlacklistPhoneNumberItemAndValidState> {
         return interactionModeRepository.getSelectedMode()
@@ -35,7 +35,7 @@ constructor(
                                     }
                         }
                         else{
-                            blacklistElementRepository.getSelectedBlacklistPhoneNumberItem()
+                            blacklistPhoneNumberItemRepository.getSelectedBlacklistPhoneNumberItem()
                                     .switchIfEmpty(Single.error(RuntimeException("Item not selected when InteractionMode.EDIT")))
                                     .map { phoneNumberItem: BlacklistPhoneNumberItem ->
                                         interactionModeWithBlacklistItemAndValidStateFactory.create(mode, phoneNumberItem, true)

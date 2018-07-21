@@ -16,10 +16,10 @@ import javax.inject.Inject
 class BlacklistPhonenumberOptionsViewModel
 @Inject
 constructor(
-        private val getInteractionModeWithItemUseCase: IGetInteractionModeWithSelectedBlackListItemUseCase,
+        private val getInteractionModeWithItemUseCase: IGetInteractionModeWithSelectedBlacklistItemUseCase,
         private val saveWithDeleteSelectionsUseCase: ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase,
         private val deleteAllSelectionsUseCase: IDeleteAllSelectionsUseCase,
-        private val syncValidateBlacklistItemForSaveUseCase: IValidateBlacklistItemForSaveSyncUseCase,
+        private val syncValidateBlacklistPhoneNumberItemForSaveUseCase: IValidateBlacklistPhoneNumberItemForSaveSyncUseCase,
         private val dataViewStateFactory: BlacklistPhonenumberOptionsViewState_DataViewStateFactory,
         private val loadingViewStateFactory: BlacklistPhonenumberOptionsViewState_LoadingViewStateFactory,
         private val listRouteFactory: BlacklistPhonenumberOptionsNavData_ListRouteFactory,
@@ -56,19 +56,19 @@ constructor(
 
     fun onNumberChanged(number: String){
         state!!.phoneNumberItem.number = number
-        syncValidateBlacklistItemForSaveUseCase.build(state!!.phoneNumberItem)
+        syncValidateBlacklistPhoneNumberItemForSaveUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SyncValidateItemObserver())
     }
 
     fun onSetIsCallsBlocked(isCallsBlocked: Boolean){
         state!!.phoneNumberItem.isCallsBlocked = isCallsBlocked
-        syncValidateBlacklistItemForSaveUseCase.build(state!!.phoneNumberItem)
+        syncValidateBlacklistPhoneNumberItemForSaveUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SyncValidateItemObserver())
     }
 
     fun onSetIsSmsBlocked(isSmsBlocked: Boolean){
         state!!.phoneNumberItem.isSmsBlocked = isSmsBlocked
-        syncValidateBlacklistItemForSaveUseCase.build(state!!.phoneNumberItem)
+        syncValidateBlacklistPhoneNumberItemForSaveUseCase.build(state!!.phoneNumberItem)
                 .subscribe(SyncValidateItemObserver())
     }
 

@@ -27,7 +27,7 @@ class LiveDataModule {
 
     @Provides
     @Singleton
-    fun provideBlackListViewStateData() : MutableLiveData<BlacklistViewState> = MutableLiveData()
+    fun provideBlacklistViewStateData() : MutableLiveData<BlacklistViewState> = MutableLiveData()
 
     @Provides
     @Singleton

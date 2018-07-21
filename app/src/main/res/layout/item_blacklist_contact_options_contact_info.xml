@@ -73,7 +73,7 @@
         android:paddingLeft="@dimen/item_blacklist_contact_options_contact_info_text_contact_name_padding_left"
         android:gravity="center_vertical|left"
         android:textSize="@dimen/item_blacklist_contact_options_contact_info_text_contact_name_size"
-        android:singleLine="true"
+        android:maxLines="2"
         android:ellipsize="end"
         tools:text="Ivan Ivanov"/>
 

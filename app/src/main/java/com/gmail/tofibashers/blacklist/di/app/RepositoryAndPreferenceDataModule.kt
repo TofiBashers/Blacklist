@@ -17,8 +17,8 @@ abstract class RepositoryAndPreferenceDataModule {
 
     @Binds
     @Singleton
-    abstract fun provideIBlackListElementRepository(repository: BlacklistItemRepository)
-            : IBlacklistItemRepository
+    abstract fun provideIBlacklistPhoneNumberItemRepository(repository: BlacklistPhoneNumberItemRepository)
+            : IBlacklistPhoneNumberItemRepository
 
     @Binds
     @Singleton
@@ -56,8 +56,8 @@ abstract class RepositoryAndPreferenceDataModule {
 
     @Binds
     @Singleton
-    abstract fun provideIActivityIntervalWithBlacklistItemsRepository(repository: BlacklistItemWithActivityIntervalsRepository)
-            : IBlacklistItemWithActivityIntervalsRepository
+    abstract fun provideIActivityIntervalWithBlacklistPhoneNumberItemsRepository(repository: BlacklistPhoneNumberItemWithActivityIntervalsRepository)
+            : IBlacklistPhoneNumberItemWithActivityIntervalsRepository
 
     @Binds
     @Singleton

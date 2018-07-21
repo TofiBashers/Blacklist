@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
  * or create default. Also, provides validation settings, that depends on phoneNumberItem and mode.
  * Created by TofiBashers on 16.01.2018.
  */
-interface IGetInteractionModeWithSelectedBlackListItemUseCase {
+interface IGetInteractionModeWithSelectedBlacklistItemUseCase {
 
     /**
      * Result [Single] operate in [Schedulers.IO], provides result to Android UI thread.

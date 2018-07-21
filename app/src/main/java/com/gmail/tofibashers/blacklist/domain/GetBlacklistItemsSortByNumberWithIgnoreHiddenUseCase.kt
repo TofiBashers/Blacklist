@@ -21,7 +21,7 @@ import javax.inject.Singleton
 class GetBlacklistItemsSortByNumberWithIgnoreHiddenUseCase
 @Inject
 constructor(
-        private val blacklistElementRepository: IBlacklistItemRepository,
+        private val blacklistPhoneNumberItemRepository: IBlacklistPhoneNumberItemRepository,
         private val blacklistContactItemRepository: IBlacklistContactItemRepository,
         private val whitelistContactPhoneRepository: IWhitelistContactPhoneRepository,
         private val preferencesData: IPreferencesData,
@@ -81,7 +81,7 @@ constructor(
         return Flowable.combineLatest(
                 blacklistContactItemRepository.getAllSortedByNameAscWithChanges()
                         .concatMap { toContactItemsWithNonIgnoredFlags(it).toFlowable() },
-                blacklistElementRepository.getAllWithChanges()
+                blacklistPhoneNumberItemRepository.getAllWithChanges()
                         .map{list -> list.sortedBy { elem -> elem.number }},
                 BiFunction { sortedContactItems: List<BlacklistContactItemWithNonIgnoredNumbersFlag>,
                              sortedPhoneNumberItems: List<BlacklistPhoneNumberItem> ->

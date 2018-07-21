@@ -60,7 +60,7 @@ deploy:
   file: $APK_FINAL_NAME
   skip_cleanup: true
   on:
-    branch: master
+    tags: true
     repo: TofiBashers/Blacklist
     jdk: oraclejdk8
   api_key:

@@ -11,7 +11,7 @@ object AndroidComponentKeys {
     const val BUNDLE_ON_TIME_CHANGE_VIEW_POSITION = "BUNDLE_ON_TIME_CHANGE_VIEW_POSITION"
     const val BUNDLE_TIME_CHANGE_IS_BEGIN = "BUNDLE_TIME_CHANGE_IS_BEGIN"
     const val EXTRA_ADDRESS = "address"
-    const val TYPE_MMS_SMS = "vnd.android-dir/mms-sms"
+    const val INTENT_TYPE_MMS_SMS = "vnd.android-dir/mms-sms"
 
     const val REQUEST_CODE_PHONENUMBER_OPTIONS_VIEW = 1
     const val REQUEST_CODE_BLACKLIST_CONTACT_OPTIONS_VIEW = 2

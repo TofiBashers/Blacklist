@@ -18,7 +18,7 @@ interface IActivityIntervalRepository {
      * Result [Maybe] doesn't specify schedulers.
      * @return - [Maybe] with value, if value exists. Otherwise, empty [Maybe]
      */
-    fun getActivityIntervalsAssociatedWithBlacklistItem(phoneNumberItem: BlacklistPhoneNumberItem): Maybe<List<ActivityInterval>>
+    fun getActivityIntervalsAssociatedWithBlacklistPhoneNumberItem(phoneNumberItem: BlacklistPhoneNumberItem): Single<List<ActivityInterval>>
 
     /**
      * Remove value stored as "selected", if not stored - do nothing and completes.

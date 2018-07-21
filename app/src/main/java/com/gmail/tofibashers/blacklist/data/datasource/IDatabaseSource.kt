@@ -10,45 +10,45 @@ import io.reactivex.*
 interface IDatabaseSource {
 
     /**
-     * Get blacklistItems firstly and after all changes. Not modify any Backpressure policy.
+     * Get blacklistPhoneNumberItems firstly and after all changes. Not modify any Backpressure policy.
      * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
      */
-    fun getAllBlackListItemsWithChanges(): Flowable<List<DbBlacklistItem>>
+    fun getAllBlacklistPhoneNumberItemsWithChanges(): Flowable<List<DbBlacklistPhoneNumberItem>>
 
     /**
-     * Get blacklistItems firstly and after all changes. Not modify any Backpressure policy.
+     * Get blacklistPhoneNumberItems firstly and after all changes. Not modify any Backpressure policy.
      * Result [Flowable] doesn't modify backpressure strategies and schedulers, never calls onComplete().
      */
-    fun getAllBlacklistItemsWithIntervalsWithChanges(): Flowable<List<DbBlacklistItemWithActivityIntervals>>
+    fun getAllBlacklistPhoneNumberItemsWithIntervalsWithChanges(): Flowable<List<DbBlacklistPhoneNumberItemWithActivityIntervals>>
 
     /**
      * @return [Maybe] with phoneNumberItem, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
      */
-    fun getBlacklistItemByNumber(number: String): Maybe<DbBlacklistItem>
+    fun getBlacklistPhoneNumberItemByNumber(number: String): Maybe<DbBlacklistPhoneNumberItem>
 
     /**
-     * Delete blacklistItems and clear orphaned [DbActivityInterval]'s formed in operation.
+     * Delete blacklistPhoneNumberItems and clear orphaned [DbActivityInterval]'s formed in operation.
      * Operations execute in transaction.
      * Result [Completable] doesn't specify schedulers.
      */
-    fun deleteBlackListItem(dbBlacklistItem: DbBlacklistItem): Completable
+    fun deleteBlacklistPhoneNumberItem(dbBlacklistPhoneNumberItem: DbBlacklistPhoneNumberItem): Completable
 
     /**
-     * Insert or update [DbBlacklistItem], then insert activity intervals if it non persist,
-     * and update association with [DbBlacklistItem].
+     * Insert or update [DbBlacklistPhoneNumberItem], then insert activity intervals if it non persist,
+     * and update association with [DbBlacklistPhoneNumberItem].
      * if not associated. Comparsion with existent performed by concatenation of [DbActivityInterval.beginTime],
      * [DbActivityInterval.endTime] and [DbActivityInterval.dayOfWeek].
      * Also removes orphaned [DbActivityInterval]'s formed in this operation.
      * Operations execute in transaction.
      * Result [Completable] doesn't specify schedulers.
-     * @param itemWithIntervals - contains [DbBlacklistItem] and list of [DbActivityInterval]'s
+     * @param itemWithIntervals - contains [DbBlacklistPhoneNumberItem] and list of [DbActivityInterval]'s
      */
-    fun putBlacklistItemWithActivityIntervals(itemWithIntervals: DbBlacklistItemWithActivityIntervals): Completable
+    fun putBlacklistPhoneNumberItemWithActivityIntervals(itemWithIntervals: DbBlacklistPhoneNumberItemWithActivityIntervals): Completable
 
     /**
      * @return [Maybe] with list of phoneNumberItems, if exists, otherwise empty. Result [Maybe] doesn't specify schedulers.
      */
-    fun getActivityIntervalsAssociatedWithBlacklistItem(blacklistItem: DbBlacklistItem): Maybe<List<DbActivityInterval>>
+    fun getActivityIntervalsAssociatedWithBlacklistPhoneNumberItem(blacklistPhoneNumberItem: DbBlacklistPhoneNumberItem): Single<List<DbActivityInterval>>
 
     /**
      * Get all [DbBlacklistContactItem]'s
@@ -115,7 +115,7 @@ interface IDatabaseSource {
      * Also removes orphaned [DbActivityInterval]'s, formed in this operation.
      * Operations execute in transaction.
      * Result [Completable] doesn't specify schedulers.
-     * @param items - contains [DbBlacklistItem] and list of [DbBlacklistContactPhoneItem] and [DbActivityInterval]'s
+     * @param items - contains [DbBlacklistPhoneNumberItem] and list of [DbBlacklistContactPhoneItem] and [DbActivityInterval]'s
      */
     fun putBlacklistContactItemWithPhonesAndActivityIntervals(items: DbBlacklistContactItemWithPhonesAndIntervals): Completable
 

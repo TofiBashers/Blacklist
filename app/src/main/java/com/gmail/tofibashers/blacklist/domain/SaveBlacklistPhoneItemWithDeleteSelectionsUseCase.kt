@@ -2,7 +2,7 @@ package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.data.repo.*
 import com.gmail.tofibashers.blacklist.entity.*
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneItemMapper
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneNumberItemMapper
 import com.gmail.tofibashers.blacklist.utils.TimeFormatUtils
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -21,11 +21,11 @@ import javax.inject.Singleton
 class SaveBlacklistPhoneItemWithDeleteSelectionsUseCase
 @Inject
 constructor(private val activityIntervalRepository: IActivityIntervalRepository,
-            private val blacklistItemRepository: IBlacklistItemRepository,
-            private val blacklistItemWithActivityIntervalsRepository: IBlacklistItemWithActivityIntervalsRepository,
+            private val blacklistPhoneNumberItemRepository: IBlacklistPhoneNumberItemRepository,
+            private val blacklistPhoneNumberItemWithActivityIntervalsRepository: IBlacklistPhoneNumberItemWithActivityIntervalsRepository,
             private val interactionModeRepository: IInteractionModeRepository,
             private val deleteAllSelectionsSyncUseCase: IDeleteAllSelectionsSyncUseCase,
-            private val blacklistPhoneItemMapper: BlacklistPhoneItemMapper,
+            private val blacklistPhoneNumberItemMapper: BlacklistPhoneNumberItemMapper,
             private val activityIntervalFactory: ActivityIntervalFactory,
             private val timeFormatUtils: TimeFormatUtils) : ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase {
 
@@ -45,8 +45,8 @@ constructor(private val activityIntervalRepository: IActivityIntervalRepository,
                                 .switchIfEmpty(Single.error<List<ActivityInterval>>(RuntimeException("Intervals not selected in Edit mode")))
                     }
                 }
-                .map { blacklistPhoneItemMapper.toBlacklistItemWithActivityIntervals(phoneNumberItem, it) }
-                .flatMapCompletable { blacklistItemWithActivityIntervalsRepository.put(it) }
+                .map { blacklistPhoneNumberItemMapper.toBlacklistPhoneNumberItemWithActivityIntervals(phoneNumberItem, it) }
+                .flatMapCompletable { blacklistPhoneNumberItemWithActivityIntervalsRepository.put(it) }
                 .andThen(deleteAllSelectionsSyncUseCase.build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,12 +59,12 @@ constructor(private val activityIntervalRepository: IActivityIntervalRepository,
     }
 
     private fun validateNumberNonExists(number: String): Completable{
-        return blacklistItemRepository.getByNumber(number)
+        return blacklistPhoneNumberItemRepository.getByNumber(number)
                 .flatMapCompletable { Completable.error(NumberAlreadyExistsException()) }
     }
 
     private fun validateIsNotAnotherNumber(dbId: Long, number: String): Completable{
-        return blacklistItemRepository.getByNumber(number)
+        return blacklistPhoneNumberItemRepository.getByNumber(number)
                 .map { existentPhoneNumberItem: BlacklistPhoneNumberItem ->
                     val itemId = existentPhoneNumberItem.dbId ?: throw RuntimeException("Saved phoneNumberItem without Id")
                     return@map itemId.equals(dbId)

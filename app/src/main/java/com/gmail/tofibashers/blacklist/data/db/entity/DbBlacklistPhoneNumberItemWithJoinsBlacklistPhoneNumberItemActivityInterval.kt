@@ -9,16 +9,16 @@ import com.gmail.tofibashers.blacklist.data.db.table_constants.JoinBlacklistItem
 /**
  * Created by TofiBashers on 03.02.2018.
  */
-data class DbBlacklistItemWithJoinsBlacklistItemActivityInterval(
+data class DbBlacklistPhoneNumberItemWithJoinsBlacklistPhoneNumberItemActivityInterval(
         @Embedded
-        var blacklistItem: DbBlacklistItem,
+        var blacklistPhoneNumberItem: DbBlacklistPhoneNumberItem,
 
         @Relation(parentColumn = BlacklistItemTable._ID,
                 entityColumn = JoinBlacklistItemActivityIntervalTable.BLACKLIST_ITEM_ID)
-        var listOfJoins: List<DbJoinBlacklistItemActivityInterval>) {
+        var listOfJoins: List<DbJoinBlacklistPhoneNumberItemActivityInterval>) {
 
         /**
          * Used only in Room generated code. Not call manually!
          */
-        constructor() : this(DbBlacklistItem(), emptyList())
+        constructor() : this(DbBlacklistPhoneNumberItem(), emptyList())
 }

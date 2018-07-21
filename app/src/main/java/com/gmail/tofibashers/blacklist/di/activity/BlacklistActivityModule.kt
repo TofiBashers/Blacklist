@@ -25,6 +25,6 @@ class BlacklistActivityModule {
 
     @Provides
     @PerActivity
-    fun provideBlackListAdapter(blacklistActivity: BlacklistActivity) : BlacklistAdapter =
+    fun provideBlacklistAdapter(blacklistActivity: BlacklistActivity) : BlacklistAdapter =
             BlacklistAdapter(blacklistActivity.contactClickListener, blacklistActivity.phoneNumberClickListener)
 }

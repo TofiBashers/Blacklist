@@ -8,7 +8,7 @@ import io.reactivex.Maybe
 /**
  * Created by TofiBashers on 14.01.2018.
  */
-interface IBlacklistItemRepository {
+interface IBlacklistPhoneNumberItemRepository {
 
     /**
      * Returns unsorted List of [BlacklistPhoneNumberItem] every time, when it changed on data storage
@@ -25,7 +25,7 @@ interface IBlacklistItemRepository {
      * Removes [BlacklistPhoneNumberItem] with all associated and unused entities.
      * Result [Completable] doesn't specify schedulers.
      */
-    fun deleteBlacklistItem(blacklistPhoneNumberItem: BlacklistPhoneNumberItem): Completable
+    fun deleteBlacklistPhoneNumberItem(blacklistPhoneNumberItem: BlacklistPhoneNumberItem): Completable
 
     /**
      * Remove phoneNumberItem stored as "selected", if exists. Otherwise, do nothing

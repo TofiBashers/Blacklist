@@ -8,7 +8,7 @@ import com.google.auto.factory.AutoFactory
  * Created by TofiBashers on 06.03.2018.
  */
 @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
-data class MemoryBlacklistItem(var dbId: Long? = null,
-                         var number: String,
-                         var isCallsBlocked: Boolean,
-                         var isSmsBlocked: Boolean)
+data class MemoryBlacklistPhoneNumberItem(var dbId: Long? = null,
+                                          var number: String,
+                                          var isCallsBlocked: Boolean,
+                                          var isSmsBlocked: Boolean)

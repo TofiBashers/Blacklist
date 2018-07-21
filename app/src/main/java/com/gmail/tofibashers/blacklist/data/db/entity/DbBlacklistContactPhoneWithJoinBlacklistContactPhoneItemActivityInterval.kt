@@ -3,9 +3,7 @@ package com.gmail.tofibashers.blacklist.data.db.entity
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactPhoneItemTable
-import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTable
 import com.gmail.tofibashers.blacklist.data.db.table_constants.JoinBlacklistContactPhoneItemActivityIntervalTable
-import com.gmail.tofibashers.blacklist.data.db.table_constants.JoinBlacklistItemActivityIntervalTable
 
 
 /**

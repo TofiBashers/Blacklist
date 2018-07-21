@@ -1,6 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.db.entity.mapper
 
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
+import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,16 +11,16 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class DbBlacklistItemMapper
+class DbBlacklistPhoneNumberItemMapper
 @Inject
 constructor(){
 
-    fun toBlacklistItem(item: DbBlacklistItem) : BlacklistPhoneNumberItem =
+    fun toBlacklistPhoneNumberItemItem(item: DbBlacklistPhoneNumberItem) : BlacklistPhoneNumberItem =
             BlacklistPhoneNumberItem(item.id,
                     item.number,
                     item.ignoreCalls,
                     item.ignoreSms)
 
-    fun toBlacklistItemsList(items: List<DbBlacklistItem>) : List<BlacklistPhoneNumberItem> =
-            items.map { toBlacklistItem(it) }
+    fun toBlacklistPhoneNumberItemsList(items: List<DbBlacklistPhoneNumberItem>) : List<BlacklistPhoneNumberItem> =
+            items.map { toBlacklistPhoneNumberItemItem(it) }
 }

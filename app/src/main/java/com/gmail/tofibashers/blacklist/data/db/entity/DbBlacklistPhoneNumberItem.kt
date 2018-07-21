@@ -11,7 +11,7 @@ import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTabl
 @Entity(tableName = BlacklistItemTable.TABLE_NAME,
         indices = arrayOf(Index(value = BlacklistItemTable.NUMBER, unique = true))
 )
-data class DbBlacklistItem(
+data class DbBlacklistPhoneNumberItem(
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = BlacklistItemTable._ID)
         val id: Long? = null,

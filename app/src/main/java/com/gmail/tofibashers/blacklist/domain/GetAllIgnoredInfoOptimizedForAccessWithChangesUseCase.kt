@@ -1,9 +1,8 @@
 package com.gmail.tofibashers.blacklist.domain
 
-import android.util.Log
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
 import com.gmail.tofibashers.blacklist.data.repo.IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
-import com.gmail.tofibashers.blacklist.data.repo.IBlacklistItemWithActivityIntervalsRepository
+import com.gmail.tofibashers.blacklist.data.repo.IBlacklistPhoneNumberItemWithActivityIntervalsRepository
 import com.gmail.tofibashers.blacklist.data.repo.IDeviceData
 import com.gmail.tofibashers.blacklist.data.repo.IPreferencesData
 import com.gmail.tofibashers.blacklist.entity.*
@@ -24,7 +23,7 @@ import javax.inject.Singleton
 @Singleton
 class GetAllIgnoredInfoOptimizedForAccessWithChangesUseCase
 @Inject
-constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklistItemWithActivityIntervalsRepository,
+constructor(private val blacklistPhoneNumberItemWithActivityIntervalsRepository: IBlacklistPhoneNumberItemWithActivityIntervalsRepository,
             private val blacklistContactItemWithPhonesAndIntervalsRepository: IBlacklistContactItemWithPhonesAndActivityIntervalsRepository,
             private val preferencesData: IPreferencesData,
             private val deviceData: IDeviceData,
@@ -50,13 +49,13 @@ constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklist
     private fun getAllBlacklistNumbersWithTimeAndIgnoreSettingsWithChanges()
             : Flowable<Pair<String, HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>>> {
         return Flowable.combineLatest(
-                blacklistItemWithActivityIntervalsRepository.getAllWithChanges(),
+                blacklistPhoneNumberItemWithActivityIntervalsRepository.getAllWithChanges(),
                 blacklistContactItemWithPhonesAndIntervalsRepository.getAllWithChanges(),
-                BiFunction { phoneNumbers: List<BlacklistItemWithActivityIntervals>,
+                BiFunction { phoneNumbers: List<BlacklistPhoneNumberItemWithActivityIntervals>,
                              contacts: List<BlacklistContactItemWithPhonesAndIntervals> ->
                     Pair(phoneNumbers, contacts)
                 })
-                .switchMap { lists: Pair<List<BlacklistItemWithActivityIntervals>, List<BlacklistContactItemWithPhonesAndIntervals>> ->
+                .switchMap { lists: Pair<List<BlacklistPhoneNumberItemWithActivityIntervals>, List<BlacklistContactItemWithPhonesAndIntervals>> ->
                     deviceData.getCelluarNetworkOrLocalCountryCodeWithChanges()
                             .subscribeOn(AndroidSchedulers.mainThread())
                             .observeOn(Schedulers.io())
@@ -67,13 +66,13 @@ constructor(private val blacklistItemWithActivityIntervalsRepository: IBlacklist
                 }
     }
 
-    private fun toTypedNumbersWithTimeAndIgnoreSettings(numbersWithIntervals: List<BlacklistItemWithActivityIntervals>,
+    private fun toTypedNumbersWithTimeAndIgnoreSettings(numbersWithIntervals: List<BlacklistPhoneNumberItemWithActivityIntervals>,
                                                         contactsWithPhonesAndIntervals: List<BlacklistContactItemWithPhonesAndIntervals>,
                                                         defaultCountryCode: String)
             : Flowable<HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>>{
         return Flowable.concat(
                 Flowable.fromIterable(numbersWithIntervals)
-                        .concatMap { item: BlacklistItemWithActivityIntervals ->
+                        .concatMap { item: BlacklistPhoneNumberItemWithActivityIntervals ->
                             toPairTypedNumberWithMapTimeByWeekday(item, defaultCountryCode)
                         },
                 Flowable.fromIterable(contactsWithPhonesAndIntervals)

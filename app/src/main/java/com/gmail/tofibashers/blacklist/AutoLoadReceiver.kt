@@ -7,8 +7,10 @@ import android.content.Intent
 class AutoLoadReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val startIntent = Intent(context, SmsAndCallsTrackingService::class.java)
-        context.startService(startIntent)
+        if(intent.action == Intent.ACTION_BOOT_COMPLETED) { //for disable lint warning and low cohesion
+            val startIntent = Intent(context, SmsAndCallsTrackingService::class.java)
+            context.startService(startIntent)
+        }
     }
 
 }

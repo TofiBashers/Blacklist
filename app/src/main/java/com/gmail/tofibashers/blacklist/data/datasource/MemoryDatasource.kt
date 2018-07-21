@@ -18,7 +18,7 @@ class MemoryDatasource
 constructor() : IMemoryDatasource {
 
     @Volatile
-    private var selectedBlacklistItem: MemoryBlacklistItem? = null
+    private var selectedBlacklistPhoneNumberItem: MemoryBlacklistPhoneNumberItem? = null
 
     @Volatile
     private var selectedBlacklistContactItem: MemoryBlacklistContactItem? = null
@@ -66,23 +66,23 @@ constructor() : IMemoryDatasource {
                 selectedBlacklistContactPhonesWithActivityIntervals = phonesWithIntervals
             }) }
 
-    override fun removeSelectedBlackListItem(): Completable =
+    override fun removeSelectedBlacklistPhoneNumberItem(): Completable =
             Completable.fromAction {
                 synchronized(this, {
-                    selectedBlacklistItem = null
+                    selectedBlacklistPhoneNumberItem = null
                 })
             }
 
-    override fun getSelectedBlackListItem(): Maybe<MemoryBlacklistItem> =
+    override fun getSelectedBlacklistPhoneNumberItem(): Maybe<MemoryBlacklistPhoneNumberItem> =
             Maybe.defer { synchronized(this, {
-                if (selectedBlacklistItem == null) return@synchronized Maybe.empty<MemoryBlacklistItem>()
-                else{ return@synchronized Maybe.just(selectedBlacklistItem)
+                if (selectedBlacklistPhoneNumberItem == null) return@synchronized Maybe.empty<MemoryBlacklistPhoneNumberItem>()
+                else{ return@synchronized Maybe.just(selectedBlacklistPhoneNumberItem)
                 }
             }) }
 
-    override fun putSelectedBlackListItem(blacklistItem: MemoryBlacklistItem): Completable =
+    override fun putSelectedBlacklistPhoneNumberItem(blacklistPhoneNumberItem: MemoryBlacklistPhoneNumberItem): Completable =
             Completable.fromAction { synchronized(this, {
-                selectedBlacklistItem = blacklistItem
+                selectedBlacklistPhoneNumberItem = blacklistPhoneNumberItem
             }) }
 
     override fun removeSelectedContactItem(): Completable =

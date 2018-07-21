@@ -1,7 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
 import com.gmail.tofibashers.blacklist.entity.BlacklistContactItemWithPhonesAndIntervals
-import com.gmail.tofibashers.blacklist.entity.BlacklistItemWithActivityIntervals
 import io.reactivex.Completable
 import io.reactivex.Flowable
 

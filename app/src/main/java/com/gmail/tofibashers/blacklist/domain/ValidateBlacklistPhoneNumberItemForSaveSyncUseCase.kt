@@ -10,9 +10,9 @@ import javax.inject.Singleton
  * Created by TofiBashers on 05.02.2018.
  */
 @Singleton
-class ValidateBlacklistItemForSaveSyncUseCase
+class ValidateBlacklistPhoneNumberItemForSaveSyncUseCase
 @Inject
-constructor() : IValidateBlacklistItemForSaveSyncUseCase {
+constructor() : IValidateBlacklistPhoneNumberItemForSaveSyncUseCase {
     override fun build(phoneNumberItem: BlacklistPhoneNumberItem): Single<Boolean> {
         return Single.fromCallable { !phoneNumberItem.number.isBlank() && (phoneNumberItem.isSmsBlocked || phoneNumberItem.isCallsBlocked) }
     }

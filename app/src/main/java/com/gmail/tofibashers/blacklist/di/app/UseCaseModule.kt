@@ -20,17 +20,17 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideIGetModeWithSelectedBlackListElementUseCase(useCase: GetInteractionModeWithSelectedBlackListItemUseCase)
-            : IGetInteractionModeWithSelectedBlackListItemUseCase
+    abstract fun provideIGetModeWithSelectedBlacklistItemUseCase(useCase: GetInteractionModeWithSelectedBlacklistItemUseCase)
+            : IGetInteractionModeWithSelectedBlacklistItemUseCase
 
     @Binds
     @Singleton
-    abstract fun provideISaveBlacklistElementUseCase(useCase: SaveBlacklistPhoneItemWithDeleteSelectionsUseCase)
+    abstract fun provideISaveBlacklistItemUseCase(useCase: SaveBlacklistPhoneItemWithDeleteSelectionsUseCase)
             : ISaveBlacklistPhoneItemWithDeleteSelectionsUseCase
 
     @Binds
     @Singleton
-    abstract fun provideISelectBlacklistElementAndEditModeUseCase(useCase: SelectEditModeAndPhoneNumberItemUseCase)
+    abstract fun provideISelectBlacklisItemElementAndEditModeUseCase(useCase: SelectEditModeAndPhoneNumberItemUseCase)
             : ISelectEditModeAndPhoneNumberItemUseCase
 
     @Binds
@@ -40,7 +40,7 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideIDeleteBlacklistItemUseCase(useCase: DeletePhoneNumberItemUseCase)
+    abstract fun provideIDeleteBlacklistPhoneNumberItemUseCase(useCase: DeletePhoneNumberItemUseCase)
             : IDeletePhoneNumberItemUseCase
 
     @Binds
@@ -80,8 +80,8 @@ abstract class UseCaseModule {
 
     @Binds
     @Singleton
-    abstract fun provideIValidateBlacklistItemForSaveUseCase(useCase: ValidateBlacklistItemForSaveSyncUseCase)
-            : IValidateBlacklistItemForSaveSyncUseCase
+    abstract fun provideIValidateBlacklistPhoneNumberItemForSaveUseCase(useCase: ValidateBlacklistPhoneNumberItemForSaveSyncUseCase)
+            : IValidateBlacklistPhoneNumberItemForSaveSyncUseCase
 
     @Binds
     @Singleton

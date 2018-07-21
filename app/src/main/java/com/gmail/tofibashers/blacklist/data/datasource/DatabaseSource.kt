@@ -18,54 +18,54 @@ class DatabaseSource
 constructor(
         private val database: BlacklistDatabase,
         private val activityIntervalDao: IActivityIntervalDao,
-        private val blackListItemDao: IBlackListItemDao,
-        private val joinBlacklistItemActivityIntervalDao: IJoinBlacklistItemActivityIntervalDao,
+        private val blacklistPhoneNumberItemDao: IBlacklistPhoneNumberItemDao,
+        private val joinBlacklistPhoneNumberItemActivityIntervalDao: IJoinBlacklistPhoneNumberItemActivityIntervalDao,
         private val blacklistContactItemDao: IBlacklistContactItemDao,
         private val blacklistContactPhoneItemDao: IBlacklistContactPhoneItemDao,
         private val joinBlacklistContactPhoneItemActivityIntervalDao: IJoinBlacklistContactPhoneItemActivityIntervalDao,
-        private val dbJoinBlacklistItemActivityIntervalFactory: DbJoinBlacklistItemActivityIntervalFactory,
-        private val dbBlacklistItemWithActivityIntervalsFactory: DbBlacklistItemWithActivityIntervalsFactory,
+        private val dbJoinBlacklistPhoneNumberItemActivityIntervalFactory: DbJoinBlacklistPhoneNumberItemActivityIntervalFactory,
+        private val dbBlacklistPhoneNumberItemWithActivityIntervalsFactory: DbBlacklistPhoneNumberItemWithActivityIntervalsFactory,
         private val dbJoinBlacklistContactPhoneItemActivityIntervalFactory: DbJoinBlacklistContactPhoneItemActivityIntervalFactory,
         private val dbBlacklistContactPhoneWithActivityIntervalsFactory: DbBlacklistContactPhoneWithActivityIntervalsFactory,
         private val dbBlacklistContactItemWithPhonesAndIntervalsFactory: DbBlacklistContactItemWithPhonesAndIntervalsFactory
 ) : IDatabaseSource {
 
-    override fun getAllBlacklistItemsWithIntervalsWithChanges(): Flowable<List<DbBlacklistItemWithActivityIntervals>> {
-        return joinBlacklistItemActivityIntervalDao.getAllBlacklistItemsWithActivityIntervalIdsWithChanges()
-                .switchMap { itemsWithJoins : List<DbBlacklistItemWithJoinsBlacklistItemActivityInterval> ->
+    override fun getAllBlacklistPhoneNumberItemsWithIntervalsWithChanges(): Flowable<List<DbBlacklistPhoneNumberItemWithActivityIntervals>> {
+        return joinBlacklistPhoneNumberItemActivityIntervalDao.getAllBlacklistPhoneNumberItemsWithActivityIntervalIdsWithChanges()
+                .switchMap { itemsWithJoins : List<DbBlacklistPhoneNumberItemWithJoinsBlacklistPhoneNumberItemActivityInterval> ->
                     return@switchMap Flowable.fromIterable(itemsWithJoins)
-                            .map { item : DbBlacklistItemWithJoinsBlacklistItemActivityInterval ->
+                            .map { item : DbBlacklistPhoneNumberItemWithJoinsBlacklistPhoneNumberItemActivityInterval ->
                                 getFlowableDbActivityIntervalsByItemWithChanges(item)
                             }
                             .toList()
-                            .flatMapPublisher { resultFlowables: List<Flowable<DbBlacklistItemWithActivityIntervals>> ->
+                            .flatMapPublisher { resultFlowables: List<Flowable<DbBlacklistPhoneNumberItemWithActivityIntervals>> ->
                                 return@flatMapPublisher if(resultFlowables.isEmpty()) Flowable.just(emptyList())
                                 else Flowable.combineLatest(resultFlowables.toMutableList(),
                                         { resultItems: Array<Any> ->
                                             resultItems.map {
-                                                resultItemObj: Any -> resultItemObj as DbBlacklistItemWithActivityIntervals
+                                                resultItemObj: Any -> resultItemObj as DbBlacklistPhoneNumberItemWithActivityIntervals
                                             }
                                         })
                             }
                 }
     }
 
-    override fun getBlacklistItemByNumber(number: String): Maybe<DbBlacklistItem> = blackListItemDao.getByNumber(number)
+    override fun getBlacklistPhoneNumberItemByNumber(number: String): Maybe<DbBlacklistPhoneNumberItem> = blacklistPhoneNumberItemDao.getByNumber(number)
 
-    override fun putBlacklistItemWithActivityIntervals(itemWithIntervals: DbBlacklistItemWithActivityIntervals): Completable {
-        return putBlacklistItemWithGetId(itemWithIntervals.dbBlacklistItem)
+    override fun putBlacklistPhoneNumberItemWithActivityIntervals(itemWithIntervals: DbBlacklistPhoneNumberItemWithActivityIntervals): Completable {
+        return putBlacklistPhoneNumberItemWithGetId(itemWithIntervals.dbBlacklistPhoneNumberItem)
                 .flatMapCompletable { id:Long ->
                     putActivityIntervalsWithAddToBlacklistItem(id, itemWithIntervals.dbActivityIntervals)
                 }
                 .compose(inTransactionCompletable())
     }
 
-    override fun getAllBlackListItemsWithChanges(): Flowable<List<DbBlacklistItem>> =
-            blackListItemDao.getAllWithChanges()
+    override fun getAllBlacklistPhoneNumberItemsWithChanges(): Flowable<List<DbBlacklistPhoneNumberItem>> =
+            blacklistPhoneNumberItemDao.getAllWithChanges()
 
-    override fun deleteBlackListItem(dbBlacklistItem: DbBlacklistItem) : Completable {
-        return deleteAllBlacklistItemActivityIntervalsAndClearOrphans(dbBlacklistItem.id)
-                .andThen(blackListItemDao.deleteBlackListItemsByIdsAsCompletable(dbBlacklistItem))
+    override fun deleteBlacklistPhoneNumberItem(dbBlacklistPhoneNumberItem: DbBlacklistPhoneNumberItem) : Completable {
+        return deleteAllBlacklistPhoneNumberItemActivityIntervalsAndClearOrphans(dbBlacklistPhoneNumberItem.id)
+                .andThen(blacklistPhoneNumberItemDao.deleteBlacklistPhoneNumberItemsByIdsAsCompletable(dbBlacklistPhoneNumberItem))
                 .compose(inTransactionCompletable())
     }
 
@@ -162,25 +162,25 @@ constructor(
             deleteBlacklistContactPhoneItemsWithAssociationsAndClearOrphans(*items.toTypedArray())
                     .compose(inTransactionCompletable())
 
-    private fun putBlacklistItemWithGetId(dbBlacklistItem: DbBlacklistItem): Single<Long> {
-        return blackListItemDao.updateBlackListItemWithGetUpdateCountAsSingle(dbBlacklistItem)
+    private fun putBlacklistPhoneNumberItemWithGetId(dbBlacklistPhoneNumberItem: DbBlacklistPhoneNumberItem): Single<Long> {
+        return blacklistPhoneNumberItemDao.updateBlacklistPhoneNumberItemWithGetUpdateCountAsSingle(dbBlacklistPhoneNumberItem)
                 .flatMap {
                     if(it == 1) {
-                        blackListItemDao.getByIdOrException(dbBlacklistItem.id)
+                        blacklistPhoneNumberItemDao.getByIdOrException(dbBlacklistPhoneNumberItem.id)
                                 .map { it.id }
                     }
-                    else blackListItemDao.insertBlackListItemAsSingle(dbBlacklistItem)
+                    else blacklistPhoneNumberItemDao.insertBlacklistPhoneNumberItemAsSingle(dbBlacklistPhoneNumberItem)
                 }
     }
 
-    override fun getActivityIntervalsAssociatedWithBlacklistItem(blacklistItem: DbBlacklistItem): Maybe<List<DbActivityInterval>> =
-            joinBlacklistItemActivityIntervalDao.getActvitiyIntervalsForBlacklistItemIdAsMaybe(blacklistItem.id)
+    override fun getActivityIntervalsAssociatedWithBlacklistPhoneNumberItem(blacklistPhoneNumberItem: DbBlacklistPhoneNumberItem): Single<List<DbActivityInterval>> =
+            joinBlacklistPhoneNumberItemActivityIntervalDao.getActvitiyIntervalsForBlacklistPhoneNumberItemId(blacklistPhoneNumberItem.id)
 
     private fun putActivityIntervalsWithAddToBlacklistItem(blacklistItemId: Long,
                                                            dbActivityIntervals: List<DbActivityInterval>): Completable {
-        return deleteAllBlacklistItemActivityIntervalsAndClearOrphans(blacklistItemId)
+        return deleteAllBlacklistPhoneNumberItemActivityIntervalsAndClearOrphans(blacklistItemId)
                 .andThen(Observable.fromIterable(dbActivityIntervals))
-                .flatMapCompletable { insertActivityIntervalWithAddToBlacklistItem(blacklistItemId, it) }
+                .flatMapCompletable { insertActivityIntervalWithAddToBlacklistPhoneNumberItem(blacklistItemId, it) }
     }
 
     private fun putActivityIntervalsWithAddToBlacklistPhoneItem(blacklistPhoneItemId: Long,
@@ -190,25 +190,25 @@ constructor(
                 .flatMapCompletable { insertActivityIntervalWithAddToBlacklistContactPhoneItem(blacklistPhoneItemId, it) }
     }
 
-    private fun deleteAllBlacklistItemActivityIntervalsAndClearOrphans(blacklistItemId: Long?) : Completable {
-        return joinBlacklistItemActivityIntervalDao.removeAllJoinsWithBlacklistItemIdAsCompletable(blacklistItemId)
-                .andThen(joinBlacklistItemActivityIntervalDao.removeActivityIntervalsNonAssociatedWithBlacklistItemsAndBlacklistContactPhoneItemsAsCompletable())
+    private fun deleteAllBlacklistPhoneNumberItemActivityIntervalsAndClearOrphans(blacklistItemId: Long?) : Completable {
+        return joinBlacklistPhoneNumberItemActivityIntervalDao.removeAllJoinsWithBlacklistPhoneNumberItemIdAsCompletable(blacklistItemId)
+                .andThen(joinBlacklistPhoneNumberItemActivityIntervalDao.removeActivityIntervalsNonAssociatedWithBlacklistPhoneNumberItemsAndBlacklistContactPhoneItemsAsCompletable())
     }
 
     private fun deleteAllBlacklistContactPhonesActivityIntervalsAndClearOrphans(vararg blacklistContactPhoneItemIds: Long?) : Completable {
         return joinBlacklistContactPhoneItemActivityIntervalDao.removeAllJoinsWithBlacklistContactPhoneItemIdsAsCompletable(*blacklistContactPhoneItemIds)
-                .andThen(joinBlacklistItemActivityIntervalDao.removeActivityIntervalsNonAssociatedWithBlacklistItemsAndBlacklistContactPhoneItemsAsCompletable())
+                .andThen(joinBlacklistPhoneNumberItemActivityIntervalDao.removeActivityIntervalsNonAssociatedWithBlacklistPhoneNumberItemsAndBlacklistContactPhoneItemsAsCompletable())
     }
 
-    private fun insertActivityIntervalWithAddToBlacklistItem(blacklistItemId: Long,
-                                                             dbActivityInterval: DbActivityInterval): Completable {
+    private fun insertActivityIntervalWithAddToBlacklistPhoneNumberItem(blacklistItemId: Long,
+                                                                        dbActivityInterval: DbActivityInterval): Completable {
         return activityIntervalDao.getActivityIntervalByTimesAndWeekday(dbActivityInterval.dayOfWeek,
                 dbActivityInterval.beginTime,
                 dbActivityInterval.endTime)
                 .map ({ it.id })
                 .switchIfEmpty(activityIntervalDao.insertActivityIntervalWithGetIdAsSingle(dbActivityInterval))
-                .map({ dbJoinBlacklistItemActivityIntervalFactory.create(blacklistItemId, it) })
-                .flatMapCompletable { joinBlacklistItemActivityIntervalDao.insertWithIgnoreConflictsAsCompletable(it) }
+                .map({ dbJoinBlacklistPhoneNumberItemActivityIntervalFactory.create(blacklistItemId, it) })
+                .flatMapCompletable { joinBlacklistPhoneNumberItemActivityIntervalDao.insertWithIgnoreConflictsAsCompletable(it) }
 
     }
 
@@ -225,17 +225,17 @@ constructor(
     }
 
     private fun getFlowableDbActivityIntervalsByItemWithChanges(
-            item : DbBlacklistItemWithJoinsBlacklistItemActivityInterval) : Flowable<DbBlacklistItemWithActivityIntervals>{
+            item : DbBlacklistPhoneNumberItemWithJoinsBlacklistPhoneNumberItemActivityInterval) : Flowable<DbBlacklistPhoneNumberItemWithActivityIntervals>{
         return Flowable.fromIterable(item.listOfJoins)
-                .map {joinItem: DbJoinBlacklistItemActivityInterval ->
+                .map {joinItem: DbJoinBlacklistPhoneNumberItemActivityInterval ->
                     activityIntervalDao.getActivityIntervalByIdWithChanges(joinItem.activityIntervalId)
                 }
                 .toList()
                 .flatMapPublisher {intervalsFlowable: List<Flowable<DbActivityInterval>> ->
                     Flowable.combineLatest(intervalsFlowable.toMutableList(),
                             {intervalChanges: Array<Any> ->
-                                dbBlacklistItemWithActivityIntervalsFactory.create(
-                                        item.blacklistItem,
+                                dbBlacklistPhoneNumberItemWithActivityIntervalsFactory.create(
+                                        item.blacklistPhoneNumberItem,
                                         intervalChanges.toList()
                                                 .map {intervalObj: Any -> intervalObj as DbActivityInterval })
                             })

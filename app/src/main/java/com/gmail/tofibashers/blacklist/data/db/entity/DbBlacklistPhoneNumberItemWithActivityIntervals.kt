@@ -9,6 +9,6 @@ import com.google.auto.factory.AutoFactory
  */
 
 @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
-class DbBlacklistItemWithActivityIntervals(
-        var dbBlacklistItem: DbBlacklistItem,
+class DbBlacklistPhoneNumberItemWithActivityIntervals(
+        var dbBlacklistPhoneNumberItem: DbBlacklistPhoneNumberItem,
         var dbActivityIntervals: List<DbActivityInterval>)

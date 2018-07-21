@@ -8,7 +8,7 @@ import io.reactivex.Single
  * This UseCase validate [BlacklistPhoneNumberItem] for ability to save.
  * Created by TofiBashers on 05.02.2018.
  */
-interface IValidateBlacklistItemForSaveSyncUseCase {
+interface IValidateBlacklistPhoneNumberItemForSaveSyncUseCase {
 
     /**
      * Result [Single] subscribes and provides result in Android UI-Thread

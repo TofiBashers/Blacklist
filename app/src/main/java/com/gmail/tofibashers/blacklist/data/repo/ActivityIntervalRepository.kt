@@ -5,11 +5,9 @@ import com.gmail.tofibashers.blacklist.data.datasource.IMemoryDatasource
 import com.gmail.tofibashers.blacklist.data.db.entity.mapper.DbActivityIntervalMapper
 import com.gmail.tofibashers.blacklist.data.memory.mapper.MemoryActivityIntervalMapper
 import com.gmail.tofibashers.blacklist.entity.ActivityInterval
-import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
 import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import com.gmail.tofibashers.blacklist.entity.mapper.ActivityIntervalMapper
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistContactItemMapper
-import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneItemMapper
+import com.gmail.tofibashers.blacklist.entity.mapper.BlacklistPhoneNumberItemMapper
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -30,12 +28,12 @@ constructor(
         private val dbActivityIntervalMapper: DbActivityIntervalMapper,
         private val memoryActivityIntervalMapper: MemoryActivityIntervalMapper,
         private val activityIntervalMapper: ActivityIntervalMapper,
-        private val blacklistPhoneItemMapper: BlacklistPhoneItemMapper
+        private val blacklistPhoneNumberItemMapper: BlacklistPhoneNumberItemMapper
 ): IActivityIntervalRepository {
 
-    override fun getActivityIntervalsAssociatedWithBlacklistItem(phoneNumberItem: BlacklistPhoneNumberItem): Maybe<List<ActivityInterval>> {
-        return Maybe.fromCallable { blacklistPhoneItemMapper.toDbBlacklistItem(phoneNumberItem) }
-                .flatMap(databaseSource::getActivityIntervalsAssociatedWithBlacklistItem)
+    override fun getActivityIntervalsAssociatedWithBlacklistPhoneNumberItem(phoneNumberItem: BlacklistPhoneNumberItem): Single<List<ActivityInterval>> {
+        return Single.fromCallable { blacklistPhoneNumberItemMapper.toDbBlacklistPhoneNumberItem(phoneNumberItem) }
+                .flatMap(databaseSource::getActivityIntervalsAssociatedWithBlacklistPhoneNumberItem)
                 .map(dbActivityIntervalMapper::toActivityIntervalsList)
     }
 

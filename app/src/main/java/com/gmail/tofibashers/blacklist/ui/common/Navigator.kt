@@ -77,7 +77,7 @@ constructor(){
     @Throws(ThirdPartyAppForNavigationNotFoundException::class)
     fun toCreateSmsWithNumber(activity: Activity, number: String) {
         val smsIntent = Intent(Intent.ACTION_VIEW)
-        smsIntent.type = AndroidComponentKeys.TYPE_MMS_SMS
+        smsIntent.type = AndroidComponentKeys.INTENT_TYPE_MMS_SMS
         smsIntent.putExtra(AndroidComponentKeys.EXTRA_ADDRESS, number)
         activity.startActivity(smsIntent)
         startActivityInThirdPartyApp(activity, smsIntent)

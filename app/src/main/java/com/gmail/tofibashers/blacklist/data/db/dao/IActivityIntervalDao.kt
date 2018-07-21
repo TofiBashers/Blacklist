@@ -21,12 +21,6 @@ abstract class IActivityIntervalDao {
     fun insertActivityIntervalWithGetIdAsSingle(dbActivityInterval: DbActivityInterval) : Single<Long> =
             Single.fromCallable { insertActivityIntervalWithGetId(dbActivityInterval) }
 
-    /**
-     * Return [Single] with updated rows count
-     */
-    fun updateActivityIntervalAsSingle(dbActivityInterval: DbActivityInterval) : Single<Int> =
-            Single.fromCallable { updateActivityInterval(dbActivityInterval) }
-
     @Query("SELECT * FROM " + ActivityIntervalTable.TABLE_NAME
             + " WHERE " + ActivityIntervalTable._ID + " = :id")
     fun getActivityIntervalByIdWithChanges(id: Long?) : Flowable<DbActivityInterval> =
@@ -34,12 +28,6 @@ abstract class IActivityIntervalDao {
 
     @Insert
     abstract fun insertActivityIntervalWithGetId(dbActivityInterval: DbActivityInterval) : Long
-
-    /**
-     * Return updated rows count
-     */
-    @Update
-    abstract fun updateActivityInterval(dbActivityInterval: DbActivityInterval) : Int
 
     @Query("SELECT * FROM " + ActivityIntervalTable.TABLE_NAME
             + " WHERE " + ActivityIntervalTable._ID + " = :id")

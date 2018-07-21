@@ -2,7 +2,6 @@ package com.gmail.tofibashers.blacklist.data.db.entity
 
 import android.arch.persistence.room.*
 import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistContactItemTable
-import com.gmail.tofibashers.blacklist.data.db.table_constants.BlacklistItemTable
 
 
 /**
