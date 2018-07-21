@@ -15,5 +15,7 @@ Code features:
      * [Butterknife](http://jakewharton.github.io/butterknife/)  
      * [Calligraphy](https://github.com/chrisjenx/Calligraphy)  
      * [joda-time-android](https://github.com/dlew/joda-time-android)  
-     * Unit tests with [Mockito 2](http://site.mockito.org/) & [Robolectric](http://robolectric.org/)  
-     * Android codestyle with [Ribot styleguide](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+     * [libphonenumber](https://github.com/googlei18n/libphonenumber)
+     * Unit tests with [Mockito 2](http://site.mockito.org/) & [Robolectric](http://robolectric.org/)
+     * Android test of Room Migration
+     * Android codestyle with [Ribot styleguide](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md) (except m-notation)
