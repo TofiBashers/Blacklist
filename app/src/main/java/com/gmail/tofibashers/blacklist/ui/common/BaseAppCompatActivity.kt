@@ -19,6 +19,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
  */
 abstract class BaseAppCompatActivity : AppCompatActivity(), HasFragmentInjector, HasSupportFragmentInjector {
 
+    @Inject
+    lateinit var navigator: Navigator
 
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -35,11 +37,7 @@ abstract class BaseAppCompatActivity : AppCompatActivity(), HasFragmentInjector,
         AndroidInjection.inject(this)
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return supportFragmentInjector
-    }
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
-    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> {
-        return frameworkFragmentInjector
-    }
+    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = frameworkFragmentInjector
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/blacklist_contact_options_group">
+        <item android:id="@+id/change_item"
+            android:title="@string/item_blacklist_menu_change_action"/>
+        <item android:id="@+id/delete_item"
+            android:title="@string/item_blacklist_menu_delete_action"/>
+        <item android:id="@+id/open_in_contacts_item"
+            android:title="@string/item_blacklist_contact_menu_open_in_contacts_app_action"/>
+    </group>
+</menu>

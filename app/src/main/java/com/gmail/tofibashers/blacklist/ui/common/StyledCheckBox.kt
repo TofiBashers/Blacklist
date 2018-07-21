@@ -1,6 +1,8 @@
 package com.gmail.tofibashers.blacklist.ui.common
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.ContextThemeWrapper
@@ -13,20 +15,20 @@ import com.gmail.tofibashers.blacklist.R
  * Created by TofiBashers on 29.03.2018.
  */
 class StyledCheckBox : AppCompatCheckBox {
-    constructor(context: Context) : super(ContextThemeWrapper(context, R.style.AppTheme_CheckBox)) {
+    constructor(context: Context) : super(ContextThemeWrapper(context, R.style.AppTheme_CompoundButton)) {
         setStyle()
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(ContextThemeWrapper(context, R.style.AppTheme_CheckBox), attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(ContextThemeWrapper(context, R.style.AppTheme_CompoundButton), attrs) {
         setStyle()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(ContextThemeWrapper(context, R.style.AppTheme_CheckBox), attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(ContextThemeWrapper(context, R.style.AppTheme_CompoundButton), attrs, defStyleAttr) {
         setStyle()
     }
 
     private fun setStyle() {
         isSaveEnabled = false
-        setBackgroundColor(resources.getColor(android.R.color.transparent))
+        setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
     }
 }

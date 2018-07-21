@@ -2,75 +2,126 @@ package com.gmail.tofibashers.blacklist.ui.blacklist
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 
-import com.gmail.tofibashers.blacklist.R
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
-import com.gmail.tofibashers.blacklist.utils.OnClickListItemWithPositionListener
-import kotterknife.bindView
+import com.gmail.tofibashers.blacklist.entity.*
+import com.gmail.tofibashers.blacklist.ui.common.BaseViewHolder
 
 /**
  * Created by TofixXx on 05.08.2015.
  */
-class BlacklistAdapter(private val clickListener: OnClickListItemWithPositionListener) :
-        RecyclerView.Adapter<BlacklistAdapter.BlackListItemHolder>() {
+class BlacklistAdapter(private val contactClickListener: BlacklistContactItemWithIgnoredInfoHolder.ClickListener,
+                       private val blacklistPhoneNumberClickListener: BlacklistPhoneNumberItemHolder.ClickListener) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var list: MutableList<BlacklistItem> = mutableListOf()
+    private var list: MutableList<SectionBlacklistItem> = mutableListOf()
 
-    fun addAll(list: List<BlacklistItem>) {
-        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                    list[newItemPosition].dbId == this@BlacklistAdapter.list[oldItemPosition].dbId
-
-            override fun getOldListSize(): Int = this@BlacklistAdapter.list.size
-
-            override fun getNewListSize(): Int  = list.size
-
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                    this@BlacklistAdapter.list[oldItemPosition] == list[newItemPosition]
-        }, false)
+    fun addAll(newList: List<SectionBlacklistItem>) {
+        DiffUtil.calculateDiff(DiffUtilCallback(newList), false)
                 .dispatchUpdatesTo(this)
-        this.list = list.toMutableList()
+        this.list = newList.toMutableList()
     }
 
-    fun getItem(position: Int): BlacklistItem = list[position]
+    override fun getItemViewType(position: Int): Int {
+        return when(list[position]){
+            is SectionBlacklistItem.Header -> ITEM_SECTION_HEADER_TYPE
+            is SectionBlacklistItem.PhoneNumber -> ITEM_PHONE_NUMBER_TYPE
+            is SectionBlacklistItem.Contact -> ITEM_CONTACT_TYPE
+        }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlackListItemHolder
-            = BlackListItemHolder(clickListener, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType){
+            ITEM_SECTION_HEADER_TYPE -> SectionHeaderHolder(parent)
+            ITEM_PHONE_NUMBER_TYPE -> BlacklistPhoneNumberItemHolder(blacklistPhoneNumberClickListener, parent)
+            ITEM_CONTACT_TYPE -> BlacklistContactItemWithIgnoredInfoHolder(contactClickListener, parent)
+            else -> throw RuntimeException("Unknown viewType: " + viewType)
+        }
+    }
 
-    override fun onBindViewHolder(holder: BlackListItemHolder, position: Int) = holder.bind(list[position])
+    @Suppress("UNCHECKED_CAST")
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val sectionHolder = holder as BaseViewHolder<SectionBlacklistItem>
+        sectionHolder.bind(list[position])
+    }
 
     override fun getItemCount(): Int = list.count()
 
-    class BlackListItemHolder(
-            private val clickListener: OnClickListItemWithPositionListener,
-            parent: ViewGroup
-    ) : RecyclerView.ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_numberlist, parent, false)
-    ), View.OnClickListener{
+    private inner class DiffUtilCallback(private val newList: List<SectionBlacklistItem>) : DiffUtil.Callback() {
 
-        private val callsBlockView: ImageView by bindView(R.id.image_is_calls_block)
-        private val smsBlockView: ImageView by bindView(R.id.image_is_sms_block)
-        private val phoneNumberView: TextView by bindView(R.id.text_phone_number)
-        private val optionsButton: ImageButton by bindView(R.id.imagebutton_options)
+        override fun getOldListSize(): Int = list.size
 
-        init {
-            optionsButton.setOnClickListener(this)
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val newListItem = newList[newItemPosition]
+            val oldListItem = list[oldItemPosition]
+            return when(oldListItem){
+                is SectionBlacklistItem.PhoneNumber -> PhoneNumberDiffHelper.areTheSameItem(newListItem, oldListItem)
+                is SectionBlacklistItem.Contact -> ContactDiffHelper.areTheSameItem(newListItem, oldListItem)
+                is SectionBlacklistItem.Header -> HeaderDiffHelper.areTheSameItem(newListItem, oldListItem)
+            }
         }
 
-        fun bind(blacklistItem: BlacklistItem){
-            smsBlockView.setImageResource(if (blacklistItem.isSmsBlocked) R.drawable.ic_sms_disabled_48dp
-            else R.drawable.ic_sms_enabled_48dp_exp)
-            callsBlockView.setImageResource(if (blacklistItem.isCallsBlocked) R.drawable.ic_call_disabled_48dp
-            else R.drawable.ic_call_enabled_48dp_exp)
-            phoneNumberView.text = blacklistItem.number
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val newListItem = newList[newItemPosition]
+            val oldListItem = list[oldItemPosition]
+            return when(oldListItem){
+                is SectionBlacklistItem.PhoneNumber ->
+                    PhoneNumberDiffHelper.areTheSameContents(newListItem as SectionBlacklistItem.PhoneNumber, oldListItem)
+                is SectionBlacklistItem.Contact ->
+                    ContactDiffHelper.areTheSameContents(newListItem as SectionBlacklistItem.Contact, oldListItem)
+                is SectionBlacklistItem.Header -> true
+            }
         }
 
-        override fun onClick(v: View) = clickListener.onClickListItem(v, adapterPosition)
+    }
+
+    private object PhoneNumberDiffHelper {
+
+        fun areTheSameItem(item: SectionBlacklistItem, itemForCompare: SectionBlacklistItem.PhoneNumber) : Boolean{
+            return item is SectionBlacklistItem.PhoneNumber &&
+                    item.phoneNumberItem.dbId == itemForCompare.phoneNumberItem.dbId
+        }
+
+        fun areTheSameContents(item: SectionBlacklistItem.PhoneNumber,
+                               itemForCompare: SectionBlacklistItem.PhoneNumber) : Boolean{
+            val firstItem = item.phoneNumberItem
+            val secondItem = itemForCompare.phoneNumberItem
+            return firstItem.number == secondItem.number &&
+                    firstItem.isCallsBlocked == secondItem.isCallsBlocked &&
+                    firstItem.isSmsBlocked == secondItem.isSmsBlocked
+        }
+    }
+    private object HeaderDiffHelper {
+        fun areTheSameItem(item: SectionBlacklistItem,
+                           itemForCompare: SectionBlacklistItem.Header) : Boolean{
+            return item is SectionBlacklistItem.Header && item.type == itemForCompare.type
+        }
+    }
+
+    private object ContactDiffHelper {
+
+        fun areTheSameItem(item: SectionBlacklistItem,
+                           itemForCompare: SectionBlacklistItem.Contact) : Boolean{
+            return item is SectionBlacklistItem.Contact &&
+                    item.contactItem.dbId == itemForCompare.contactItem.dbId &&
+                    item.contactItem.deviceDbId == itemForCompare.contactItem.deviceDbId
+        }
+
+        fun areTheSameContents(item: SectionBlacklistItem,
+                               itemForCompare: SectionBlacklistItem.Contact) : Boolean{
+            val firstItem = (item as SectionBlacklistItem.Contact).contactItem
+            val secondItem = itemForCompare.contactItem
+            return firstItem.name == secondItem.name &&
+                    firstItem.photoUrl == secondItem.photoUrl &&
+                    firstItem.withNonIgnoredNumbers == secondItem.withNonIgnoredNumbers
+        }
+    }
+
+    companion object {
+        const val ITEM_SECTION_HEADER_TYPE = 1
+        const val ITEM_CONTACT_TYPE = 2
+        const val ITEM_PHONE_NUMBER_TYPE = 3
     }
 }

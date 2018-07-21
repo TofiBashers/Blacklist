@@ -1,8 +1,10 @@
 package com.gmail.tofibashers.blacklist.ui.time_settings
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.constraint.Group
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
@@ -11,6 +13,7 @@ import com.gmail.tofibashers.blacklist.R
 import com.gmail.tofibashers.blacklist.entity.MutableActivityIntervalsWithEnableAndValidState
 import com.gmail.tofibashers.blacklist.entity.TimeChangeInitData
 import com.gmail.tofibashers.blacklist.ui.common.BaseStateableViewActivity
+import com.gmail.tofibashers.blacklist.ui.common.SavingResult
 import com.gmail.tofibashers.blacklist.utils.AndroidComponentKeys
 import com.gmail.tofibashers.blacklist.utils.TimeFormatUtils
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -18,14 +21,14 @@ import kotterknife.bindView
 import javax.inject.Inject
 
 
-class TimeSettingsActivity : BaseStateableViewActivity(),
+class TimeSettingsActivity : BaseStateableViewActivity<Group, Group>(),
         View.OnClickListener,
         WeekLinearLayout.OnTimeSetClickListener,
         WeekLinearLayout.OnWeekdayCheckedChangeListener,
         TimePickerDialog.OnTimeSetListener{
 
-    override val loadingGroup: Group by bindView(R.id.group_progress)
-    override val dataGroup: Group by bindView(R.id.group_scrollview_with_save)
+    override val loadingView: Group by bindView(R.id.group_progress)
+    override val dataView: Group by bindView(R.id.group_scrollview_with_save)
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val weekLayout: WeekLinearLayout by bindView(R.id.weekview)
     private val saveButton: Button by bindView(R.id.button_save)
@@ -60,7 +63,7 @@ class TimeSettingsActivity : BaseStateableViewActivity(),
         viewModel.navigationData.observe(this, Observer{
             when(it){
                 is TimeSettingsNavData.TimeChangeRoute -> prepareAndShowTimePicker(it.timeChangeInitData)
-                is TimeSettingsNavData.ItemDetailsRoute -> finish()
+                is TimeSettingsNavData.ItemDetailsRoute -> finishWithResult(it.result)
             }
         })
     }
@@ -132,7 +135,7 @@ class TimeSettingsActivity : BaseStateableViewActivity(),
                 timeInPickerFormat[0],
                 timeInPickerFormat[1],
                 timeFormatUtils.is24hourFormatForView())
-        dialog.accentColor = resources.getColor(R.color.time_picker_color)
+        dialog.accentColor = ContextCompat.getColor(this, R.color.time_picker_color)
         dialog.setSelectableTimes(timeFormatUtils.localTimesToViewTimepoints(*timeChangeInitData.selectableTimes.toTypedArray()))
         dialog.vibrate(false)
         dialog.show(fragmentManager, AndroidComponentKeys.TAG_TIMEPICKER_DIALOG)
@@ -151,6 +154,13 @@ class TimeSettingsActivity : BaseStateableViewActivity(),
                     timeFormatUtils.localTimeToLocalizedViewTime(activityInterval.endTime, true))
         }
         saveButton.isEnabled = activityTimesWithEnableAndValid.isValidToSave
+    }
+
+    private fun finishWithResult(savingResult: SavingResult) {
+        navigator.toParentWithResult(this, when(savingResult){
+            SavingResult.SAVED -> Activity.RESULT_OK
+            SavingResult.CANCELED -> Activity.RESULT_CANCELED
+        })
     }
 
     companion object {

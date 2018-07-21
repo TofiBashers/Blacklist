@@ -2,6 +2,8 @@ package com.gmail.tofibashers.blacklist.domain
 
 import com.gmail.tofibashers.blacklist.TimeAndIgnoreSettingsByWeekdayId
 import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSettings
+import com.gmail.tofibashers.blacklist.entity.PhoneNumberTypeWithValue
+import com.gmail.tofibashers.blacklist.utils.PhoneNumberFormatUtils
 import com.gmail.tofibashers.blacklist.utils.TimeFormatUtils
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
@@ -24,6 +26,9 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
     @Mock
     lateinit var mockTimeFormatUtils: TimeFormatUtils
 
+    @Mock
+    lateinit var mockPhoneNumberFormatUtils: PhoneNumberFormatUtils
+
     @InjectMocks
     lateinit var testUseCase: CheckNumberMustBeIgnoredNowSyncUseCase
 
@@ -34,9 +39,10 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
         val testNumber = null
         val testIgnoreHiddenNumbers = true
         val testIsSms = true
-        val mockIgnoreSettingsByNumbers = mock<HashMap<String, TimeAndIgnoreSettingsByWeekdayId>>()
+        val testDefaultCountry = "RU"
+        val mockIgnoreSettingsByNumbers = mock<HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>>()
 
-        val testObserver = testUseCase.build(testNumber, testIsSms, mockIgnoreSettingsByNumbers, testIgnoreHiddenNumbers)
+        val testObserver = testUseCase.build(testNumber, testIsSms, mockIgnoreSettingsByNumbers, testDefaultCountry, testIgnoreHiddenNumbers)
                 .test()
 
         verifyZeroInteractions(mockIgnoreSettingsByNumbers)
@@ -48,9 +54,11 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
     }
 
     @Test
-    fun testOnSmsFromNumberIgnoredInCurrentDayAndAnotherTime_FALSE(){
+    fun testOnSmsFromInvalidNumberIgnoredInCurrentDayAndAnotherTime_FALSE(){
 
-        val testDataWithExpResult = genereateSmsFromNumberWithIgnoredOnSmsInAnotherTimeAndIgnoreHidden()
+        val testDataWithExpResult = genereateSmsFromInvalidNumberWithIgnoredOnSmsInAnotherTimeAndIgnoreHidden()
+        whenever(mockPhoneNumberFormatUtils.toPhoneNumberTypeWithValue(testDataWithExpResult.testNumber!!, testDataWithExpResult.testDefaultCountry))
+                .thenReturn(testDataWithExpResult.testConvertedNumberWithValue)
         whenever(mockTimeFormatUtils.currentWeekdayAsActivityIntervalFormat())
                 .thenReturn(testDataWithExpResult.testCurrentWeekday)
         whenever(mockTimeFormatUtils.isCurrentTimeInInterval(testDataWithExpResult.testBeginTimeForCheckInterval, testDataWithExpResult.testEndTimeForCheckInterval))
@@ -59,6 +67,7 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
         val testObserver = testUseCase.build(testDataWithExpResult.testNumber,
                 testDataWithExpResult.testIsSms,
                 testDataWithExpResult.testIgnoredSettingsByNumbers,
+                testDataWithExpResult.testDefaultCountry,
                 testDataWithExpResult.testIgnoreHiddenNumbers)
                 .test()
 
@@ -68,9 +77,11 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
     }
 
     @Test
-    fun testOnSmsFromNumberIgnoredInCurrentDayAndCurrentTime_TRUE(){
+    fun testOnSmsFromInvalidNumberIgnoredInCurrentDayAndCurrentTime_TRUE(){
 
-        val testDataWithExpResult = genereateSmsFromNumberWithIgnoredOnSmsInCurrentTimeAndIgnoreHidden()
+        val testDataWithExpResult = genereateSmsFromInvalidNumberWithIgnoredOnSmsInCurrentTimeAndIgnoreHidden()
+        whenever(mockPhoneNumberFormatUtils.toPhoneNumberTypeWithValue(testDataWithExpResult.testNumber!!, testDataWithExpResult.testDefaultCountry))
+                .thenReturn(testDataWithExpResult.testConvertedNumberWithValue)
         whenever(mockTimeFormatUtils.currentWeekdayAsActivityIntervalFormat())
                 .thenReturn(testDataWithExpResult.testCurrentWeekday)
         whenever(mockTimeFormatUtils.isCurrentTimeInInterval(testDataWithExpResult.testBeginTimeForCheckInterval, testDataWithExpResult.testEndTimeForCheckInterval))
@@ -79,6 +90,7 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
         val testObserver = testUseCase.build(testDataWithExpResult.testNumber,
                 testDataWithExpResult.testIsSms,
                 testDataWithExpResult.testIgnoredSettingsByNumbers,
+                testDataWithExpResult.testDefaultCountry,
                 testDataWithExpResult.testIgnoreHiddenNumbers)
                 .test()
 
@@ -88,15 +100,16 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
     }
 
     @Test
-    fun testOnSmsFromNumberNotIgnored_FALSE(){
+    fun testOnSmsFromInvalidNumberNotIgnored_FALSE(){
 
-        val testDataWithExpResult = genereateSmsFromNumberNotIgnoredAndIgnoreHidden()
-        whenever(mockTimeFormatUtils.currentWeekdayAsActivityIntervalFormat())
-                .thenReturn(testDataWithExpResult.testCurrentWeekday)
+        val testDataWithExpResult = genereateSmsFromInvalidNumberNotIgnoredAndIgnoreHidden()
+        whenever(mockPhoneNumberFormatUtils.toPhoneNumberTypeWithValue(testDataWithExpResult.testNumber!!, testDataWithExpResult.testDefaultCountry))
+                .thenReturn(testDataWithExpResult.testConvertedNumberWithValue)
 
         val testObserver = testUseCase.build(testDataWithExpResult.testNumber,
                 testDataWithExpResult.testIsSms,
                 testDataWithExpResult.testIgnoredSettingsByNumbers,
+                testDataWithExpResult.testDefaultCountry,
                 testDataWithExpResult.testIgnoreHiddenNumbers)
                 .test()
 
@@ -106,15 +119,18 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
     }
 
     @Test
-    fun testOnSmsFromNumberIgnoredOnlyCall_FALSE(){
+    fun testOnSmsFromInvalidNumberIgnoredOnlyCall_FALSE(){
 
-        val testDataWithExpResult = genereateSmsFromNumberWithIgnoredOnlyOnCallInCurrentTimeAndIgnoreHidden()
+        val testDataWithExpResult = genereateSmsFromInvalidNumberWithIgnoredOnlyOnCallInCurrentTimeAndIgnoreHidden()
+        whenever(mockPhoneNumberFormatUtils.toPhoneNumberTypeWithValue(testDataWithExpResult.testNumber!!, testDataWithExpResult.testDefaultCountry))
+                .thenReturn(testDataWithExpResult.testConvertedNumberWithValue)
         whenever(mockTimeFormatUtils.currentWeekdayAsActivityIntervalFormat())
                 .thenReturn(testDataWithExpResult.testCurrentWeekday)
 
         val testObserver = testUseCase.build(testDataWithExpResult.testNumber,
                 testDataWithExpResult.testIsSms,
                 testDataWithExpResult.testIgnoredSettingsByNumbers,
+                testDataWithExpResult.testDefaultCountry,
                 testDataWithExpResult.testIgnoreHiddenNumbers)
                 .test()
 
@@ -123,66 +139,76 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
         Assert.assertEquals(testDataWithExpResult.expectedResult, result)
     }
 
-    private fun genereateSmsFromNumberWithIgnoredOnSmsInAnotherTimeAndIgnoreHidden() : TestDataWithExpectedRes{
+    private fun genereateSmsFromInvalidNumberWithIgnoredOnSmsInAnotherTimeAndIgnoreHidden() : TestDataWithExpectedRes{
         val testNumber = "123"
         val testIsSms = true
+        val testDefaultCountry = "RU"
         val testCurrentWeekdayId = 2
+        val testConvertedNumberWithValue = PhoneNumberTypeWithValue.Invalid(testNumber)
         val testBeginTimeInCurrentDay = LocalTime(4, 0)
         val testEndTimeInCurrentDay = LocalTime(5, 0)
-        val testIgnoreSettingsByNumbers = HashMap<String, TimeAndIgnoreSettingsByWeekdayId>().apply {
+        val testIgnoreSettingsByNumbers = HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>().apply {
             val timeAndIgnoreSettingsByWeekdayId = TimeAndIgnoreSettingsByWeekdayId().apply {
                 put(testCurrentWeekdayId, ActivityTimeIntervalWithIgnoreSettings(false,
                         true,
                         testBeginTimeInCurrentDay,
                         testEndTimeInCurrentDay))
             }
-            put(testNumber, timeAndIgnoreSettingsByWeekdayId)
+            put(testConvertedNumberWithValue, timeAndIgnoreSettingsByWeekdayId)
         }
         return TestDataWithExpectedRes(testNumber = testNumber,
                 testIsSms = testIsSms,
                 testIgnoredSettingsByNumbers = testIgnoreSettingsByNumbers,
+                testDefaultCountry = testDefaultCountry,
                 testIgnoreHiddenNumbers = true,
                 testCurrentWeekday = testCurrentWeekdayId,
+                testConvertedNumberWithValue = testConvertedNumberWithValue,
                 testBeginTimeForCheckInterval = testBeginTimeInCurrentDay,
                 testEndTimeForCheckInterval = testEndTimeInCurrentDay,
                 testIsCurrentTimeInInterval = false,
                 expectedResult = false)
     }
 
-    private fun genereateSmsFromNumberWithIgnoredOnSmsInCurrentTimeAndIgnoreHidden() : TestDataWithExpectedRes{
+    private fun genereateSmsFromInvalidNumberWithIgnoredOnSmsInCurrentTimeAndIgnoreHidden() : TestDataWithExpectedRes{
         val testNumber = "123"
         val testIsSms = true
+        val testDefaultCountry = "RU"
         val testCurrentWeekdayId = 2
+        val testConvertedNumberWithValue = PhoneNumberTypeWithValue.Invalid(testNumber)
         val testBeginTimeInCurrentDay = LocalTime(4, 0)
         val testEndTimeInCurrentDay = LocalTime(5, 0)
-        val testIgnoreSettingsByNumbers = HashMap<String, TimeAndIgnoreSettingsByWeekdayId>().apply {
+        val testIgnoreSettingsByNumbers = HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>().apply {
             val timeAndIgnoreSettingsByWeekdayId = TimeAndIgnoreSettingsByWeekdayId().apply {
                 put(testCurrentWeekdayId, ActivityTimeIntervalWithIgnoreSettings(false,
                         true,
                         testBeginTimeInCurrentDay,
                         testEndTimeInCurrentDay))
             }
-            put(testNumber, timeAndIgnoreSettingsByWeekdayId)
+            put(testConvertedNumberWithValue, timeAndIgnoreSettingsByWeekdayId)
         }
         return TestDataWithExpectedRes(testNumber = testNumber,
                 testIsSms = testIsSms,
                 testIgnoredSettingsByNumbers = testIgnoreSettingsByNumbers,
+                testDefaultCountry = testDefaultCountry,
                 testIgnoreHiddenNumbers = true,
                 testCurrentWeekday = testCurrentWeekdayId,
+                testConvertedNumberWithValue = testConvertedNumberWithValue,
                 testBeginTimeForCheckInterval = testBeginTimeInCurrentDay,
                 testEndTimeForCheckInterval = testEndTimeInCurrentDay,
                 testIsCurrentTimeInInterval = true,
                 expectedResult = true)
     }
 
-    private fun genereateSmsFromNumberNotIgnoredAndIgnoreHidden() : TestDataWithExpectedRes{
+    private fun genereateSmsFromInvalidNumberNotIgnoredAndIgnoreHidden() : TestDataWithExpectedRes{
         val testInpNumber = "123"
-        val testIgnoreSettingNumber = "456"
+        val testConvertedNumberWithValue = PhoneNumberTypeWithValue.Invalid(testInpNumber)
+        val testIgnoreSettingNumber = PhoneNumberTypeWithValue.Invalid("456")
         val testIsSms = true
+        val testDefaultCountry = "RU"
         val testCurrentWeekdayId = 2
         val testBeginTimeInCurrentDay = LocalTime(4, 0)
         val testEndTimeInCurrentDay = LocalTime(5, 0)
-        val testIgnoreSettingsByNumbers = HashMap<String, TimeAndIgnoreSettingsByWeekdayId>().apply {
+        val testIgnoreSettingsByNumbers = HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>().apply {
             val timeAndIgnoreSettingsByWeekdayId = TimeAndIgnoreSettingsByWeekdayId().apply {
                 put(testCurrentWeekdayId, ActivityTimeIntervalWithIgnoreSettings(false,
                         true,
@@ -194,8 +220,10 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
         return TestDataWithExpectedRes(testNumber = testInpNumber,
                 testIsSms = testIsSms,
                 testIgnoredSettingsByNumbers = testIgnoreSettingsByNumbers,
+                testDefaultCountry = testDefaultCountry,
                 testIgnoreHiddenNumbers = true,
                 testCurrentWeekday = testCurrentWeekdayId,
+                testConvertedNumberWithValue = testConvertedNumberWithValue,
                 testBeginTimeForCheckInterval = testBeginTimeInCurrentDay,
                 testEndTimeForCheckInterval = testEndTimeInCurrentDay,
                 testIsCurrentTimeInInterval = true,
@@ -203,26 +231,30 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
     }
 
 
-    private fun genereateSmsFromNumberWithIgnoredOnlyOnCallInCurrentTimeAndIgnoreHidden() : TestDataWithExpectedRes{
+    private fun genereateSmsFromInvalidNumberWithIgnoredOnlyOnCallInCurrentTimeAndIgnoreHidden() : TestDataWithExpectedRes{
         val testNumber = "123"
         val testIsSms = true
+        val testDefaultCountry = "RU"
         val testCurrentWeekdayId = 2
+        val testConvertedNumber = PhoneNumberTypeWithValue.Invalid("123")
         val testBeginTimeInCurrentDay = LocalTime(4, 0)
         val testEndTimeInCurrentDay = LocalTime(5, 0)
-        val testIgnoreSettingsByNumbers = HashMap<String, TimeAndIgnoreSettingsByWeekdayId>().apply {
+        val testIgnoreSettingsByNumbers = HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>().apply {
             val timeAndIgnoreSettingsByWeekdayId = TimeAndIgnoreSettingsByWeekdayId().apply {
                 put(testCurrentWeekdayId, ActivityTimeIntervalWithIgnoreSettings(true,
                         false,
                         testBeginTimeInCurrentDay,
                         testEndTimeInCurrentDay))
             }
-            put(testNumber, timeAndIgnoreSettingsByWeekdayId)
+            put(testConvertedNumber, timeAndIgnoreSettingsByWeekdayId)
         }
         return TestDataWithExpectedRes(testNumber = testNumber,
                 testIsSms = testIsSms,
                 testIgnoredSettingsByNumbers = testIgnoreSettingsByNumbers,
+                testDefaultCountry = testDefaultCountry,
                 testIgnoreHiddenNumbers = true,
                 testCurrentWeekday = testCurrentWeekdayId,
+                testConvertedNumberWithValue = testConvertedNumber,
                 testBeginTimeForCheckInterval = testBeginTimeInCurrentDay,
                 testEndTimeForCheckInterval = testEndTimeInCurrentDay,
                 testIsCurrentTimeInInterval = true,
@@ -231,9 +263,11 @@ class CheckNumberMustBeIgnoredNowSyncUseCaseTest {
 
     private data class TestDataWithExpectedRes(val testNumber: String?,
                                                val testIsSms: Boolean,
-                                               val testIgnoredSettingsByNumbers: HashMap<String, TimeAndIgnoreSettingsByWeekdayId>,
+                                               val testIgnoredSettingsByNumbers: HashMap<PhoneNumberTypeWithValue, TimeAndIgnoreSettingsByWeekdayId>,
+                                               val testDefaultCountry: String,
                                                val testIgnoreHiddenNumbers: Boolean,
                                                val testCurrentWeekday: Int,
+                                               val testConvertedNumberWithValue: PhoneNumberTypeWithValue,
                                                val testBeginTimeForCheckInterval: LocalTime,
                                                val testEndTimeForCheckInterval: LocalTime,
                                                val testIsCurrentTimeInInterval: Boolean,

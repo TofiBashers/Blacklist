@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/blacklist_phonenumber_options_group">
+        <item android:id="@+id/change_item"
+            android:title="@string/item_blacklist_menu_change_action"/>
+        <item android:id="@+id/delete_item"
+            android:title="@string/item_blacklist_menu_delete_action"/>
+        <item android:id="@+id/call_item"
+            android:title="@string/item_blacklist_phonenumber_menu_call_action"/>
+        <item android:id="@+id/sms_item"
+            android:title="@string/item_blacklist_phonenumber_menu_send_sms_action"/>
+    </group>
+</menu>

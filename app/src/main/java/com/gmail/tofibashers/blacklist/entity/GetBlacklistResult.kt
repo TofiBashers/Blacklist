@@ -9,8 +9,8 @@ import com.google.auto.factory.AutoFactory
  */
 sealed class GetBlacklistResult {
     @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
-    data class ListWithIgnoreResult(val items: List<BlacklistItem>,
-                                    val ignoreHidden: Boolean) : List<BlacklistItem> by items, GetBlacklistResult()
+    data class ListWithIgnoreResult(val sectionedItems: List<SectionBlacklistItem>,
+                                    val ignoreHidden: Boolean) : List<SectionBlacklistItem> by sectionedItems, GetBlacklistResult()
 
     @AutoFactory(allowSubclasses = true, extending = BaseFactory::class)
     data class SystemVerWarning(val warningType: SystemVerWarningType) : GetBlacklistResult()

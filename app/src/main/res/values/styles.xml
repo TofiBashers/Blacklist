@@ -3,16 +3,20 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="buttonStyle">@style/Button</item>
         <item name="textAllCaps">false</item>
     </style>
     
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme"/>
     
-    <style name="Button" parent="Base.Widget.AppCompat.Button">
+    <style name="AppTheme.DefaultButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_default_backgrounds</item>
         <item name="android:textColor">@drawable/btn_default_text_colors</item>
+    </style>
+
+    <style name="AppTheme.OutlinedButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_outlined_backgrounds</item>
+        <item name="android:textColor">@drawable/btn_outlined_text_colors</item>
     </style>
 
     <style name="ErrorTextAppearance" parent="@android:style/TextAppearance">
@@ -29,9 +33,10 @@
         <item name="colorControlHighlight">@color/enabled_icons</item>
     </style>
 
-    <style name="AppTheme.CheckBox">
+    <style name="AppTheme.CompoundButton">
         <item name="colorControlActivated">@color/enabled_icons</item>
         <item name="android:textColorPrimaryDisableOnly">@color/primary_dark_text</item>
+        <item name="android:background">#AC1f1f</item>
     </style>
 
     <style name="ProgressTheme" parent="ThemeOverlay.AppCompat.Light">

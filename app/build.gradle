@@ -20,6 +20,20 @@ android {
         maxSdkVersion DEFAULT_MAX_SDK_VERSION
         targetSdkVersion DEFAULT_TARGET_SDK_VERSION
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
     }
 
     buildTypes {
@@ -33,7 +47,7 @@ android {
         }
     }
 
-    if(!inCIServer()) {
+    if (!inCIServer()) {
         signingConfigs {
             def props = new Properties()
             release {
@@ -64,7 +78,8 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
-            returnDefaultValues = true //only for use in RxAndroidPlugins.setMainThreadSchedulerHandler
+            returnDefaultValues = true
+            //only for use in RxAndroidPlugins.setMainThreadSchedulerHandler
         }
     }
 }
@@ -85,6 +100,8 @@ dependencies {
     implementation "com.android.support:gridlayout-v7:${supportLibraryVersion}"
     implementation "com.android.support:recyclerview-v7:${supportLibraryVersion}"
     implementation "com.android.support:cardview-v7:${supportLibraryVersion}"
+    implementation "com.android.support:exifinterface:${supportLibraryVersion}"
+    implementation "com.android.support:support-v13:${supportLibraryVersion}"
     implementation "com.android.support:multidex:${multidexVersion}"
 
     // Constraint Layout
@@ -92,13 +109,15 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:${lifecycleVersion}"
-    implementation "com.google.firebase:firebase-database:${firebaseVersion}"
     kapt "android.arch.lifecycle:compiler:${lifecycleVersion}"
 
     // Room
-    implementation "android.arch.persistence.room:runtime:${lifecycleVersion}"
-    implementation "android.arch.persistence.room:rxjava2:${lifecycleVersion}"
-    kapt "android.arch.persistence.room:compiler:${lifecycleVersion}"
+    implementation "android.arch.persistence.room:runtime:${roomVersion}"
+    implementation "android.arch.persistence.room:rxjava2:${roomVersion}"
+    kapt "android.arch.persistence.room:compiler:${roomVersion}"
+
+    // Firebase (future)
+    implementation "com.google.firebase:firebase-database:${firebaseVersion}"
 
     // Dagger
     implementation "com.google.dagger:dagger:${daggerVersion}"
@@ -120,8 +139,17 @@ dependencies {
     // Calligraphy
     implementation "uk.co.chrisjenx:calligraphy:${calligraphyVersion}"
 
+    // Picasso
+    implementation "com.squareup.picasso:picasso:${picassoVersion}"
+
+    // Floating action menu
+    implementation "com.leinardi.android:speed-dial:${floatingActionMenuVersion}"
+
     // Joda Time
     implementation "net.danlew:android.joda:${jodaTimeVersion}"
+
+    // libphonenumber
+    implementation "io.michaelrocks:libphonenumber-android:${libPhoneNumberVersion}"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:${rxjavaVersion}"
@@ -142,7 +170,8 @@ dependencies {
     testImplementation "android.arch.core:core-testing:${lifecycleVersion}"
 
     // Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:${lifecycleVersion}"
+    testImplementation "android.arch.persistence.room:testing:${roomVersion}"
+    androidTestImplementation "android.arch.persistence.room:testing:${roomVersion}"
 
     // Mockito Kotlin
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
@@ -152,4 +181,10 @@ dependencies {
 
     // Robolectric
     testImplementation "org.robolectric:robolectric:${robolectricVersion}"
+
+    // Android test runner
+    androidTestImplementation "com.android.support:support-annotations:${supportLibraryVersion}"
+    androidTestImplementation "com.android.support.test:runner:${androidTestRunnerVersion}"
+    androidTestImplementation "com.android.support.test:rules:${androidTestRunnerVersion}"
 }
+apply plugin: 'kotlin-android-extensions'

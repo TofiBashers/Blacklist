@@ -1,5 +1,7 @@
 package com.gmail.tofibashers.blacklist.di.app
 
+import com.gmail.tofibashers.blacklist.data.ISynchronizeDataUseCase
+import com.gmail.tofibashers.blacklist.data.SynchronizeDataUseCase
 import com.gmail.tofibashers.blacklist.data.repo.*
 import dagger.Binds
 import dagger.Module
@@ -15,8 +17,8 @@ abstract class RepositoryAndPreferenceDataModule {
 
     @Binds
     @Singleton
-    abstract fun provideIBlackListElementRepository(repository: BlacklistItemRepository)
-            : IBlacklistItemRepository
+    abstract fun provideIBlacklistPhoneNumberItemRepository(repository: BlacklistPhoneNumberItemRepository)
+            : IBlacklistPhoneNumberItemRepository
 
     @Binds
     @Singleton
@@ -25,12 +27,42 @@ abstract class RepositoryAndPreferenceDataModule {
 
     @Binds
     @Singleton
+    abstract fun provideIContactItemRepository(repository: WhitelistContactItemRepository)
+            : IWhitelistContactItemRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactItemRepository(repository: BlacklistContactItemRepository)
+            : IBlacklistContactItemRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactItemWithPhonesAndActivityIntervalsRepository(repository: BlacklistContactItemWithPhonesAndActivityIntervalsRepository)
+            : IBlacklistContactItemWithPhonesAndActivityIntervalsRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactPhoneRepository(repository: BlacklistContactPhoneRepository)
+            : IBlacklistContactPhoneRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIContactPhoneRepository(repository: WhitelistContactPhoneRepository)
+            : IWhitelistContactPhoneRepository
+
+    @Binds
+    @Singleton
     abstract fun provideIModeRepository(repository: InteractionModeRepository) : IInteractionModeRepository
 
     @Binds
     @Singleton
-    abstract fun provideIActivityIntervalWithBlacklistItemsRepository(repository: BlacklistItemWithActivityIntervalsRepository)
-            : IBlacklistItemWithActivityIntervalsRepository
+    abstract fun provideIActivityIntervalWithBlacklistPhoneNumberItemsRepository(repository: BlacklistPhoneNumberItemWithActivityIntervalsRepository)
+            : IBlacklistPhoneNumberItemWithActivityIntervalsRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideIBlacklistContactPhoneWithActivityIntervalsRepository(repository: BlacklistContactPhoneWithActivityIntervalsRepository)
+            : IBlacklistContactPhoneWithActivityIntervalsRepository
 
     @Binds
     @Singleton
@@ -39,4 +71,8 @@ abstract class RepositoryAndPreferenceDataModule {
     @Binds
     @Singleton
     abstract fun provideIDeviceData(deviceData: DeviceData) : IDeviceData
+
+    @Binds
+    @Singleton
+    abstract fun provideISynchronizeDataUseCase(synchronizeDataUseCase: SynchronizeDataUseCase) : ISynchronizeDataUseCase
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="blacklist_guideline_vertical_ignore_hidden_numbers_space_percent" type="dimen" format="float">0.65</item>
+    <item name="blacklist_guideline_vertical_checkbox_ignore_hidden_numbers_right_margin_percent" type="dimen" format="float">0.95</item>
+
+    <dimen name="partial_item_time_and_weekday_settings_hyphen_size">25sp</dimen>
+    <dimen name="partial_time_text_time_size">25sp</dimen>
+    <item name="partial_time_guideline_vertical" type="dimen" format="float">0.8</item>
+    <item name="partial_time_guideline_horizontal" type="dimen" format="float">0.4</item>
+
+    <dimen name="partial_card_wrapper_toolbar_with_ignore_hidden_block_switch_ignore_hidden_text_padding">0dp</dimen>
+
+    <dimen name="item_blacklist_phonenumber_text_phone_number_size">35sp</dimen>
+
+    <dimen name="item_blacklist_height">100dp</dimen>
+    <dimen name="item_blacklist_header_text_header_size">35sp</dimen>
+
+    <dimen name="item_blacklist_contact_text_contact_name_size">35sp</dimen>
+
+    <dimen name="item_blacklist_contact_options_contact_info_text_contact_name_size">35sp</dimen>
+
+    <dimen name="item_blacklist_contact_options_phone_text_phone_number_size">35sp</dimen>
+
+    <dimen name="item_select_contact_text_contact_name_size">35sp</dimen>
+
+    <dimen name="item_time_and_weekday_settings_height">140dp</dimen>
+    <dimen name="item_time_and_weekday_settings_height_checkbox_weekday_state_marginBottom">0dp</dimen>
+    <item name="item_time_and_weekday_settings_guideline_between_checkbox_and_times_percent" type="dimen" format="float">0.46</item>
+    <item name="item_time_and_weekday_settings_guideline_for_hyphen" type="dimen" format="float">0.66</item>
+    <item name="item_time_and_weekday_settings_guideline_for_bottom_space" type="dimen" format="float">0.96</item>
+</resources>

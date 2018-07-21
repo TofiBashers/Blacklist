@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnit
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
+import org.robolectric.internal.bytecode.InstrumentationConfiguration
 
 
 /**

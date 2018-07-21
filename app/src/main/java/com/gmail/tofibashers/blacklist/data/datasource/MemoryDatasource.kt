@@ -1,8 +1,6 @@
 package com.gmail.tofibashers.blacklist.data.datasource
 
-import android.util.Log
-import com.gmail.tofibashers.blacklist.data.memory.MemoryActivityInterval
-import com.gmail.tofibashers.blacklist.data.memory.MemoryBlacklistItem
+import com.gmail.tofibashers.blacklist.data.memory.*
 import com.gmail.tofibashers.blacklist.entity.InteractionMode
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -20,10 +18,22 @@ class MemoryDatasource
 constructor() : IMemoryDatasource {
 
     @Volatile
-    private var selectedBlacklistItem: MemoryBlacklistItem? = null
+    private var selectedBlacklistPhoneNumberItem: MemoryBlacklistPhoneNumberItem? = null
+
+    @Volatile
+    private var selectedBlacklistContactItem: MemoryBlacklistContactItem? = null
+
+    @Volatile
+    private var selectedWhitelistContactItem: MemoryWhitelistContactItem? = null
+
+    @Volatile
+    private var selectedWhitelistContactPhones: List<MemoryWhitelistContactPhone>? = null
 
     @Volatile
     private var selectedActivityIntervals: List<MemoryActivityInterval>? = null
+
+    @Volatile
+    private var selectedBlacklistContactPhonesWithActivityIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>? = null
 
     @Volatile
     private var selectedInteractionMode: InteractionMode? = null
@@ -42,24 +52,91 @@ constructor() : IMemoryDatasource {
                 selectedActivityIntervals = activityIntervals
             }) }
 
-    override fun removeSelectedBlackListItem(): Completable =
+    override fun removeSelectedBlacklistContactPhonesWithActivityIntervals(): Completable =
+            Completable.fromAction { synchronized(this, { selectedBlacklistContactPhonesWithActivityIntervals = null }) }
+
+    override fun getSelectedBlacklistContactPhonesWithActivityIntervals(): Maybe<List<MemoryBlacklistContactPhoneWithActivityIntervals>> =
+            Maybe.defer { synchronized(this, {
+                return@synchronized if (selectedBlacklistContactPhonesWithActivityIntervals == null) Maybe.empty<List<MemoryBlacklistContactPhoneWithActivityIntervals>>()
+                else Maybe.just(selectedBlacklistContactPhonesWithActivityIntervals) })
+            }
+
+    override fun putSelectedBlacklistContactPhonesWithActivityIntervals(phonesWithIntervals: List<MemoryBlacklistContactPhoneWithActivityIntervals>): Completable =
+            Completable.fromAction { synchronized(this, {
+                selectedBlacklistContactPhonesWithActivityIntervals = phonesWithIntervals
+            }) }
+
+    override fun removeSelectedBlacklistPhoneNumberItem(): Completable =
             Completable.fromAction {
-                Log.d("lol", "lol")
                 synchronized(this, {
-                    selectedBlacklistItem = null
+                    selectedBlacklistPhoneNumberItem = null
                 })
             }
 
-    override fun getSelectedBlackListItem(): Maybe<MemoryBlacklistItem> =
+    override fun getSelectedBlacklistPhoneNumberItem(): Maybe<MemoryBlacklistPhoneNumberItem> =
             Maybe.defer { synchronized(this, {
-                if (selectedBlacklistItem == null) return@synchronized Maybe.empty<MemoryBlacklistItem>()
-                else{ return@synchronized Maybe.just(selectedBlacklistItem)
+                if (selectedBlacklistPhoneNumberItem == null) return@synchronized Maybe.empty<MemoryBlacklistPhoneNumberItem>()
+                else{ return@synchronized Maybe.just(selectedBlacklistPhoneNumberItem)
                 }
             }) }
 
-    override fun putSelectedBlackListItem(blacklistItem: MemoryBlacklistItem): Completable =
+    override fun putSelectedBlacklistPhoneNumberItem(blacklistPhoneNumberItem: MemoryBlacklistPhoneNumberItem): Completable =
             Completable.fromAction { synchronized(this, {
-                selectedBlacklistItem = blacklistItem
+                selectedBlacklistPhoneNumberItem = blacklistPhoneNumberItem
+            }) }
+
+    override fun removeSelectedContactItem(): Completable =
+            Completable.fromAction {
+                synchronized(this, {
+                    selectedWhitelistContactItem = null
+                })
+            }
+
+    override fun getSelectedContactItem(): Maybe<MemoryWhitelistContactItem> =
+            Maybe.defer { synchronized(this, {
+                if (selectedWhitelistContactItem == null) return@synchronized Maybe.empty<MemoryWhitelistContactItem>()
+                else{ return@synchronized Maybe.just(selectedWhitelistContactItem) }
+            }) }
+
+    override fun putSelectedContactItem(whitelistContactItem: MemoryWhitelistContactItem): Completable =
+            Completable.fromAction { synchronized(this, {
+                selectedWhitelistContactItem = whitelistContactItem
+            }) }
+
+    override fun removeSelectedWhitelistContactPhones(): Completable =
+            Completable.fromAction {
+                synchronized(this, {
+                    selectedWhitelistContactPhones = null
+                })
+            }
+
+    override fun getSelectedWhitelistContactPhones(): Maybe<List<MemoryWhitelistContactPhone>> =
+            Maybe.defer { synchronized(this, {
+                if (selectedWhitelistContactPhones == null) return@synchronized Maybe.empty<List<MemoryWhitelistContactPhone>>()
+                else{ return@synchronized Maybe.just(selectedWhitelistContactPhones) }
+            }) }
+
+    override fun putSelectedWhitelistContactPhones(whitelistContactPhones: List<MemoryWhitelistContactPhone>): Completable =
+            Completable.fromAction { synchronized(this, {
+                selectedWhitelistContactPhones = whitelistContactPhones
+            }) }
+
+    override fun removeSelectedBlacklistContactItem(): Completable =
+            Completable.fromAction {
+                synchronized(this, {
+                    selectedBlacklistContactItem = null
+                })
+            }
+
+    override fun getSelectedBlacklistContactItem(): Maybe<MemoryBlacklistContactItem> =
+            Maybe.defer { synchronized(this, {
+                if (selectedBlacklistContactItem == null) return@synchronized Maybe.empty<MemoryBlacklistContactItem>()
+                else{ return@synchronized Maybe.just(selectedBlacklistContactItem) }
+            }) }
+
+    override fun putSelectedBlacklistContactItem(contactItem: MemoryBlacklistContactItem): Completable =
+            Completable.fromAction { synchronized(this, {
+                selectedBlacklistContactItem = contactItem
             }) }
 
     override fun getSelectedMode(): Maybe<InteractionMode> =

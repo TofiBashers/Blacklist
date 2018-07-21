@@ -6,11 +6,9 @@ import com.gmail.tofibashers.blacklist.BuildConfig
 import com.gmail.tofibashers.blacklist.data.datasource.DatabaseSource
 import com.gmail.tofibashers.blacklist.data.datasource.IDatabaseSource
 import com.gmail.tofibashers.blacklist.data.db.BlacklistDatabase
-import com.gmail.tofibashers.blacklist.data.db.dao.IActivityIntervalDao
-import com.gmail.tofibashers.blacklist.data.db.dao.IBlackListItemDao
-import com.gmail.tofibashers.blacklist.data.db.dao.IJoinBlacklistItemActivityIntervalDao
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItemWithActivityIntervalsFactory
-import com.gmail.tofibashers.blacklist.data.db.entity.DbJoinBlacklistItemActivityIntervalFactory
+import com.gmail.tofibashers.blacklist.data.db.Migrations
+import com.gmail.tofibashers.blacklist.data.db.dao.*
+import com.gmail.tofibashers.blacklist.data.db.entity.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -28,10 +26,12 @@ class DatabaseModule {
     fun provideDatabase(appContext: Context) : BlacklistDatabase {
         return if(BuildConfig.DEBUG) Room.inMemoryDatabaseBuilder(appContext,
                 BlacklistDatabase::class.java)
+                .addMigrations(Migrations.MIGRATION_1_2)
                 .build()
         else Room.databaseBuilder(appContext,
-                    BlacklistDatabase::class.java, BlacklistDatabase.DB_NAME)
-                    .build()
+                BlacklistDatabase::class.java, BlacklistDatabase.DB_NAME)
+                .addMigrations(Migrations.MIGRATION_1_2)
+                .build()
     }
 
     @Singleton
@@ -41,26 +41,53 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideBlacklistItemDao(database: BlacklistDatabase) : IBlackListItemDao =
-            database.blackListItemDao()
+    fun provideBlacklistPhoneNumberItemDao(database: BlacklistDatabase) : IBlacklistPhoneNumberItemDao =
+            database.blacklistPhoneNumberItemDao()
 
     @Singleton
     @Provides
-    fun provideJoinBlacklistItemActivityIntervalDao(database: BlacklistDatabase) : IJoinBlacklistItemActivityIntervalDao =
-            database.joinBlacklistItemActivityIntervalDao()
+    fun provideJoinBlacklistPhoneNumberItemActivityIntervalDao(database: BlacklistDatabase) : IJoinBlacklistPhoneNumberItemActivityIntervalDao =
+            database.joinBlacklistPhoneNumberItemActivityIntervalDao()
+
+    @Singleton
+    @Provides
+    fun provideIBlacklistContactItemDao(database: BlacklistDatabase) : IBlacklistContactItemDao =
+            database.blacklistContactItemDao()
+
+    @Singleton
+    @Provides
+    fun provideIBlacklistContactPhoneItemDao(database: BlacklistDatabase) : IBlacklistContactPhoneItemDao =
+            database.blacklistContactPhoneItemDao()
+
+    @Singleton
+    @Provides
+    fun provideIJoinBlacklistContactPhoneItemActivityIntervalDao(database: BlacklistDatabase) : IJoinBlacklistContactPhoneItemActivityIntervalDao =
+            database.joinBlacklistContactPhoneItemActivityIntervalDao()
 
     @Singleton
     @Provides
     fun provideDatabaseSource(blacklistDatabase: BlacklistDatabase,
                               activityIntervalDao: IActivityIntervalDao,
-                              blacklistItemDao: IBlackListItemDao,
-                              joinBlacklistItemActivityIntervalDao: IJoinBlacklistItemActivityIntervalDao,
-                              dbJoinBlacklistItemActivityIntervalFactory: DbJoinBlacklistItemActivityIntervalFactory,
-                              dbBlacklistItemWithActivityIntervalsFactory: DbBlacklistItemWithActivityIntervalsFactory) : IDatabaseSource =
+                              blacklistPhoneNumberItemDao: IBlacklistPhoneNumberItemDao,
+                              joinBlacklistPhoneNumberItemActivityIntervalDao: IJoinBlacklistPhoneNumberItemActivityIntervalDao,
+                              blacklistContactItemDao: IBlacklistContactItemDao,
+                              blacklistContactPhoneItemDao: IBlacklistContactPhoneItemDao,
+                              joinBlacklistContactPhoneItemActivityIntervalDao: IJoinBlacklistContactPhoneItemActivityIntervalDao,
+                              dbJoinBlacklistPhoneNumberItemActivityIntervalFactory: DbJoinBlacklistPhoneNumberItemActivityIntervalFactory,
+                              dbBlacklistPhoneNumberItemWithActivityIntervalsFactory: DbBlacklistPhoneNumberItemWithActivityIntervalsFactory,
+                              dbJoinBlacklistContactPhoneItemActivityIntervalFactory: DbJoinBlacklistContactPhoneItemActivityIntervalFactory,
+                              dbBlacklistContactPhoneWithActivityIntervalsFactory: DbBlacklistContactPhoneWithActivityIntervalsFactory,
+                              dbBlacklistContactItemWithPhonesAndIntervalsFactory: DbBlacklistContactItemWithPhonesAndIntervalsFactory) : IDatabaseSource =
             DatabaseSource(blacklistDatabase,
                     activityIntervalDao,
-                    blacklistItemDao,
-                    joinBlacklistItemActivityIntervalDao,
-                    dbJoinBlacklistItemActivityIntervalFactory,
-                    dbBlacklistItemWithActivityIntervalsFactory)
+                    blacklistPhoneNumberItemDao,
+                    joinBlacklistPhoneNumberItemActivityIntervalDao,
+                    blacklistContactItemDao,
+                    blacklistContactPhoneItemDao,
+                    joinBlacklistContactPhoneItemActivityIntervalDao,
+                    dbJoinBlacklistPhoneNumberItemActivityIntervalFactory,
+                    dbBlacklistPhoneNumberItemWithActivityIntervalsFactory,
+                    dbJoinBlacklistContactPhoneItemActivityIntervalFactory,
+                    dbBlacklistContactPhoneWithActivityIntervalsFactory,
+                    dbBlacklistContactItemWithPhonesAndIntervalsFactory)
 }

@@ -1,9 +1,11 @@
 package com.gmail.tofibashers.blacklist.data.repo
 
 import com.gmail.tofibashers.blacklist.entity.ActivityInterval
-import com.gmail.tofibashers.blacklist.entity.BlacklistItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactItem
+import com.gmail.tofibashers.blacklist.entity.BlacklistPhoneNumberItem
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.Single
 
 
 /**
@@ -16,7 +18,7 @@ interface IActivityIntervalRepository {
      * Result [Maybe] doesn't specify schedulers.
      * @return - [Maybe] with value, if value exists. Otherwise, empty [Maybe]
      */
-    fun getActivityIntervalsAssociatedWithBlacklistItem(item: BlacklistItem): Maybe<List<ActivityInterval>>
+    fun getActivityIntervalsAssociatedWithBlacklistPhoneNumberItem(phoneNumberItem: BlacklistPhoneNumberItem): Single<List<ActivityInterval>>
 
     /**
      * Remove value stored as "selected", if not stored - do nothing and completes.
@@ -36,4 +38,5 @@ interface IActivityIntervalRepository {
      * Result [Completable] doesn't specify schedulers.
      */
     fun putSelectedActivityIntervals(activityIntervals: List<ActivityInterval>): Completable
+
 }

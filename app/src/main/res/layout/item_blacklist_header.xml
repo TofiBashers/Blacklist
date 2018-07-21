@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_blacklist_header_height"
+    android:background="@color/divider_blacklist">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_left_text_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/item_blacklist_header_guideline_vertical_left_and_right_text_margin"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_left_between_left_image_and_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/item_blacklist_header_guideline_vertical_left_and_right_between_text_and_image"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_right_between_text_and_right_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/item_blacklist_header_guideline_vertical_left_and_right_between_text_and_image"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_vertical_right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/item_blacklist_header_guideline_vertical_left_and_right_text_margin"
+        android:orientation="vertical"/>
+
+    <ImageView
+        android:id="@+id/image_left_header"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_left_text_margin"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_left_between_left_image_and_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="@dimen/item_blacklist_header_images_header_top_and_bottom_padding"
+        android:paddingBottom="@dimen/item_blacklist_header_images_header_top_and_bottom_padding"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/ic_header_contacts_48dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_header"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_left_between_left_image_and_text"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_right_between_text_and_right_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:textSize="@dimen/item_blacklist_header_text_header_size"
+        android:maxLines="1"
+        android:textColor="@color/text_blacklist_header_color"
+        fontPath="fonts/Vollkorn-Bold.ttf"
+        tools:text="@string/blacklist_header_contacts_title" />
+
+    <ImageView
+        android:id="@+id/image_right_header"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_right_between_text_and_right_image"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_right_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="@dimen/item_blacklist_header_images_header_top_and_bottom_padding"
+        android:paddingBottom="@dimen/item_blacklist_header_images_header_top_and_bottom_padding"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/ic_header_contacts_48dp"/>
+
+</android.support.constraint.ConstraintLayout>

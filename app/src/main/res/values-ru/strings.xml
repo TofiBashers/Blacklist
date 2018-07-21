@@ -4,17 +4,23 @@
     <string name="app_name">Чёрный список</string>
     <string name="menu_settings">Настройки</string>
     <string name="options_cancel_action">Отмена</string>
-    <string name="options_ignore_calls_action">Игнорировать звонки</string>
-    <string name="options_ignore_sms_action">Игнорировать SMS</string>
-    <string name="options_edit_number_action">Введите номер </string>
-    <string name="options_change_ignoring_period_action">Изменить период игнорирования</string>
     <string name="options_ok_action">Oк</string>
-    <string name="options_toolbar_edit_title">Редактировать номер</string>
-    <string name="options_toolbar_create_title">Добавить номер</string>
+    <string name="blacklist_phonenumber_options_ignore_calls_action">Игнорировать звонки</string>
+    <string name="blacklist_phonenumber_options_ignore_sms_action">Игнорировать SMS</string>
+    <string name="blacklist_phonenumber_options_edit_number_action">Введите номер </string>
+    <string name="blacklist_phonenumber_options_change_ignoring_period_action">Изменить период игнорирования</string>
+    <string name="blacklist_phonenumber_options_toolbar_edit_title">Редактировать номер</string>
+    <string name="blacklist_phonenumber_options_toolbar_create_title">Добавить номер</string>
     <string name="blacklist_add_num_action">Добавить номер</string>
     <string name="blacklist_ignore_hidden_action">Игнорировать скрытые номера</string>
-    <string name="blacklist_item_numberlist_menu_change_action">Изменить</string>
-    <string name="blacklist_item_numberlist_menu_delete_action">Удалить</string>
+    <string name="item_blacklist_menu_change_action">Изменить</string>
+    <string name="item_blacklist_menu_delete_action">Удалить</string>
+    <string name="item_blacklist_phonenumber_menu_call_action">Вызвать</string>
+    <string name="item_blacklist_phonenumber_menu_send_sms_action">Отправить SMS</string>
+    <string name="item_blacklist_contact_menu_open_in_contacts_app_action">Открыть в приложении контактов</string>
+    <string name="blacklist_header_contacts_title">Контакты</string>
+    <string name="blacklist_header_phone_numbers_title">Номера</string>
+    <string name="blacklist_item_contact_not_all_ignored_title">Не все номера заблокированы</string>
     <string name="blacklist_warning_update_to_incompatible_android_version">Данное приложение работает только на версиях системы ниже 4.4 ("KitKat").\nПосле обновления системы до версии 4.4 или выше, рекомендуется использовать функции чёрного списка, предоставляемые системой.</string>
     <string name="blacklist_warning_incompatible_android_version">Версия вашей системы выше, чем 4.4 ("KitKat").\nИз-за системных ограничений, данное приложение корректно работает только на версиях Android ниже 4.4.\nНастоятельно рекомендуется использовать системные возможности чёрного списка вместо данного приложения.</string>
     <string name="timesettings_toolbar_title">Время игнорирования</string>
@@ -32,6 +38,15 @@
     <string name="action_save">Сохранить</string>
     <string name="action_settings">Настройки</string>
     <string name="title_data_saving_error">Ошибка сохранения данных</string>
+    <string name="msg_contact_app_not_found_title">Не найдено приложение для работы с контактами. Откройте его вручную!</string>
+    <string name="msg_calls_app_not_found_title">Не найдено приложение для работы со звонками. Откройте его вручную!</string>
+    <string name="msg_sms_app_not_found_title">Не найдено приложение для работы с SMS-сообщениями. Откройте его вручную!</string>
 
     <string name="current_locale">ru</string>
+    <string name="blacklist_contact_options_changed_or_deleted_error_title">Ошибка сохранения: контакт был изменён или удалён</string>
+    <string name="blacklist_contact_options_toolbar_edit_title">Редактировать номера контакта</string>
+    <string name="blacklist_contact_options_toolbar_create_title">Добавить контакт</string>
+    <string name="select_contact_without_phone_numbers_title">Нет номеров телефонов</string>
+    <string name="select_contact_toolbar_title">Выберите контакт</string>
+    <string name="blacklist_add_contact_action">Добавить контакт</string>
 </resources>

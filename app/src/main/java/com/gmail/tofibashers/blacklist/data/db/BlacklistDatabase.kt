@@ -4,12 +4,8 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import com.gmail.tofibashers.blacklist.data.db.converters.LocalTimeISO8601StringConverter
-import com.gmail.tofibashers.blacklist.data.db.dao.IActivityIntervalDao
-import com.gmail.tofibashers.blacklist.data.db.dao.IBlackListItemDao
-import com.gmail.tofibashers.blacklist.data.db.dao.IJoinBlacklistItemActivityIntervalDao
-import com.gmail.tofibashers.blacklist.data.db.entity.DbActivityInterval
-import com.gmail.tofibashers.blacklist.data.db.entity.DbBlacklistItem
-import com.gmail.tofibashers.blacklist.data.db.entity.DbJoinBlacklistItemActivityInterval
+import com.gmail.tofibashers.blacklist.data.db.dao.*
+import com.gmail.tofibashers.blacklist.data.db.entity.*
 
 
 /**
@@ -17,21 +13,27 @@ import com.gmail.tofibashers.blacklist.data.db.entity.DbJoinBlacklistItemActivit
  */
 
 @Database(
-        version = BlacklistDatabase.DB_VERSION,
+        version = BlacklistDatabase.DB_CURRENT_VERSION,
         entities = arrayOf(
-                DbBlacklistItem::class,
+                DbBlacklistPhoneNumberItem::class,
                 DbActivityInterval::class,
-                DbJoinBlacklistItemActivityInterval::class
+                DbBlacklistContactItem::class,
+                DbBlacklistContactPhoneItem::class,
+                DbJoinBlacklistPhoneNumberItemActivityInterval::class,
+                DbJoinBlacklistContactPhoneItemActivityInterval::class
         ))
 @TypeConverters(LocalTimeISO8601StringConverter::class)
 abstract class BlacklistDatabase : RoomDatabase() {
 
-    abstract fun blackListItemDao() : IBlackListItemDao
+    abstract fun blacklistPhoneNumberItemDao() : IBlacklistPhoneNumberItemDao
     abstract fun activityIntervalDao() : IActivityIntervalDao
-    abstract fun joinBlacklistItemActivityIntervalDao() : IJoinBlacklistItemActivityIntervalDao
+    abstract fun joinBlacklistPhoneNumberItemActivityIntervalDao() : IJoinBlacklistPhoneNumberItemActivityIntervalDao
+    abstract fun blacklistContactItemDao() : IBlacklistContactItemDao
+    abstract fun blacklistContactPhoneItemDao() : IBlacklistContactPhoneItemDao
+    abstract fun joinBlacklistContactPhoneItemActivityIntervalDao() : IJoinBlacklistContactPhoneItemActivityIntervalDao
 
     companion object {
-        const val DB_VERSION = 1
+        const val DB_CURRENT_VERSION = 2
         const val DB_NAME = "db_blacklist"
     }
 }

@@ -11,8 +11,11 @@ cache:
 env:
   global:
   - ANDROID_API=27
-  - ANDROID_BUILD_TOOLS=27.0.2
+  - ANDROID_BUILD_TOOLS=27.0.3
+  - EMULATOR_API=15
+  - EMULATOR_NAME=test
   - APK_FINAL_NAME=Blacklist.apk
+  - ADB_INSTALL_TIMEOUT=5
   - secure: SSPNTIdZBvTK9oWbt9n9XFhEK1mkoYjQkI1GgsfRfvhP3lUmYtyQsSSsGbnN2Ak4TS6HTrLU71Zo2N121Mp5/nfozmd1SbmOPCVofLooUtq7KhLpTnyx3BbDphqRFaXJQ8cTo+D92UOtWS2oSyYwF4KTZ7aeL4lEfU/I7LP/kc/BzDAZ3+fl7D2ah/Y4eSIDpUuOFvWRgFiH5LDlbE4rbf5zlqayhLFCxdJNTGWzb+sqJwQ4yEv4LNBWe+occQPXRUH4PC1plHGrR/73gVH8w5Ik8liWj0gM1qwqlFl2SL1KOfyZCb3buGgSWeBrbogjSVWCyYkEgMKJ9D0xjXptWfxQuREibq+acsGgneIA0uwyNoWmfZKfLJ3dxND6xpUGMfmpzjPHeAHama3PiH1E8Wl9SYf2gY8icjTERlq+lbXciiyvUcZUUAzZwcQDmIC1GmFWNv9vULxOm2fzmjxPIPTYtk3rlq6jTh+BV+iGoHBz3B5CkWp5t1w0UUW+0omsCbA4CgZeQYFsZxjnpm8qeHviwvziIV77JV6q3uYYL3sgFfCsCdftOcCJXyRsp5Aa2Dbm8tKfNZFN9ED8LVEz7Y+gUDjksJYRIrUvPOr5iVVoDFwwfuNWaAy7k+ibN5wxUHltT51yqtD8jeGmPBdtRYHkwqsW8j9caBYYDrVoheQ=
   - secure: Hyy5wfOdSYuz2Z6BoZCUDXYWjstyIETMMpGJj4aRE2hecwi+7y+C4WKOkkicK9Kw30JXkCgP4YCc5w3GlMDLsGJU7EWVWRJdHv4GVZAW5n4vkcAdC0sEJamZT7jg3Xpt2Gv76x9bdGVhi7U0Wuucdh4MzbXZUwStA/uEHU/knUT259YBU/vWqtd0TRGAqakQSOrIgj4fSpBU3gqJdGrDhgOxPO/He5yc9uACN3SPLxXRu361Apz2tSMyJYAAMjd7lOpTlpld5eTXuvnbiQ1guQSuYcw1C09pml3fslAM2z033YFbQT9wq6UDrMuwS+dpDlM2flOqd+udHD7iKQd8+t3cKo7uwMyTY2zYmn39EkGkQgYiOl3+mVxsi4l42Q0A1miMZ65iQ15t4g4ZLlDtS9H+xGqtGBfcGlIayMcIeeCVnjVMJsz7+PXxUkbnb1nPnhiLaQFYixvAVvOpeI5k5hapNpDvYycGBdxwXPOR69FtS+MXwtxlMoKxzArm/dDavVfI0a2/+noOjWmoqa4c4oUhJbqKgC4Vi6k3luk8FMHUzbmf6Xl2J1E+QuRe+JO144YryMMidHJV4pKFmn+vqeaaXD95DcTLM9j6BnGHtVm/qQNjmutPQYgOTe6x2FyBmQhMn/NWfmE3Mdwiwi4yvNVe+Zvyiw5+Kq464CMpInY=
   - secure: hYGWaBOGvySQUJgvS5Bd4kmakUHVvQqGkTuaYpTe+rc8KKSgJkfpFEzrm9elcWaW9bCqnQet3m4HdL0fp1SUrC9uXQCDDNn4B8urfiRZKrmniykIuL65uvN80NcvMud3K8vIKpEy4cCHjl44qY/WCTBVAIjjJSLan6wfbWXfBvSM6G938gJFmHbR5FicjoBRJbq8wF+Vz9LXISLBgHkWHrvQrDh+33coca5xEA39e8VxDjg+w9akBjuWKh4LP0FDrGMaVIScL7cCvkKyyWRCaqPTaRdvM66FmNoSomuPP1JMMS6S4PJEfVe9ZvU2MkWN5qjFZhvsX7SbvWY4zq6S4it0El0VU3bHmzohf3TjMvcBdUAFUsaf1sw/9IW5s87QkMbgJ415VKpMrJR1wHrhQt6xF1PG+n//37j/pEiNew0zjeYYXyhG0lO8MorHDDaqiffJzHO9s9xt+37gtxvg93YLkahvGfyRG6n85pw3cMbp8e+AMKbK4w9CLX88mBWLv3Uv4ZWDS4zS9gLTNWV1e+heYVk9gdWqm1znfwIyiDXK4fwGwrjI43NhVVHUFyg4klB90RruxkMCd3+x1kJe3hbR1325FE1VRoSqKGGKYpQgtqjN5MZn5EK6srrmCZprp+QpZ4sL8sftTPGFtfENbzHg7GDnEIssBFrIWitkkZw=
@@ -25,9 +28,11 @@ android:
   - tools
   - build-tools-$ANDROID_BUILD_TOOLS
   - android-$ANDROID_API
+  - android-$EMULATOR_API
   - extra-android-support
   - extra-google-m2repository
   - extra-android-m2repository
+  - sys-img-armeabi-v7a-android-$EMULATOR_API
 before_install:
 - openssl aes-256-cbc -k "$travisKeystoreEncPassword" -in travis.keystore.enc -out
   travis.keystore -d
@@ -36,8 +41,13 @@ before_install:
   -out fabric.properties -d
 - cd ..
 - chmod +x gradlew
+before_script:
+- echo no | android create avd --force -n $EMULATOR_NAME -t android-$EMULATOR_API --abi armeabi-v7a
+- QEMU_AUDIO_DRV=none emulator -avd $EMULATOR_NAME -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 script:
-- "./gradlew clean build test --stacktrace"
+- "./gradlew clean build connectedCheck test --stacktrace"
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/travis.keystore $HOME
 - cd app/build/outputs/apk/release
@@ -50,7 +60,7 @@ deploy:
   file: $APK_FINAL_NAME
   skip_cleanup: true
   on:
-    branch: master
+    tags: true
     repo: TofiBashers/Blacklist
     jdk: oraclejdk8
   api_key:

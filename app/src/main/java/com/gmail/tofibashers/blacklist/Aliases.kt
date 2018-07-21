@@ -1,6 +1,8 @@
 package com.gmail.tofibashers.blacklist
 
+import com.gmail.tofibashers.blacklist.entity.ActivityInterval
 import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSettings
+import com.gmail.tofibashers.blacklist.entity.BlacklistContactPhoneNumberItem
 
 
 /**
@@ -8,3 +10,4 @@ import com.gmail.tofibashers.blacklist.entity.ActivityTimeIntervalWithIgnoreSett
  */
 
 typealias TimeAndIgnoreSettingsByWeekdayId = HashMap<Int, ActivityTimeIntervalWithIgnoreSettings>
+typealias PairOfBlacklistContactPhonesAndIntervals = Pair<List<BlacklistContactPhoneNumberItem>, List<List<ActivityInterval>>>
